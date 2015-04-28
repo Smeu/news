@@ -1,0 +1,107 @@
+///////////// GRAPHIC INTERFACES //////////////////////
+Login interface
+	- input for the credentials
+	- login -> mainPage if login successful
+			\> show errors
+	- new user -> redirect to new users
+New User
+	- input for the credentials
+	- create new user -> redirect login interface if input is correct
+	                  \-> show errors
+Homepage
+	- menu area
+	- news feed area (news from my feeds, news from users I follow, my news)
+
+User page
+	- menu area
+	- news feed area (users news);
+	
+Feeds page
+	- menu area
+	- news feed area (feeds news);
+
+Add feed
+    - menu area
+	- add feed area
+	
+Search users
+	- menu area
+	- a list of users with follow user button
+////////////////////// AREAS ///////////					  
+menu area:
+	-my news
+		- news feed with my news only
+	-my feeds
+		- list feeds
+			- clicking on a source will redirect to feeds page
+		- add new feed				
+	-my people I follow
+		- list people I follow
+			- clicking on a user will redirect to his page
+	-add new feed		
+
+add new feed area:
+	-input for url, name, description
+	-add button -checks the input - OK -> redirect to feed page
+								  \- Error -> show errors	
+								  
+the news feed area (requires a news list) (sorted list):
+	- list latest 10 news from your sources (friends or feed)
+		for each piece of news - show title (hyperlink to source)
+							   - show categories
+							   - content
+							   - read more or source button;
+							   - source of news (user or feed);
+							   - if the news is from your feed, show "save" button.
+							   - if the news is from a user you follow or yours:
+										-show existing comments
+											for each comment:
+												- show owner of the comment (optional? with hyperlink to him)
+												- show comment
+										-add comment button.
+							   
+	- button for next 10 news (if exists);
+	- button last 10 news (if exists);
+
+///////// USER /////////////////////////////////////////
+
+User - id long
+	 - username String (4-32 characters)
+     - password String (8-32 characters  as hashcode)
+
+NEW user 
+	{username, password} - OK ->  User created {returns id};
+					     - ERROR -> username already exists, username or password too short/long;
+LIST users
+     {} - OK -> return List<User>
+
+AUTHENTICATE user
+	 {username, password} - OK -> returns user id;
+						  - ERROR -> No user found with those credentials;	
+	
+	
+optional: (delete user) ? (delete(all resources and connections) or inactivate the account)
+optional:(modify user) ? (change password)
+
+NEWS service
+	{}
+
+	
+
+/////////  NEWS ///////////////////////////////////////////
+
+News - id long
+     - ownerId long // the user that posted the news
+	 - feedId long // the feed id
+	 - title String (max 64 characters) if exceeds ...
+	 - content String (max 1024 characters) for more, Read More
+	 - url String (max 256 characters)  (for read more, or source)
+     - List<NewsCategory> categories (not stored in db in news)
+
+Feed - id long
+	 - name String (max 32 characters) name of your feed
+     - url String (max 256 characters) the source of the rss file
+	 - userId long // the user that selected this feed
+	 - description String (max 256 characters) 
+	
++ ADMIN   category create numai de admini.
