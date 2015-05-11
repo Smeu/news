@@ -1,0 +1,13 @@
+
+1) Implement the user operations (service, repo, tests, etc).
+2) Implement the news operations.
+3) Implement the feeds operations:
+		3.1) Create feed (checks if the source is viable, save in repo, tests, etc)
+		3.2) Parsers to read from xml to list of news.
+		3.3) Integration of the parsers with the feed service.
+
+For each and every task:
+	java doc is required.
+	exception handling (crate own exceptions for id not found, no internet connection, etc throw runtime exception)
+	bad input (invalid name, etc) create a response with errors.
+	junit required.
