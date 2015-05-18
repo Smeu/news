@@ -32,7 +32,7 @@ public class Response<T> {
 	 * @return true if it has errors, false otherwise.
 	 */
 	public boolean hasErrors() {
-		return errors != null && errors.size() != 0;
+		return errors != null && !errors.isEmpty();
 	}
 
 	public T getResponse() {
@@ -49,5 +49,13 @@ public class Response<T> {
 
 	public void setErrors(List<FieldError> errors) {
 		this.errors = errors;
+	}
+
+	@Override
+	public String toString() {
+		return "Response{" +
+				"response=" + response +
+				", errors=" + errors +
+				'}';
 	}
 }

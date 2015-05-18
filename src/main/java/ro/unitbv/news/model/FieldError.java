@@ -23,4 +23,12 @@ public class FieldError {
   public Error getError() {
     return error;
   }
+
+	@Override
+	public String toString() {
+		return "FieldError{" +
+				"name='" + name + '\'' +
+				", error=" + error +
+				'}';
+	}
 }

@@ -24,7 +24,7 @@ public class ValidationResult {
 	 * @return true if it has errors, false otherwise.
 	 */
 	public boolean hasErrors() {
-		return errors != null && errors.size() != 0;
+		return errors != null && !errors.isEmpty();
 	}
 
 	/**
@@ -34,6 +34,15 @@ public class ValidationResult {
 	 */
 	public void addError(FieldError error) {
 		errors.add(error);
+	}
+
+	/**
+	 * Adds the errors to the errors list.
+	 *
+	 * @param errors errors to be added.
+	 */
+	public void addErrors(List<FieldError> errors) {
+		this.errors.addAll(errors);
 	}
 
 	public List<FieldError> getErrors() {

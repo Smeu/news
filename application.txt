@@ -99,8 +99,8 @@ News - id long
      - List<NewsCategory> categories (not stored in db in news)
 
 Feed - id long
-	 - name String (max 32 characters) name of your feed
-     - url String (max 256 characters) the source of the rss file
+	 - name String (min 4) (max 32 characters) name of your feed
+   - url String (max 256 characters) the source of the rss file
 	 - userId long // the user that selected this feed
 	 - description String (max 256 characters) 
 	
