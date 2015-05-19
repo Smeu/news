@@ -8,6 +8,7 @@ import ro.unitbv.news.model.User;
  * Validator for a user.
  *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public class UserValidator {
 
@@ -19,6 +20,12 @@ public class UserValidator {
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
+	/**
+	 * Validates a user's credentials.
+	 *
+	 * @param user user to validate.
+	 * @return result of the validation.
+	 */
 	public ValidationResult validate(User user) {
 		ValidationResult result = new ValidationResult();
 		if (user.getUsername().trim().length() < USERNAME_MIN_LENGTH) {
@@ -35,5 +42,4 @@ public class UserValidator {
 		}
 		return result;
 	}
-
 }

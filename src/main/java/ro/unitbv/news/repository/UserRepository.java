@@ -3,9 +3,13 @@ package ro.unitbv.news.repository;
 import ro.unitbv.news.model.User;
 
 /**
+ * Repository for {@link ro.unitbv.news.model.User}.
+ *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public interface UserRepository {
+
 	/**
 	 * Creates a new user.
 	 *
@@ -21,4 +25,13 @@ public interface UserRepository {
 	 * @return the user.
 	 */
 	User get(long id);
+
+	/**
+	 * Attempts authentication of a user with the specified username and password.
+	 *
+	 * @param username user's provided username.
+	 * @param password user's provided password.
+	 * @return <code>true</code> if authentication was successful or <code>false</code> otherwise.
+	 */
+	boolean authenticate(String username, String password);
 }
