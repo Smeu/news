@@ -14,6 +14,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class InMemoryUserRepositoryTest {
 
+	private static final String EMPTY_STRING = "";
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+
 	private UserRepository repository;
 
 	@Before
@@ -37,21 +41,19 @@ public class InMemoryUserRepositoryTest {
 
 	@Test
 	public void testAuthenticateUnsuccessful() throws Exception {
-		boolean result = repository.authenticate("", "");
+		boolean result = repository.authenticate(EMPTY_STRING, EMPTY_STRING);
 
 		assertThat(result, is(false));
 	}
 
 	@Test
 	public void testAuthenticateSuccessful() throws Exception {
-		String username = "username";
-		String password = "password";
 		User user = new User();
-		user.setUsername(username);
-		user.setPassword(password);
+		user.setUsername(USERNAME);
+		user.setPassword(PASSWORD);
 		repository.create(user);
 
-		boolean result = repository.authenticate(username, password);
+		boolean result = repository.authenticate(USERNAME, PASSWORD);
 		assertThat(result, is(true));
 	}
 }

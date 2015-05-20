@@ -1,7 +1,5 @@
 package ro.unitbv.news.validator;
 
-import ro.unitbv.news.model.Error;
-import ro.unitbv.news.model.FieldError;
 import ro.unitbv.news.model.User;
 
 /**
@@ -12,34 +10,29 @@ import ro.unitbv.news.model.User;
  */
 public class UserValidator {
 
-	private static final int USERNAME_MIN_LENGTH = 4;
-	private static final int USERNAME_MAX_LENGTH = 32;
-	private static final int PASSWORD_MIN_LENGTH = 8;
-	private static final int PASSWORD_MAX_LENGTH = 32;
-
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
+	private StringFieldValidator usernameValidator;
+	private StringFieldValidator passwordValidator;
+
+	public UserValidator(StringFieldValidator usernameValidator, StringFieldValidator passwordValidator) {
+		this.usernameValidator = usernameValidator;
+		this.passwordValidator = passwordValidator;
+	}
+
 	/**
-	 * Validates a user's credentials.
+	 * Validates the provided information for a user.
 	 *
 	 * @param user user to validate.
 	 * @return result of the validation.
 	 */
 	public ValidationResult validate(User user) {
 		ValidationResult result = new ValidationResult();
-		if (user.getUsername().trim().length() < USERNAME_MIN_LENGTH) {
-			result.addError(new FieldError(USERNAME, Error.MIN_LENGTH_NOT_REACHED));
-		}
-		if (user.getUsername().trim().length() > USERNAME_MAX_LENGTH) {
-			result.addError(new FieldError(USERNAME, Error.MAX_LENGTH_EXCEEDED));
-		}
-		if (user.getPassword().trim().length() < PASSWORD_MIN_LENGTH) {
-			result.addError(new FieldError(PASSWORD, Error.MIN_LENGTH_NOT_REACHED));
-		}
-		if (user.getPassword().trim().length() > PASSWORD_MAX_LENGTH) {
-			result.addError(new FieldError(PASSWORD, Error.MAX_LENGTH_EXCEEDED));
-		}
+		ValidationResult usernameValidationResult = usernameValidator.validate(USERNAME, user.getUsername());
+		ValidationResult passwordValidationResult = passwordValidator.validate(PASSWORD, user.getPassword());
+		result.addErrors(usernameValidationResult.getErrors());
+		result.addErrors(passwordValidationResult.getErrors());
 		return result;
 	}
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.exception.InvalidIdException;
-import ro.unitbv.news.validator.UserValidator;
 
 /**
  * In memory implementation for {@link ro.unitbv.news.repository.UserRepository}
@@ -34,13 +33,6 @@ public class InMemoryUserRepository implements UserRepository {
 
 	@Override
 	public boolean authenticate(String username, String password) {
-		User providedUser = new User();
-		providedUser.setUsername(username);
-		providedUser.setPassword(password);
-		UserValidator validator = new UserValidator();
-		if (validator.validate(providedUser).hasErrors()) {
-			return false;
-		}
 		for (User user : users) {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
 				return true;

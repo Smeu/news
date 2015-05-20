@@ -18,6 +18,7 @@ import ro.unitbv.news.validator.ValidationResult;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -25,6 +26,13 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultUserServiceTest {
+
+	private static final String EMPTY_STRING = "";
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+
+	private static final long VALID_ID = 1;
+	private static final long INVALID_ID = -1;
 
 	private UserService service;
 
@@ -42,7 +50,7 @@ public class DefaultUserServiceTest {
 	@Test
 	public void testCreateWithErrors() throws Exception {
 		ValidationResult result = new ValidationResult();
-		result.addError(new FieldError("password", Error.MIN_LENGTH_NOT_REACHED));
+		result.addError(new FieldError(PASSWORD, Error.MIN_LENGTH_NOT_REACHED));
 		when(validator.validate(any())).thenReturn(result);
 
 		Response<Long> response = service.create(new User());
@@ -53,33 +61,30 @@ public class DefaultUserServiceTest {
 
 	@Test
 	public void testCreateWithoutErrors() throws Exception {
-		long id = 1L;
 		when(validator.validate(any())).thenReturn(new ValidationResult());
-		when(repository.create(any())).thenReturn(id);
+		when(repository.create(any())).thenReturn(VALID_ID);
 
 		Response<Long> response = service.create(new User());
 
 		assertThat(response.hasErrors(), is(false));
-		assertThat(response.getResponse(), is(id));
+		assertThat(response.getResponse(), is(VALID_ID));
 	}
 
 	@Test
 	public void testGetWithErrors() throws Exception {
-		long id = -1;
-		when(repository.get(id)).thenThrow(new InvalidIdException());
+		when(repository.get(INVALID_ID)).thenThrow(new InvalidIdException());
 
-		Response<User> response = service.get(id);
+		Response<User> response = service.get(INVALID_ID);
 
 		assertThat(response.hasErrors(), is(true));
 	}
 
 	@Test
 	public void testGetWithoutErrors() throws Exception {
-		long id = 1L;
 		User user = new User();
-		when(repository.get(id)).thenReturn(user);
+		when(repository.get(VALID_ID)).thenReturn(user);
 
-		Response<User> response = service.get(id);
+		Response<User> response = service.get(VALID_ID);
 
 		assertThat(response.hasErrors(), is(false));
 		assertThat(response.getResponse(), is(user));
@@ -87,17 +92,17 @@ public class DefaultUserServiceTest {
 
 	@Test
 	public void testAuthenticateIncorrectly() throws Exception {
-		when(repository.authenticate(any(), any())).thenReturn(false);
+		when(repository.authenticate(anyString(), anyString())).thenReturn(false);
 
-		boolean result = service.authenticate("", "");
+		boolean result = service.authenticate(EMPTY_STRING, EMPTY_STRING);
 		assertThat(result, is(false));
 	}
 
 	@Test
 	public void testAuthenticateCorrectly() throws Exception {
-		when(repository.authenticate(any(), any())).thenReturn(true);
+		when(repository.authenticate(anyString(), anyString())).thenReturn(true);
 
-		boolean result = service.authenticate("username", "password");
+		boolean result = service.authenticate(USERNAME, PASSWORD);
 		assertThat(result, is(true));
 	}
 }
