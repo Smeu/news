@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet title="XSL_formatting" type="text/xsl" href="/shared/bsp/xsl/rss/nolsol.xsl"?>
+
+<rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>BBC News - Technology</title>
+        <link>http://www.bbc.co.uk/news/technology/#sa-ns_mchannel=rss&amp;ns_source=PublicRSS20-sa</link>
+        <description>The latest stories from the Technology section of the BBC News web site.</description>
+        <language>en-gb</language>
+        <lastBuildDate>Thu, 21 May 2015 15:34:17 GMT</lastBuildDate>
+        <copyright>Copyright: (C) British Broadcasting Corporation, see http://news.bbc.co.uk/2/hi/help/rss/4498287.stm for terms and conditions of reuse.</copyright>
+        <image>
+            <url>http://news.bbcimg.co.uk/nol/shared/img/bbc_news_120x60.gif</url>
+            <title>BBC News - Technology</title>
+            <link>http://www.bbc.co.uk/news/technology/#sa-ns_mchannel=rss&amp;ns_source=PublicRSS20-sa</link>
+            <width>120</width>
+            <height>60</height>
+        </image>
+        <ttl>15</ttl>
+        <atom:link href="http://feeds.bbci.co.uk/news/technology/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>mSpy admits hacking and data theft</title>
+            <description>A company offering software that allows people to spy on others admits it has been hacked and had thousands of customer records leaked online.</description>
+            <link>url</link>
+            <guid isPermaLink="false">http://www.bbc.co.uk/news/technology-32826678</guid>
+            <pubDate>Thu, 21 May 2015 15:27:25 GMT</pubDate>
+            <media:thumbnail width="66" height="49" url="http://news.bbcimg.co.uk/media/images/83139000/jpg/_83139353_80528394.jpg"/>
+            <media:thumbnail width="144" height="81" url="http://news.bbcimg.co.uk/media/images/83149000/jpg/_83149921_80528394.jpg"/>
+        </item>
+    </channel>
+</rss>
