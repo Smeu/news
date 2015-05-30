@@ -10,17 +10,24 @@ import ro.unitbv.news.model.User;
  */
 public class UserValidator {
 
+	private static final int USERNAME_MIN_LENGTH = 4;
+	private static final int USERNAME_MAX_LENGTH = 32;
+	private static final int PASSWORD_MIN_LENGTH = 8;
+	private static final int PASSWORD_MAX_LENGTH = 32;
+
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
 	private StringFieldValidator validator = new StringFieldValidator();
 
-	private ValidationConstraint usernameConstraint;
-	private ValidationConstraint passwordConstraint;
+	private ValidationConstraint usernameConstraint = new ValidationConstraint();
+	private ValidationConstraint passwordConstraint = new ValidationConstraint();
 
-	public UserValidator(ValidationConstraint usernameConstraint, ValidationConstraint passwordConstraint) {
-		this.usernameConstraint = usernameConstraint;
-		this.passwordConstraint = passwordConstraint;
+	public UserValidator() {
+		usernameConstraint.setMinLength(USERNAME_MIN_LENGTH);
+		usernameConstraint.setMaxLength(USERNAME_MAX_LENGTH);
+		passwordConstraint.setMinLength(PASSWORD_MIN_LENGTH);
+		passwordConstraint.setMaxLength(PASSWORD_MAX_LENGTH);
 	}
 
 	/**

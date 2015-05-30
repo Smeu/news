@@ -1,6 +1,5 @@
 package ro.unitbv.news.validator;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,9 +20,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserValidatorTest {
 
-	private static final int MIN_LENGTH = 4;
-	private static final int MAX_LENGTH = 32;
-
 	private static final String FIELD = "field";
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
@@ -31,15 +27,7 @@ public class UserValidatorTest {
 	@Mock
 	private StringFieldValidator fieldValidator;
 
-	private UserValidator validator;
-
-	@Before
-	public void init() {
-		ValidationConstraint constraint = new ValidationConstraint();
-		constraint.setMinLength(MIN_LENGTH);
-		constraint.setMaxLength(MAX_LENGTH);
-		validator = new UserValidator(constraint, constraint);
-	}
+	private UserValidator validator = new UserValidator();
 
 	@Test
 	public void testValidateWithErrors() throws Exception {
