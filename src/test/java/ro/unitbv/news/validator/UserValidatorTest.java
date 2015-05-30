@@ -11,6 +11,7 @@ import ro.unitbv.news.model.FieldError;
 import ro.unitbv.news.model.User;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -20,30 +21,31 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserValidatorTest {
 
+	private static final int MIN_LENGTH = 4;
+	private static final int MAX_LENGTH = 32;
+
+	private static final String FIELD = "field";
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
+	@Mock
+	private StringFieldValidator fieldValidator;
+
 	private UserValidator validator;
-
-	@Mock
-	private StringFieldValidator usernameValidator;
-
-	@Mock
-	private StringFieldValidator passwordValidator;
 
 	@Before
 	public void init() {
-		validator = new UserValidator(usernameValidator, passwordValidator);
+		ValidationConstraint constraint = new ValidationConstraint();
+		constraint.setMinLength(MIN_LENGTH);
+		constraint.setMaxLength(MAX_LENGTH);
+		validator = new UserValidator(constraint, constraint);
 	}
 
 	@Test
 	public void testValidateWithErrors() throws Exception {
-		ValidationResult usernameValidationResult = new ValidationResult();
-		ValidationResult passwordValidationResult = new ValidationResult();
-		usernameValidationResult.addError(new FieldError(USERNAME, Error.FIELD_IS_MANDATORY));
-		passwordValidationResult.addError(new FieldError(PASSWORD, Error.FIELD_IS_MANDATORY));
-		when(usernameValidator.validate(anyString(), anyString())).thenReturn(usernameValidationResult);
-		when(passwordValidator.validate(anyString(), anyString())).thenReturn(passwordValidationResult);
+		ValidationResult fieldResult = new ValidationResult();
+		fieldResult.addError(new FieldError(FIELD, Error.FIELD_IS_MANDATORY));
+		when(fieldValidator.validateMandatory(anyString(), anyString(), any())).thenReturn(fieldResult);
 		User user = new User();
 		user.setUsername(null);
 		user.setPassword(null);
@@ -56,8 +58,7 @@ public class UserValidatorTest {
 
 	@Test
 	public void testValidateWithoutErrors() throws Exception {
-		when(usernameValidator.validate(anyString(), anyString())).thenReturn(new ValidationResult());
-		when(passwordValidator.validate(anyString(), anyString())).thenReturn(new ValidationResult());
+		when(fieldValidator.validateMandatory(anyString(), anyString(), any())).thenReturn(new ValidationResult());
 		User user = new User();
 		user.setUsername(USERNAME);
 		user.setPassword(PASSWORD);

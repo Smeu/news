@@ -10,31 +10,24 @@ import ro.unitbv.news.model.FieldError;
  */
 public class StringFieldValidator {
 
-	private int minLength;
-	private int maxLength;
-
-	public StringFieldValidator(int minLength, int maxLength) {
-		this.minLength = minLength;
-		this.maxLength = maxLength;
-	}
-
 	/**
-	 * Validates a field's content.
+	 * Validates a mandatory field's content against the specified constraint.
 	 *
-	 * @param fieldName name of field that will be validated.
-	 * @param field     field to validate.
+	 * @param fieldName  name of field that will be validated.
+	 * @param field      field to validate.
+	 * @param constraint constraint to validate against.
 	 * @return result of the validation.
 	 */
-	public ValidationResult validate(String fieldName, String field) {
+	public ValidationResult validateMandatory(String fieldName, String field, ValidationConstraint constraint) {
 		ValidationResult result = new ValidationResult();
 		if (field == null) {
 			result.addError(new FieldError(fieldName, Error.FIELD_IS_MANDATORY));
 			return result;
 		}
-		if (field.trim().length() < minLength) {
+		if (field.trim().length() < constraint.getMinLength()) {
 			result.addError(new FieldError(fieldName, Error.MIN_LENGTH_NOT_REACHED));
 		}
-		if (field.trim().length() > maxLength) {
+		if (field.trim().length() > constraint.getMaxLength()) {
 			result.addError(new FieldError(fieldName, Error.MAX_LENGTH_EXCEEDED));
 		}
 		return result;

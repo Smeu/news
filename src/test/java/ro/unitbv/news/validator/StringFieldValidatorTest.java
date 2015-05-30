@@ -19,16 +19,18 @@ public class StringFieldValidatorTest {
 	private static final int MIN_LENGTH = 4;
 	private static final int MAX_LENGTH = 10;
 
-	private StringFieldValidator validator;
+	private StringFieldValidator validator = new StringFieldValidator();
+	private ValidationConstraint constraint = new ValidationConstraint();
 
 	@Before
 	public void init() {
-		validator = new StringFieldValidator(MIN_LENGTH, MAX_LENGTH);
+		constraint.setMinLength(MIN_LENGTH);
+		constraint.setMaxLength(MAX_LENGTH);
 	}
 
 	@Test
 	public void testValidateNullField() throws Exception {
-		ValidationResult result = validator.validate(FIELD_NAME, null);
+		ValidationResult result = validator.validateMandatory(FIELD_NAME, null, constraint);
 
 		assertThat(result.hasErrors(), is(true));
 		assertThat(result.getErrors().size(), is(1));
@@ -36,7 +38,7 @@ public class StringFieldValidatorTest {
 
 	@Test
 	public void testValidateFieldTooShort() throws Exception {
-		ValidationResult result = validator.validate(FIELD_NAME, EMPTY_STRING);
+		ValidationResult result = validator.validateMandatory(FIELD_NAME, EMPTY_STRING, constraint);
 
 		assertThat(result.hasErrors(), is(true));
 		assertThat(result.getErrors().size(), is(1));
@@ -44,7 +46,7 @@ public class StringFieldValidatorTest {
 
 	@Test
 	public void testValidateFieldTooLong() throws Exception {
-		ValidationResult result = validator.validate(FIELD_NAME, LONG_STRING);
+		ValidationResult result = validator.validateMandatory(FIELD_NAME, LONG_STRING, constraint);
 
 		assertThat(result.hasErrors(), is(true));
 		assertThat(result.getErrors().size(), is(1));
@@ -52,7 +54,7 @@ public class StringFieldValidatorTest {
 
 	@Test
 	public void testValidateWithoutErrors() throws Exception {
-		ValidationResult result = validator.validate(FIELD_NAME, VALID_CONTENT);
+		ValidationResult result = validator.validateMandatory(FIELD_NAME, VALID_CONTENT, constraint);
 
 		assertThat(result.hasErrors(), is(false));
 	}
