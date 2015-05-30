@@ -31,7 +31,7 @@ public interface UserRepository {
 	 *
 	 * @param username user's provided username.
 	 * @param password user's provided password.
-	 * @return <code>true</code> if authentication was successful or <code>false</code> otherwise.
+	 * @return the corresponding user if authentication was successful or <code>null</code> otherwise.
 	 */
-	boolean authenticate(String username, String password);
+	User authenticate(String username, String password);
 }

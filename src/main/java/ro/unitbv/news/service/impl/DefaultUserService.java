@@ -53,7 +53,7 @@ public class DefaultUserService implements UserService {
 	}
 
 	@Override
-	public boolean authenticate(String username, String password) {
+	public User authenticate(String username, String password) {
 		return repository.authenticate(username, password);
 	}
 }

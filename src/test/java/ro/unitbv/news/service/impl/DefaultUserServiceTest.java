@@ -17,6 +17,7 @@ import ro.unitbv.news.validator.UserValidator;
 import ro.unitbv.news.validator.ValidationResult;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -92,17 +93,18 @@ public class DefaultUserServiceTest {
 
 	@Test
 	public void testAuthenticateIncorrectly() throws Exception {
-		when(repository.authenticate(anyString(), anyString())).thenReturn(false);
+		when(repository.authenticate(anyString(), anyString())).thenReturn(null);
 
-		boolean result = service.authenticate(EMPTY_STRING, EMPTY_STRING);
-		assertThat(result, is(false));
+		User authenticatedUser = service.authenticate(EMPTY_STRING, EMPTY_STRING);
+		assertEquals(null, authenticatedUser);
 	}
 
 	@Test
 	public void testAuthenticateCorrectly() throws Exception {
-		when(repository.authenticate(anyString(), anyString())).thenReturn(true);
+		User user = new User();
+		when(repository.authenticate(anyString(), anyString())).thenReturn(user);
 
-		boolean result = service.authenticate(USERNAME, PASSWORD);
-		assertThat(result, is(true));
+		User authenticatedUser = service.authenticate(USERNAME, PASSWORD);
+		assertThat(authenticatedUser, is(user));
 	}
 }

@@ -8,6 +8,7 @@ import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.exception.InvalidIdException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Teodora Tanase
@@ -41,9 +42,9 @@ public class InMemoryUserRepositoryTest {
 
 	@Test
 	public void testAuthenticateUnsuccessful() throws Exception {
-		boolean result = repository.authenticate(EMPTY_STRING, EMPTY_STRING);
+		User authenticatedUser = repository.authenticate(EMPTY_STRING, EMPTY_STRING);
 
-		assertThat(result, is(false));
+		assertEquals(null, authenticatedUser);
 	}
 
 	@Test
@@ -53,7 +54,7 @@ public class InMemoryUserRepositoryTest {
 		user.setPassword(PASSWORD);
 		repository.create(user);
 
-		boolean result = repository.authenticate(USERNAME, PASSWORD);
-		assertThat(result, is(true));
+		User authenticatedUser = repository.authenticate(USERNAME, PASSWORD);
+		assertThat(authenticatedUser, is(user));
 	}
 }

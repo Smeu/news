@@ -32,12 +32,12 @@ public class InMemoryUserRepository implements UserRepository {
 	}
 
 	@Override
-	public boolean authenticate(String username, String password) {
+	public User authenticate(String username, String password) {
 		for (User user : users) {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-				return true;
+				return user;
 			}
 		}
-		return false;
+		return null;
 	}
 }
