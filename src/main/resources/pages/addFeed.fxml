@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane hgap="10.0" stylesheets="@main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.AddFeedPageController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <VBox alignment="CENTER" prefHeight="436.0" prefWidth="408.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Add feed">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="25.0"/>
+                    </VBox.margin>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Url">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="urlInput" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="350.0">
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                </TextField>
+                <Text fx:id="urlError" strokeType="OUTSIDE" strokeWidth="0.0">
+                    <styleClass>
+                        <String fx:value="hidden"/>
+                        <String fx:value="errorText"/>
+                    </styleClass>
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </Text>
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Name">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="nameInput" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="350.0">
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                </TextField>
+                <Text fx:id="nameError" strokeType="OUTSIDE" strokeWidth="0.0">
+                    <styleClass>
+                        <String fx:value="hidden"/>
+                        <String fx:value="errorText"/>
+                    </styleClass>
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </Text>
+                <Label text="Description"/>
+                <TextField fx:id="descriptionInput" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="350.0">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </TextField>
+                <Text fx:id="descriptionError" strokeType="OUTSIDE" strokeWidth="0.0">
+                    <styleClass>
+                        <String fx:value="hidden"/>
+                        <String fx:value="errorText"/>
+                    </styleClass>
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </Text>
+                <Button fx:id="addFeed" mnemonicParsing="false" onMouseClicked="#addFeed" text="Add">
+                    <VBox.margin>
+                        <Insets top="25.0"/>
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</GridPane>

@@ -4,18 +4,21 @@ package ro.unitbv.news.controller;
  * Enum for maintaining the pages sources.
  *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public enum Page {
 
 	LOGIN_PAGE("Login", "pages/login.fxml"),
 
-	CREATE_USER_PAGE("Create User", "pages/createUser.fxml");
+	CREATE_USER_PAGE("Create User", "pages/createUser.fxml"),
+
+	ADD_FEED_PAGE("Add Feed", "pages/addFeed.fxml");
 
 	private String pagePath;
 
 	private String title;
 
-	private Page(String title, String pagePath) {
+	Page(String title, String pagePath) {
 		this.pagePath = pagePath;
 		this.title = title;
 	}

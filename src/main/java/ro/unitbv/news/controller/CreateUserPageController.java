@@ -47,7 +47,13 @@ public class CreateUserPageController extends AbstractController {
 	private TextField usernameInput;
 	@FXML
 	private PasswordField passwordInput;
+	@FXML
+	private Button backToLogin;
 
+
+	public void backToLogin() {
+		redirectTo(Page.LOGIN_PAGE);
+	}
 
 	public void createUser() {
 		resetErrors();
@@ -94,28 +100,6 @@ public class CreateUserPageController extends AbstractController {
 		}
 	}
 
-	private void showErrorForField(TextField input, Text errorArea, FieldError error) {
-		switch (error.getError()) {
-			case FIELD_IS_MANDATORY:
-				addClassIfMissing(input, ERROR_BORDER);
-				removeClassIfExists(errorArea, HIDDEN);
-				errorArea.setText("The " + error.getFieldName() + " is mandatory");
-				break;
-			case MIN_LENGTH_NOT_REACHED:
-				addClassIfMissing(input, ERROR_BORDER);
-				removeClassIfExists(errorArea, HIDDEN);
-				errorArea.setText("The " + error.getFieldName() + " must have at least " +
-						error.getConstraint().getMinLength() + " characters");
-				break;
-			case MAX_LENGTH_EXCEEDED:
-				addClassIfMissing(input, ERROR_BORDER);
-				removeClassIfExists(errorArea, HIDDEN);
-				errorArea.setText("The " + error.getFieldName() + " must have maximum " +
-						error.getConstraint().getMaxLength() + " characters");
-				break;
-		}
-	}
-
 	private boolean passwordCheckPassed() {
 		if (passwordInput.getText().length() < 8) {
 			setPasswordError("Password must have at least \n 8 characters");
@@ -142,19 +126,5 @@ public class CreateUserPageController extends AbstractController {
 		removeClassIfExists(usernameInput, ERROR_BORDER);
 		removeClassIfExists(passwordInput, ERROR_BORDER);
 		removeClassIfExists(confirmPasswordInput, ERROR_BORDER);
-
 	}
-
-	private void removeClassIfExists(Node node, String cssClass) {
-		if (node.getStyleClass().contains(cssClass)) {
-			node.getStyleClass().remove(cssClass);
-		}
-	}
-
-	private void addClassIfMissing(Node node, String cssClass) {
-		if (!node.getStyleClass().contains(cssClass)) {
-			node.getStyleClass().add(cssClass);
-		}
-	}
-
 }
