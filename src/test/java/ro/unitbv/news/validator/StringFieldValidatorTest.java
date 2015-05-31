@@ -3,6 +3,7 @@ package ro.unitbv.news.validator;
 import org.junit.Before;
 import org.junit.Test;
 
+import ro.unitbv.news.model.FieldConstraint;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -20,7 +21,7 @@ public class StringFieldValidatorTest {
 	private static final int MAX_LENGTH = 10;
 
 	private StringFieldValidator validator = new StringFieldValidator();
-	private ValidationConstraint constraint = new ValidationConstraint();
+	private FieldConstraint constraint = new FieldConstraint();
 
 	@Before
 	public void init() {

@@ -1,0 +1,22 @@
+
+.errorBorder {
+    -fx-border-color: #ff2828;
+}
+
+.roundCorners {
+    -fx-border-radius: 5px;
+    -fx-padding: 0 5px 0 5px;
+}
+
+.errorText {
+    -fx-text-fill: #ff2828;
+    -fx-fill: ff2828
+}
+
+.hidden {
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+    -fx-max-width: 1px;
+    -fx-max-height: 1px;
+    visibility: collapse;
+}

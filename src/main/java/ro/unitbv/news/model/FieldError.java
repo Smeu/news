@@ -7,28 +7,41 @@ package ro.unitbv.news.model;
  */
 public class FieldError {
 
-  private String name;
+  private String fieldName;
 
   private Error error;
 
-  public FieldError(String name, Error error) {
-    this.name = name;
+	private FieldConstraint constraint;
+
+  public FieldError(String fieldName, Error error, FieldConstraint constraint) {
+    this.fieldName = fieldName;
     this.error = error;
+		this.constraint = constraint;
   }
 
-  public String getName() {
-    return name;
+	public FieldError(String fieldName, Error error) {
+		this.fieldName = fieldName;
+		this.error = error;
+	}
+
+	public String getFieldName() {
+    return fieldName;
   }
 
   public Error getError() {
     return error;
   }
 
+	public FieldConstraint getConstraint() {
+		return constraint;
+	}
+
 	@Override
 	public String toString() {
 		return "FieldError{" +
-				"name='" + name + '\'' +
+				"fieldName='" + fieldName + '\'' +
 				", error=" + error +
+				", constraint=" + constraint +
 				'}';
 	}
 }

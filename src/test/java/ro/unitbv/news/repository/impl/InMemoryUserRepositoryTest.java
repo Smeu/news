@@ -6,6 +6,7 @@ import org.junit.Test;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.exception.InvalidIdException;
+import ro.unitbv.news.util.PasswordHash;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -51,7 +52,7 @@ public class InMemoryUserRepositoryTest {
 	public void testAuthenticateSuccessful() throws Exception {
 		User user = new User();
 		user.setUsername(USERNAME);
-		user.setPassword(PASSWORD);
+		user.setPassword(PasswordHash.createHash(PASSWORD));
 		repository.create(user);
 
 		User authenticatedUser = repository.authenticate(USERNAME, PASSWORD);

@@ -18,11 +18,11 @@ public class UserValidator {
 
 	private StringFieldValidator validator;
 
-	private ValidationConstraint usernameConstraint;
+	private FieldConstraint usernameConstraint;
 
 	public UserValidator(StringFieldValidator validator) {
 		this.validator = validator;
-		usernameConstraint = new ValidationConstraint();
+		usernameConstraint = new FieldConstraint();
 		usernameConstraint.setMinLength(USERNAME_MIN_LENGTH);
 		usernameConstraint.setMaxLength(USERNAME_MAX_LENGTH);
 	}

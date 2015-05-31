@@ -1,11 +1,11 @@
-package ro.unitbv.news.validator;
+package ro.unitbv.news.model;
 
 /**
  * Constraint to use as validation criteria.
  *
  * @author Teodora Tanase
  */
-public class ValidationConstraint {
+public class FieldConstraint {
 
 	private int minLength;
 	private int maxLength;
@@ -24,5 +24,13 @@ public class ValidationConstraint {
 
 	public void setMaxLength(int maxLength) {
 		this.maxLength = maxLength;
+	}
+
+	@Override
+	public String toString() {
+		return "FieldConstraint{" +
+				"minLength=" + minLength +
+				", maxLength=" + maxLength +
+				'}';
 	}
 }

@@ -6,22 +6,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import ro.unitbv.news.factory.ServiceFactory;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.UserService;
-import ro.unitbv.news.util.PasswordHash;
 
 /**
  * Controller for the login page.
  *
  * @author Rares Smeu
  */
-public class LoginPageController {
+public class LoginPageController extends AbstractController {
 
 	private UserService userService = ServiceFactory.getInstance().getUserService();
-
-	private Stage primaryStage;
 
 	@FXML
 	private Button loginButton;
@@ -31,11 +27,8 @@ public class LoginPageController {
 	private TextField usernameInput;
 	@FXML
 	private PasswordField passwordInput;
-
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
+	@FXML
+	private Button createUserButton;
 
 	/**
 	 * Login a user
@@ -43,13 +36,20 @@ public class LoginPageController {
 	 * @param event the button pressed event
 	 */
 	public void loginUser(Event event) throws Exception {
-		User user = userService.authenticate(usernameInput.getText(), PasswordHash.createHash(passwordInput.getText()));
-		if (user == null){
+		User user = userService.authenticate(usernameInput.getText(), passwordInput.getText());
+		if (user == null) {
 			passwordInput.setText("");
 			errorLabel.setText("Invalid Credentials");
 			errorLabel.setVisible(true);
 			return;
 		}
 		//TODO redirect to next page
+	}
+
+	/**
+	 * Redirects to the create user page.
+	 */
+	public void createUser() {
+		redirectTo(Page.CREATE_USER_PAGE);
 	}
 }
