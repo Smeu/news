@@ -4,17 +4,36 @@ package ro.unitbv.news;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import ro.unitbv.news.controller.LoginPageController;
+
 /**
  * @author Rares Smeu
  */
-public class Main {
+public class Main extends Application {
 
 	private final static Logger log = LoggerFactory.getLogger(Main.class);
 
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle("Login");
+
+		FXMLLoader myLoader = new FXMLLoader(Main.class.getClassLoader().getResource("pages/login.fxml"));
+		Pane myPane = myLoader.load();
+		LoginPageController controller = myLoader.getController();
+		controller.setPrimaryStage(primaryStage);
+
+		Scene myScene = new Scene(myPane);
+		primaryStage.setScene(myScene);
+		primaryStage.show();
+	}
+
+
 	public static void main(String[] args) {
-		log.trace("trace");
-		log.debug("debug");
-		log.info("info");
-		log.error("error");
+		launch(args);
 	}
 }

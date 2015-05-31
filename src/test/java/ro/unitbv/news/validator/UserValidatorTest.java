@@ -27,10 +27,12 @@ public class UserValidatorTest {
 	@Mock
 	private StringFieldValidator fieldValidator;
 
-	private UserValidator validator = new UserValidator();
+	private UserValidator validator = new UserValidator(fieldValidator);
 
 	@Test
 	public void testValidateWithErrors() throws Exception {
+		UserValidator validator = new UserValidator(fieldValidator);
+
 		ValidationResult fieldResult = new ValidationResult();
 		fieldResult.addError(new FieldError(FIELD, Error.FIELD_IS_MANDATORY));
 		when(fieldValidator.validateMandatory(anyString(), anyString(), any())).thenReturn(fieldResult);
@@ -46,6 +48,7 @@ public class UserValidatorTest {
 
 	@Test
 	public void testValidateWithoutErrors() throws Exception {
+		UserValidator validator = new UserValidator(fieldValidator);
 		when(fieldValidator.validateMandatory(anyString(), anyString(), any())).thenReturn(new ValidationResult());
 		User user = new User();
 		user.setUsername(USERNAME);
