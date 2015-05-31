@@ -27,8 +27,6 @@ public class UserValidatorTest {
 	@Mock
 	private StringFieldValidator fieldValidator;
 
-	private UserValidator validator = new UserValidator(fieldValidator);
-
 	@Test
 	public void testValidateWithErrors() throws Exception {
 		UserValidator validator = new UserValidator(fieldValidator);

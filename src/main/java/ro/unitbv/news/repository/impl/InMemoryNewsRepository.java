@@ -25,7 +25,7 @@ public class InMemoryNewsRepository implements NewsRepository {
 
 	@Override
 	public News get(long id) {
-		if (id < 0 || id > newsList.size()) {
+		if (id < 0 || id >= newsList.size()) {
 			throw new InvalidIdException();
 		}
 		return newsList.get((int) id);

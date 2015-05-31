@@ -1,5 +1,7 @@
 package ro.unitbv.news.parser;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Before;
@@ -14,7 +16,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class RssFeedParserTest {
 
-	private static final String INVALID_PATH = "";
+	private static final String INVALID_PATH = "src/test/resources/file.txt";
 	private static final String VALID_PATH = "src/test/resources/rss.xml";
 
 	private static final String TITLE = "mSpy admits hacking and data theft";
@@ -30,12 +32,17 @@ public class RssFeedParserTest {
 
 	@Test(expected = RssParsingException.class)
 	public void testRetrieveNewsUnsuccessful() throws Exception {
-		parser.retrieveNews(INVALID_PATH);
+		try (InputStream inputStream = new FileInputStream(INVALID_PATH)) {
+			parser.retrieveNews(inputStream);
+		}
 	}
 
 	@Test
 	public void testRetrieveNewsSuccessful() throws Exception {
-		List<News> newsList = parser.retrieveNews(VALID_PATH);
+		List<News> newsList;
+		try (InputStream inputStream = new FileInputStream(VALID_PATH)) {
+			newsList = parser.retrieveNews(inputStream);
+		}
 
 		assertEquals(TITLE, newsList.get(0).getTitle());
 		assertEquals(CONTENT, newsList.get(0).getContent());

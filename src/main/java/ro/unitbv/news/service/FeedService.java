@@ -11,6 +11,7 @@ import ro.unitbv.news.model.User;
  * Service for operations that use feeds.
  *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public interface FeedService {
 
@@ -26,18 +27,18 @@ public interface FeedService {
 	 * Gets all the feeds from a user.
 	 *
 	 * @param user user from which to bring the feeds.
-	 * @return the list of feeds.
+	 * @return response holding the list of feeds or the errors.
 	 */
-	List<Feed> getAll(User user);
+	Response<List<Feed>> getAll(User user);
 
 
 	/**
 	 * Gets a feed after its id.
 	 *
 	 * @param id the id of the feed.
-	 * @return the feed.
+	 * @return response holding the feed or the errors.
 	 */
-	Feed get(long id);
+	Response<Feed> get(long id);
 
 
 	/**
@@ -45,8 +46,7 @@ public interface FeedService {
 	 * Requires an internet connection;
 	 *
 	 * @param feed the source of the news.
-	 * @return latest news.
+	 * @return response holding latest news or the errors.
 	 */
-	List<News> getNews(Feed feed);
-
+	Response<List<News>> getNews(Feed feed);
 }

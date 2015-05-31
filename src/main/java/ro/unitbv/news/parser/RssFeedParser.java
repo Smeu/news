@@ -1,7 +1,7 @@
 package ro.unitbv.news.parser;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,17 +35,17 @@ public class RssFeedParser {
 	private static final String LINK = "link";
 
 	/**
-	 * Retrieves news elements from a xml file.
+	 * Retrieves news elements from a stream.
 	 *
-	 * @param fileName file to retrieve news from.
+	 * @param inputStream stream to retrieve news from.
 	 * @return a list of {@link ro.unitbv.news.model.News}.
 	 */
-	public List<News> retrieveNews(String fileName) {
+	public List<News> retrieveNews(InputStream inputStream) {
 		List<News> newsList = new ArrayList<>();
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.parse(new File(fileName));
+			Document document = documentBuilder.parse(inputStream);
 			document.getDocumentElement().normalize();
 			NodeList nodeList = document.getElementsByTagName(ITEM);
 			for (int index = 0; index < nodeList.getLength(); index++) {
@@ -54,7 +54,7 @@ public class RssFeedParser {
 			}
 		}
 		catch (ParserConfigurationException | SAXException | IOException e) {
-			log.error("File inaccessible or badly formatted {}", fileName, e);
+			log.error("Inaccessible or badly formatted {}", e);
 			throw new RssParsingException();
 		}
 		return newsList;
