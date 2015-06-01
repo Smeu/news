@@ -53,4 +53,25 @@ public class InMemoryUserRepository implements UserRepository {
 		}
 		return null;
 	}
+
+	@Override
+	public boolean addFollowedUser(long id, User followedUser) {
+		if (id < 0 || id >= users.size()) {
+			throw new InvalidIdException();
+		}
+		User user = users.get((int) id);
+		if (user.getFollowedUsers().contains(followedUser)) {
+			return false;
+		}
+		user.addFollowedUser(followedUser);
+		return true;
+	}
+
+	@Override
+	public List<User> getFollowedUsers(long id) {
+		if (id < 0 || id >= users.size()) {
+			throw new InvalidIdException();
+		}
+		return users.get((int) id).getFollowedUsers();
+	}
 }

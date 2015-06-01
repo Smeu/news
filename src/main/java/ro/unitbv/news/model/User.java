@@ -1,62 +1,74 @@
 package ro.unitbv.news.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Model for a user
+ * Model for a user.
  *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public class User {
 
-  private long id;
+	private long id;
 
-  private String username;
+	private String username;
 
-  private String password;
+	private String password;
 
-  public long getId() {
-    return id;
-  }
+	private List<User> followedUsers = new ArrayList<>();
 
-  public void setId(long id) {
-    this.id = id;
-  }
+	public long getId() {
+		return id;
+	}
 
-  public String getUsername() {
-    return username;
-  }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+	public String getUsername() {
+		return username;
+	}
 
-  public String getPassword() {
-    return password;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    User user = (User) o;
-    return Objects.equals(id, user.id) &&
-        Objects.equals(username, user.username) &&
-        Objects.equals(password, user.password);
-  }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, username, password);
-  }
+	public List<User> getFollowedUsers() {
+		return followedUsers;
+	}
 
+	public void addFollowedUser(User user) {
+		followedUsers.add(user);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		User user = (User) o;
+		return Objects.equals(id, user.id) &&
+				Objects.equals(username, user.username) &&
+				Objects.equals(password, user.password);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, username, password);
+	}
 }
 

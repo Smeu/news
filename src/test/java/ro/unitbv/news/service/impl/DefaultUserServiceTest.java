@@ -1,5 +1,8 @@
 package ro.unitbv.news.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,6 +81,7 @@ public class DefaultUserServiceTest {
 		Response<User> response = service.get(INVALID_ID);
 
 		assertThat(response.hasErrors(), is(true));
+		assertThat(response.getErrors().size(), is(1));
 	}
 
 	@Test
@@ -106,5 +110,49 @@ public class DefaultUserServiceTest {
 
 		User authenticatedUser = service.authenticate(USERNAME, PASSWORD);
 		assertThat(authenticatedUser, is(user));
+	}
+
+	@Test
+	public void testAddFollowedUserWithErrors() throws Exception {
+		User followedUser = new User();
+		when(repository.addFollowedUser(INVALID_ID, followedUser)).thenThrow(new InvalidIdException());
+
+		Response<Boolean> response = service.addFollowedUser(INVALID_ID, followedUser);
+
+		assertThat(response.hasErrors(), is(true));
+		assertThat(response.getErrors().size(), is(1));
+	}
+
+	@Test
+	public void testAddFollowedUserWithoutErrors() throws Exception {
+		User followedUser = new User();
+		boolean result = true;
+		when(repository.addFollowedUser(VALID_ID, followedUser)).thenReturn(result);
+
+		Response<Boolean> response = service.addFollowedUser(VALID_ID, followedUser);
+
+		assertThat(response.hasErrors(), is(false));
+		assertThat(response.getResponse(), is(result));
+	}
+
+	@Test
+	public void testGetFollowedUsersWithErrors() throws Exception {
+		when(repository.getFollowedUsers(INVALID_ID)).thenThrow(new InvalidIdException());
+
+		Response<List<User>> response = service.getFollowedUsers(INVALID_ID);
+
+		assertThat(response.hasErrors(), is(true));
+		assertThat(response.getErrors().size(), is(1));
+	}
+
+	@Test
+	public void testGetFollowedUsersWithoutErrors() throws Exception {
+		List<User> followedUsers = new ArrayList<>();
+		when(repository.getFollowedUsers(VALID_ID)).thenReturn(followedUsers);
+
+		Response<List<User>> response = service.getFollowedUsers(VALID_ID);
+
+		assertThat(response.hasErrors(), is(false));
+		assertThat(response.getResponse(), is(followedUsers));
 	}
 }

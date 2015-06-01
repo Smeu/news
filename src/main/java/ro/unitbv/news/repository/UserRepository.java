@@ -1,5 +1,7 @@
 package ro.unitbv.news.repository;
 
+import java.util.List;
+
 import ro.unitbv.news.model.User;
 
 /**
@@ -34,4 +36,22 @@ public interface UserRepository {
 	 * @return the corresponding user if authentication was successful or <code>null</code> otherwise.
 	 */
 	User authenticate(String username, String password);
+
+	/**
+	 * Adds a new followed user for the one with the specified id.
+	 *
+	 * @param id           of the user that follows.
+	 * @param followedUser user that is followed.
+	 * @return <code>true</code> if the followed user was successfully added, or <code>false</code> if that user was
+	 * already being followed.
+	 */
+	boolean addFollowedUser(long id, User followedUser);
+
+	/**
+	 * Retrieves all users that the given one is following.
+	 *
+	 * @param id id of the given user.
+	 * @return all users that the given one is following.
+	 */
+	List<User> getFollowedUsers(long id);
 }

@@ -56,4 +56,30 @@ public class DefaultUserService implements UserService {
 	public User authenticate(String username, String password) {
 		return repository.authenticate(username, password);
 	}
+
+	@Override
+	public Response<Boolean> addFollowedUser(long id, User followedUser) {
+		try {
+			boolean result = repository.addFollowedUser(id, followedUser);
+			return new Response<>(result);
+		}
+		catch (InvalidIdException e) {
+			List<FieldError> errors = new ArrayList<>();
+			errors.add(new FieldError(ID, Error.INVALID_ID));
+			return new Response<>(errors);
+		}
+	}
+
+	@Override
+	public Response<List<User>> getFollowedUsers(long id) {
+		try {
+			List<User> followedUsers = repository.getFollowedUsers(id);
+			return new Response<>(followedUsers);
+		}
+		catch (InvalidIdException e) {
+			List<FieldError> errors = new ArrayList<>();
+			errors.add(new FieldError(ID, Error.INVALID_ID));
+			return new Response<>(errors);
+		}
+	}
 }
