@@ -33,6 +33,8 @@ public class DefaultFeedServiceTest {
 	private static final Long ID = 1L;
 	private static final long INVALID_ID = -1;
 
+	private static final String NAME = "name";
+
 	@Mock
 	private FeedRepository repository;
 
@@ -43,7 +45,7 @@ public class DefaultFeedServiceTest {
 	public void testCreateWithErrors() throws Exception {
 		FeedService service = new DefaultFeedService(repository, feedValidator);
 		ValidationResult result = new ValidationResult();
-		result.addError(new FieldError("name", Error.MIN_LENGTH_NOT_REACHED));
+		result.addError(new FieldError(NAME, Error.MIN_LENGTH_NOT_REACHED));
 		when(feedValidator.validate(any())).thenReturn(result);
 
 		Response<Long> response = service.create(new Feed());
@@ -61,7 +63,7 @@ public class DefaultFeedServiceTest {
 		Response<Long> response = service.create(new Feed());
 
 		assertThat(response.hasErrors(), is(false));
-		assertThat(response.getResponse(), is(1L));
+		assertThat(response.getResponse(), is(ID));
 	}
 
 	@Test
