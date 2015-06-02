@@ -25,7 +25,8 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="211.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <VBox fx:id="test" alignment="CENTER" prefHeight="200.0" prefWidth="211.0" GridPane.halignment="CENTER"
+               GridPane.valignment="CENTER">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" text="Enter your credentials">
                     <font>

@@ -33,7 +33,7 @@ public abstract class AbstractController {
 		this.primaryStage = primaryStage;
 	}
 
-	protected void redirectTo(Page page) {
+	protected <T extends AbstractController> T redirectTo(Page page) {
 		FXMLLoader loader = new FXMLLoader(AbstractController.class.getClassLoader().getResource(page.getPagePath()));
 		Pane myPane;
 		try {
@@ -41,15 +41,17 @@ public abstract class AbstractController {
 		}
 		catch (IOException e) {
 			log.error("Couldn't process the file: {} ", page.getPagePath(), e);
-			return;
+			return null;
 		}
 
-		AbstractController controller = loader.getController();
+		T controller = loader.getController();
 		controller.setPrimaryStage(primaryStage);
 
 		Scene scene = new Scene(myPane);
 		primaryStage.setTitle(page.getTitle());
 		primaryStage.setScene(scene);
+
+		return controller;
 	}
 
 	protected void showErrorForField(TextField input, Text errorArea, FieldError error) {

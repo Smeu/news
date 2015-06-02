@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import ro.unitbv.news.factory.ServiceFactory;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.UserService;
@@ -29,6 +30,8 @@ public class LoginPageController extends AbstractController {
 	private PasswordField passwordInput;
 	@FXML
 	private Button createUserButton;
+	@FXML
+	private VBox test;
 
 	/**
 	 * Login a user
@@ -43,7 +46,8 @@ public class LoginPageController extends AbstractController {
 			errorLabel.setVisible(true);
 			return;
 		}
-		//TODO redirect to next page
+		HomePageController controller = redirectTo(Page.HOME_PAGE);
+		controller.init();
 	}
 
 	/**

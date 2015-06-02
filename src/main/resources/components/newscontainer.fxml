@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" stylesheets="@../pages/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.NewsContainerController">
+    <children>
+        <VBox fx:id="newsContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0">
+
+        </VBox>
+      <HBox prefHeight="31.0" prefWidth="300.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="previousButton" mnemonicParsing="false" onMouseClicked="#previousPage" text="Previous" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#nextPage" text="Next" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+    </children>
+</VBox>

@@ -12,7 +12,9 @@ public enum Page {
 
 	CREATE_USER_PAGE("Create User", "pages/createUser.fxml"),
 
-	ADD_FEED_PAGE("Add Feed", "pages/addFeed.fxml");
+	ADD_FEED_PAGE("Add Feed", "pages/addFeed.fxml"),
+
+	HOME_PAGE("Home Page", "pages/homepage.fxml");
 
 	private String pagePath;
 

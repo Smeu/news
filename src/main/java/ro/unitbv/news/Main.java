@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import ro.unitbv.news.controller.LoginPageController;
 import static ro.unitbv.news.controller.Page.LOGIN_PAGE;
@@ -22,8 +24,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Login");
-		primaryStage.setWidth(500);
-		primaryStage.setHeight(500);
+		Rectangle2D bounds = Screen.getPrimary().getBounds();
+		primaryStage.setWidth(bounds.getWidth());
+		primaryStage.setHeight(bounds.getHeight());
 
 		FXMLLoader myLoader = new FXMLLoader(Main.class.getClassLoader().getResource(LOGIN_PAGE.getPagePath()));
 		Pane myPane = myLoader.load();
