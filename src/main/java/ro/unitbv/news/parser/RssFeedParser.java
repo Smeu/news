@@ -2,7 +2,11 @@ package ro.unitbv.news.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -29,10 +33,13 @@ public class RssFeedParser {
 
 	private final static Logger log = LoggerFactory.getLogger(RssFeedParser.class);
 
+	private static final String DATE_FORMAT = "EEE, dd MMM yyyy hh:mm:ss Z";
+
 	private static final String ITEM = "item";
 	private static final String TITLE = "title";
 	private static final String DESCRIPTION = "description";
 	private static final String LINK = "link";
+	private static final String PUB_DATE = "pubDate";
 
 	/**
 	 * Retrieves news elements from a stream.
@@ -69,6 +76,7 @@ public class RssFeedParser {
 		NodeList titles = element.getElementsByTagName(TITLE);
 		NodeList descriptions = element.getElementsByTagName(DESCRIPTION);
 		NodeList links = element.getElementsByTagName(LINK);
+		NodeList dates = element.getElementsByTagName(PUB_DATE);
 		if (titles.getLength() > 0) {
 			news.setTitle(titles.item(0).getTextContent());
 		}
@@ -77,6 +85,16 @@ public class RssFeedParser {
 		}
 		if (links.getLength() > 0) {
 			news.setUrl(links.item(0).getTextContent());
+		}
+		if (dates.getLength() > 0) {
+			DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+			try {
+				Date date = dateFormat.parse(dates.item(0).getTextContent());
+				news.setDate(date);
+			}
+			catch (ParseException e) {
+				throw new RssParsingException();
+			}
 		}
 		return news;
 	}
