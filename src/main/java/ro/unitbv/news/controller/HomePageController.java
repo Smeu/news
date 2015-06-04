@@ -1,12 +1,21 @@
 package ro.unitbv.news.controller;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
+import ro.unitbv.news.factory.ServiceFactory;
+import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
+import ro.unitbv.news.model.Response;
+import ro.unitbv.news.model.User;
+import ro.unitbv.news.service.FeedService;
+import ro.unitbv.news.service.NewsService;
+import ro.unitbv.news.service.UserService;
 
 /**
  * Controller for the home page.
@@ -18,12 +27,55 @@ public class HomePageController extends AbstractController {
 	@FXML
 	private VBox homePageContainer;
 
+	private User user;
 
-	public void init() {
+	private FeedService feedService;
+
+	private UserService userService;
+
+	private NewsService newsService;
+
+	public HomePageController() {
+		feedService = ServiceFactory.getInstance().getFeedService();
+		userService = ServiceFactory.getInstance().getUserService();
+		newsService = ServiceFactory.getInstance().getNewsService();
+	}
+
+	public void init(User user) {
+		this.user = user;
 		homePageContainer.setAlignment(Pos.TOP_CENTER);
-		NewsContainer container = new NewsContainer();
-		container.setNews(Arrays.asList(new News(), new News(), new News(), new News(), new News(), new News(), new News()));
+		List<News> news = getAllNews(user);
+		NewsContainer container = new NewsContainer(user);
+		container.setNews(news);
 		homePageContainer.getChildren().add(container.getComponent());
 	}
 
+	private List<News> getAllNews(User user) {
+		List<News> news = new ArrayList<>();
+		news.addAll(newsService.getAll(user).getResponse());
+		for (Feed feed : feedService.getAll(user).getResponse()) {
+			Response<List<News>> response = feedService.getNews(feed);
+			if (!response.hasErrors()) {
+				news.addAll(response.getResponse());
+			}
+		}
+		for (User followedUser : userService.getFollowedUsers(user.getId()).getResponse()) {
+			Response<List<News>> response = newsService.getAll(followedUser);
+			if (!response.hasErrors()) {
+				news.addAll(response.getResponse());
+			}
+		}
+		Collections.sort(news, (first, second) -> second.getDate().compareTo(first.getDate()));
+		return news;
+	}
+
+	public void addFeed() {
+		AddFeedPageController controller = redirectTo(Page.ADD_FEED_PAGE);
+		controller.setUser(user);
+	}
+
+	public void users() {
+		UsersController controller = redirectTo(Page.USERS_PAGE);
+		controller.init(user, userService.getAll().getResponse());
+	}
 }

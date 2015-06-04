@@ -54,4 +54,11 @@ public interface UserRepository {
 	 * @return all users that the given one is following.
 	 */
 	List<User> getFollowedUsers(long id);
+
+	/**
+	 * Retrieves all users.
+	 *
+	 * @return users.
+	 */
+	List<User> getAll();
 }

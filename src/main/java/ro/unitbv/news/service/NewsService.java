@@ -19,5 +19,13 @@ public interface NewsService {
 	 * @param user the user from which to get the news.
 	 * @return response holding the saved news or the errors, in case there are any.
 	 */
-	Response<List<News>> getNews(User user);
+	Response<List<News>> getAll(User user);
+
+	/**
+	 * Saves a news for a user.
+	 *
+	 * @param news news to be saved.
+	 * @param user owner of the news.
+	 */
+	void add(News news, User user);
 }

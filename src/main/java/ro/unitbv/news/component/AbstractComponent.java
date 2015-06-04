@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import ro.unitbv.news.controller.AbstractController;
 
 /**
  * @author Rares Smeu
@@ -18,7 +19,7 @@ public abstract class AbstractComponent {
 
 	protected Pane component;
 
-	protected Pane loadComponent(Component component){
+	protected <T extends AbstractController> T loadComponent(Component component){
 		loader = new FXMLLoader(this.getClass().getClassLoader().getResource(component.getPath()));
 		try {
 			this.component = loader.load();
@@ -26,7 +27,7 @@ public abstract class AbstractComponent {
 		catch (IOException e) {
 			log.error("Couldn't process the {} file",component.getPath(), e);
 		}
-		return null;
+		return loader.getController();
 	}
 
 	public Pane getComponent() {

@@ -74,4 +74,9 @@ public class InMemoryUserRepository implements UserRepository {
 		}
 		return users.get((int) id).getFollowedUsers();
 	}
+
+	@Override
+	public List<User> getAll() {
+		return new ArrayList<>(users);
+	}
 }

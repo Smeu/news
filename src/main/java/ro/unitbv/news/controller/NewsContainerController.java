@@ -56,7 +56,7 @@ public class NewsContainerController extends AbstractController {
 		if (currentPage == 0) {
 			previousButton.setVisible(false);
 		}
-		if (currentPage == numberOfPages - 1) {
+		if (currentPage >= numberOfPages - 1) {
 			nextButton.setVisible(false);
 		}
 	}

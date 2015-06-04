@@ -39,7 +39,7 @@ public class DefaultNewsServiceTest {
 
 	@Test
 	public void testGetNewsNullUser() throws Exception {
-		Response<List<News>> response = service.getNews(null);
+		Response<List<News>> response = service.getAll(null);
 
 		assertThat(response.hasErrors(), is(true));
 		assertThat(response.getErrors().size(), is(1));
@@ -52,7 +52,7 @@ public class DefaultNewsServiceTest {
 
 		User user = new User();
 		user.setId(OWNER_ID);
-		Response<List<News>> response = service.getNews(user);
+		Response<List<News>> response = service.getAll(user);
 
 		assertThat(response.hasErrors(), is(false));
 		assertThat(response.getResponse(), is(newsList));

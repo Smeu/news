@@ -14,7 +14,9 @@ public enum Page {
 
 	ADD_FEED_PAGE("Add Feed", "pages/addFeed.fxml"),
 
-	HOME_PAGE("Home Page", "pages/homepage.fxml");
+	HOME_PAGE("Home Page", "pages/homepage.fxml"),
+
+	USERS_PAGE("Users", "pages/users.fxml");
 
 	private String pagePath;
 

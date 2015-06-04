@@ -14,6 +14,7 @@ import ro.unitbv.news.factory.ServiceFactory;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.FieldError;
 import ro.unitbv.news.model.Response;
+import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.FeedService;
 
 /**
@@ -48,6 +49,11 @@ public class AddFeedPageController extends AbstractController {
 	@FXML
 	private Button addFeed;
 
+	private User user;
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public void addFeed() {
 		resetErrors();
@@ -55,6 +61,7 @@ public class AddFeedPageController extends AbstractController {
 		feed.setUrl(urlInput.getText());
 		feed.setName(nameInput.getText());
 		feed.setDescription(descriptionInput.getText());
+		feed.setOwnerId(user.getId());
 		Response<Long> response = feedService.create(feed);
 		if (response.hasErrors()) {
 			showErrors(response.getErrors());
@@ -64,6 +71,8 @@ public class AddFeedPageController extends AbstractController {
 		alert.setTitle("Feed addition");
 		alert.setHeaderText("Feed added successfully");
 		alert.showAndWait();
+		HomePageController controller = redirectTo(Page.HOME_PAGE);
+		controller.init(user);
 	}
 
 	private void resetErrors() {

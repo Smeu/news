@@ -3,8 +3,10 @@ package ro.unitbv.news.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.unitbv.news.model.*;
 import ro.unitbv.news.model.Error;
+import ro.unitbv.news.model.FieldError;
+import ro.unitbv.news.model.Response;
+import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.service.UserService;
@@ -81,5 +83,12 @@ public class DefaultUserService implements UserService {
 			errors.add(new FieldError(ID, Error.INVALID_ID));
 			return new Response<>(errors);
 		}
+	}
+
+	@Override
+	public Response<List<User>> getAll() {
+		Response<List<User>> response = new Response<>();
+		response.setResponse(repository.getAll());
+		return response;
 	}
 }

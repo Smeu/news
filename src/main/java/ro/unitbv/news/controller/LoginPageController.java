@@ -47,7 +47,7 @@ public class LoginPageController extends AbstractController {
 			return;
 		}
 		HomePageController controller = redirectTo(Page.HOME_PAGE);
-		controller.init();
+		controller.init(user);
 	}
 
 	/**

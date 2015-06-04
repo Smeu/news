@@ -27,12 +27,18 @@ public class DefaultNewsService implements NewsService {
 	}
 
 	@Override
-	public Response<List<News>> getNews(User user) {
+	public Response<List<News>> getAll(User user) {
 		if (user == null) {
 			List<FieldError> errors = new ArrayList<>();
 			errors.add(new FieldError(USER, Error.FIELD_IS_MANDATORY));
 			return new Response<>(errors);
 		}
 		return new Response<>(repository.getAllForOwner(user.getId()));
+	}
+
+	@Override
+	public void add(News news, User user) {
+		news.setOwnerId(user.getId());
+		repository.create(news);
 	}
 }

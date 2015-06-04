@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-<HBox alignment="TOP_CENTER" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" prefWidth="300.0"
-            stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ro.unitbv.news.controller.HomePageController">
+
+<HBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="600.0" stylesheets="@main.css" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.HomePageController">
     <children>
-        <VBox fx:id="homePageContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0"
-              style="vertical-align: text-top;" GridPane.halignment="CENTER"/>
+      <HBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="608.0">
+         <children>
+            <VBox minHeight="200.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#addFeed" prefHeight="25.0" prefWidth="98.0" text="Add Feed" VBox.vgrow="SOMETIMES" />
+                  <Button mnemonicParsing="false" onMouseClicked="#users" prefHeight="25.0" prefWidth="98.0" text="Users" VBox.vgrow="SOMETIMES" />
+               </children>
+               <padding>
+                  <Insets top="150.0" />
+               </padding>
+            </VBox>
+              <VBox fx:id="homePageContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" style="vertical-align: text-top;" />
+         </children>
+      </HBox>
     </children>
 </HBox>

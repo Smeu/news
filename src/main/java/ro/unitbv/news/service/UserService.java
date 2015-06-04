@@ -30,6 +30,13 @@ public interface UserService {
 	Response<User> get(long id);
 
 	/**
+	 * Gets all the users.
+	 *
+	 * @return response holding the users or the errors.
+	 */
+	Response<List<User>> getAll();
+
+	/**
 	 * Authenticates a user after its username and password.
 	 *
 	 * @param username the user's username.
