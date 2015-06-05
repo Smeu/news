@@ -3,6 +3,8 @@ package ro.unitbv.news.factory;
 import ro.unitbv.news.repository.FeedRepository;
 import ro.unitbv.news.repository.NewsRepository;
 import ro.unitbv.news.repository.UserRepository;
+import ro.unitbv.news.repository.impl.DatabaseFeedRepository;
+import ro.unitbv.news.repository.impl.DatabaseUserRepository;
 import ro.unitbv.news.repository.impl.InMemoryFeedRepository;
 import ro.unitbv.news.repository.impl.InMemoryNewsRepository;
 import ro.unitbv.news.repository.impl.InMemoryUserRepository;
@@ -19,9 +21,9 @@ public class RepositoryFactory {
 	private UserRepository userRepository;
 
 	public RepositoryFactory() {
-		feedRepository = new InMemoryFeedRepository();
+		feedRepository = new DatabaseFeedRepository();
 		newsRepository = new InMemoryNewsRepository();
-		userRepository = new InMemoryUserRepository();
+		userRepository = new DatabaseUserRepository();
 	}
 
 	public FeedRepository getFeedRepository() {

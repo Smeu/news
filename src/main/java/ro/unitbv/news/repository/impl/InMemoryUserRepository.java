@@ -60,7 +60,7 @@ public class InMemoryUserRepository implements UserRepository {
 			throw new InvalidIdException();
 		}
 		User user = users.get((int) id);
-		if (user.getFollowedUsers().contains(followedUser)) {
+		if (user.getFollowedUsers().contains(followedUser) || followedUser.getId() == id) {
 			return false;
 		}
 		user.addFollowedUser(followedUser);
