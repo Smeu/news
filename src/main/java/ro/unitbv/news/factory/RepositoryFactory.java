@@ -4,10 +4,8 @@ import ro.unitbv.news.repository.FeedRepository;
 import ro.unitbv.news.repository.NewsRepository;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.impl.DatabaseFeedRepository;
+import ro.unitbv.news.repository.impl.DatabaseNewsRepository;
 import ro.unitbv.news.repository.impl.DatabaseUserRepository;
-import ro.unitbv.news.repository.impl.InMemoryFeedRepository;
-import ro.unitbv.news.repository.impl.InMemoryNewsRepository;
-import ro.unitbv.news.repository.impl.InMemoryUserRepository;
 
 /**
  * Factory for repositories.
@@ -22,7 +20,7 @@ public class RepositoryFactory {
 
 	public RepositoryFactory() {
 		feedRepository = new DatabaseFeedRepository();
-		newsRepository = new InMemoryNewsRepository();
+		newsRepository = new DatabaseNewsRepository();
 		userRepository = new DatabaseUserRepository();
 	}
 

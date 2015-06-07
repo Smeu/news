@@ -83,7 +83,11 @@ public class DefaultFeedService implements FeedService {
 			URLConnection connection = url.openConnection();
 			RssFeedParser parser = new RssFeedParser();
 			try (InputStream inputStream = connection.getInputStream()) {
-				return new Response<>(parser.retrieveNews(inputStream));
+				List<News> newsList = parser.retrieveNews(inputStream);
+				for (News news : newsList) {
+					news.setFeedId(feed.getId());
+				}
+				return new Response<>(newsList);
 			}
 		}
 		catch (IOException e) {

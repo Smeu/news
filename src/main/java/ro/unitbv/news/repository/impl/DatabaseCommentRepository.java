@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.repository.CommentRepository;
+import ro.unitbv.news.repository.converter.ModelEntityConverter;
 
 /**
  * Database implementation for {@link ro.unitbv.news.repository.CommentRepository}.
@@ -16,6 +17,8 @@ import ro.unitbv.news.repository.CommentRepository;
 public class DatabaseCommentRepository implements CommentRepository {
 
 	private final static Logger logger = LoggerFactory.getLogger(DatabaseCommentRepository.class);
+
+	private ModelEntityConverter converter = new ModelEntityConverter();
 
 	@Override
 	public long create(Comment comment) {

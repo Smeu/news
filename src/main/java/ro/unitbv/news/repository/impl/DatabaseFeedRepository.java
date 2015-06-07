@@ -9,11 +9,13 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ro.unitbv.news.entity.FeedEntity;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.FeedRepository;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.converter.ModelEntityConverter;
+import ro.unitbv.news.repository.exception.InternalErrorException;
 import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.util.HibernateUtil;
 
@@ -32,19 +34,19 @@ public class DatabaseFeedRepository implements FeedRepository {
 
 	@Override
 	public long create(Feed feed) {
-		ro.unitbv.news.entity.Feed entityFeed = converter.toEntityFeed(feed);
+		FeedEntity feedEntity = converter.toFeedEntity(feed);
 		User owner = userRepository.get(feed.getOwnerId());
-		entityFeed.setOwner(converter.toEntityUser(owner));
+		feedEntity.setOwner(converter.toUserEntity(owner));
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			session.save(entityFeed);
+			session.save(feedEntity);
 			session.getTransaction().commit();
 			return feed.getId();
 		}
 		catch (HibernateException e) {
-			logger.error("Create error", e);
-			throw new InvalidIdException();
+			logger.error("Error creating feed", e);
+			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -56,20 +58,20 @@ public class DatabaseFeedRepository implements FeedRepository {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			Query query = session.createQuery("from Feed feed where feed.owner.id = :owner_id");
+			Query query = session.createQuery("from FeedEntity feed where feed.owner.id = :owner_id");
 			query.setParameter("owner_id", ownerId);
-			List<ro.unitbv.news.entity.Feed> entityFeeds = query.list();
+			List<FeedEntity> feedEntities = query.list();
 			session.getTransaction().commit();
 			List<Feed> feeds = new ArrayList<>();
-			for (ro.unitbv.news.entity.Feed entityFeed : entityFeeds) {
-				Feed feed = converter.toModelFeed(entityFeed);
+			for (FeedEntity feedEntity : feedEntities) {
+				Feed feed = converter.toFeedModel(feedEntity);
 				feeds.add(feed);
 			}
 			return feeds;
 		}
 		catch (HibernateException e) {
-			logger.error("Get All error", e);
-			throw new InvalidIdException();
+			logger.error("Error getting all feeds", e);
+			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -81,14 +83,16 @@ public class DatabaseFeedRepository implements FeedRepository {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			ro.unitbv.news.entity.Feed entityFeed = (ro.unitbv.news.entity.Feed) session.get(ro.unitbv.news.entity.Feed
-					.class, id);
+			FeedEntity feedEntity = (FeedEntity) session.get(FeedEntity.class, id);
+			if (feedEntity == null) {
+				throw new InvalidIdException();
+			}
 			session.getTransaction().commit();
-			return converter.toModelFeed(entityFeed);
+			return converter.toFeedModel(feedEntity);
 		}
 		catch (HibernateException e) {
-			logger.error("Get error", e);
-			throw new InvalidIdException();
+			logger.error("Error getting feed", e);
+			throw new InternalErrorException();
 		}
 		finally {
 			session.close();

@@ -1,5 +1,7 @@
 package ro.unitbv.news.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-public class News {
+@Table(name = "news")
+public class NewsEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,17 +21,19 @@ public class News {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ownerId")
-	private User owner;
+	private UserEntity owner;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "feedId")
-	private Feed feed;
+	private FeedEntity feed;
 
 	private String title;
 
 	private String content;
 
 	private String url;
+
+	private Date date;
 
 	public long getId() {
 		return id;
@@ -37,19 +43,19 @@ public class News {
 		this.id = id;
 	}
 
-	public User getOwner() {
+	public UserEntity getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(UserEntity owner) {
 		this.owner = owner;
 	}
 
-	public Feed getFeed() {
+	public FeedEntity getFeed() {
 		return feed;
 	}
 
-	public void setFeed(Feed feed) {
+	public void setFeed(FeedEntity feed) {
 		this.feed = feed;
 	}
 
@@ -75,5 +81,13 @@ public class News {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

@@ -6,11 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Feed {
+@Table(name = "feed")
+public class FeedEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +19,7 @@ public class Feed {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ownerId")
-	private User owner;
+	private UserEntity owner;
 
 	private String url;
 
@@ -34,11 +35,11 @@ public class Feed {
 		this.id = id;
 	}
 
-	public User getOwner() {
+	public UserEntity getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(UserEntity owner) {
 		this.owner = owner;
 	}
 

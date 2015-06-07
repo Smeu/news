@@ -2,6 +2,8 @@ package ro.unitbv.news.entity;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -9,12 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import ro.unitbv.news.validator.StringFieldValidator;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "user")
 @Embeddable
-public class User {
+public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +28,8 @@ public class User {
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<User> followedUsers;
+	@CollectionTable(name = "user_followedUser", joinColumns = @JoinColumn(name = "followedUser_id"))
+	private List<UserEntity> followedUsers;
 
 	public long getId() {
 		return id;
@@ -51,15 +55,15 @@ public class User {
 		this.password = password;
 	}
 
-	public List<User> getFollowedUsers() {
+	public List<UserEntity> getFollowedUsers() {
 		return followedUsers;
 	}
 
-	public void setFollowedUsers(List<User> followedUsers) {
+	public void setFollowedUsers(List<UserEntity> followedUsers) {
 		this.followedUsers = followedUsers;
 	}
 
-	public void addFollowedUser(User followedUser) {
+	public void addFollowedUser(UserEntity followedUser) {
 		followedUsers.add(followedUser);
 	}
 }

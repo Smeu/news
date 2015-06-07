@@ -10,9 +10,11 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ro.unitbv.news.entity.UserEntity;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.converter.ModelEntityConverter;
+import ro.unitbv.news.repository.exception.InternalErrorException;
 import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.util.HibernateUtil;
 import ro.unitbv.news.util.PasswordHash;
@@ -30,17 +32,17 @@ public class DatabaseUserRepository implements UserRepository {
 
 	@Override
 	public long create(User user) {
-		ro.unitbv.news.entity.User entityUser = converter.toEntityUser(user);
+		UserEntity userEntity = converter.toUserEntity(user);
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			session.save(entityUser);
+			session.save(userEntity);
 			session.getTransaction().commit();
 			return user.getId();
 		}
 		catch (HibernateException e) {
-			logger.error("Create error", e);
-			throw new InvalidIdException();
+			logger.error("Error creating user", e);
+			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -52,18 +54,20 @@ public class DatabaseUserRepository implements UserRepository {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			ro.unitbv.news.entity.User entityUser = (ro.unitbv.news.entity.User) session.get(ro.unitbv.news.entity.User
-					.class, id);
+			UserEntity userEntity = (UserEntity) session.get(UserEntity.class, id);
+			if (userEntity == null) {
+				throw new InvalidIdException();
+			}
 			session.getTransaction().commit();
-			User user = converter.toModelUser(entityUser);
-			for (ro.unitbv.news.entity.User followedUser : entityUser.getFollowedUsers()) {
-				user.addFollowedUser(converter.toModelUser(followedUser));
+			User user = converter.toUserModel(userEntity);
+			for (UserEntity followedUser : userEntity.getFollowedUsers()) {
+				user.addFollowedUser(converter.toUserModel(followedUser));
 			}
 			return user;
 		}
 		catch (HibernateException e) {
-			logger.error("Get error", e);
-			throw new InvalidIdException();
+			logger.error("Error getting user", e);
+			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -79,33 +83,38 @@ public class DatabaseUserRepository implements UserRepository {
 					return user;
 				}
 			}
+			return null;
 		}
 		catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			logger.error("Authenticate error", e);
-			throw new InvalidIdException();
+			logger.error("Authentication error", e);
+			throw new InternalErrorException();
 		}
-		return null;
 	}
 
 	@Override
 	public boolean addFollowedUser(long id, User followedUser) {
+		if (followedUser.getId() == id) {
+			throw new InvalidIdException();
+		}
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			ro.unitbv.news.entity.User existingUser = (ro.unitbv.news.entity.User) session.get(ro.unitbv.news.entity.User
-					.class, id);
-			existingUser.addFollowedUser(converter.toEntityUser(followedUser));
-			session.update(existingUser);
+			UserEntity existingUserEntity = (UserEntity) session.get(UserEntity.class, id);
+			if (existingUserEntity == null) {
+				throw new InvalidIdException();
+			}
+			existingUserEntity.addFollowedUser(converter.toUserEntity(followedUser));
+			session.update(existingUserEntity);
 			session.getTransaction().commit();
+			return true;
 		}
 		catch (HibernateException e) {
-			logger.error("Add Follower error", e);
-			throw new InvalidIdException();
+			logger.error("Error adding follower", e);
+			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
 		}
-		return true;
 	}
 
 	@Override
@@ -119,21 +128,21 @@ public class DatabaseUserRepository implements UserRepository {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			List<ro.unitbv.news.entity.User> entityUsers = session.createQuery("from User").list();
+			List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
 			session.getTransaction().commit();
 			List<User> users = new ArrayList<>();
-			for (ro.unitbv.news.entity.User entityUser : entityUsers) {
-				User user = converter.toModelUser(entityUser);
-				for (ro.unitbv.news.entity.User followedUser : entityUser.getFollowedUsers()) {
-					user.addFollowedUser(converter.toModelUser(followedUser));
+			for (UserEntity userEntity : userEntities) {
+				User user = converter.toUserModel(userEntity);
+				for (UserEntity followedUser : userEntity.getFollowedUsers()) {
+					user.addFollowedUser(converter.toUserModel(followedUser));
 				}
 				users.add(user);
 			}
 			return users;
 		}
 		catch (HibernateException e) {
-			logger.error("Get All error", e);
-			throw new InvalidIdException();
+			logger.error("Error getting all users", e);
+			throw new InternalErrorException();
 		}
 		finally {
 			session.close();

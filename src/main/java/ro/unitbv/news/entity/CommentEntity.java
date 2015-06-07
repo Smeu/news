@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Comment {
+@Table(name = "comment")
+public class CommentEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,11 +22,11 @@ public class Comment {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "newsId")
-	private News news;
+	private NewsEntity news;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ownerId")
-	private User owner;
+	private UserEntity owner;
 
 	private String content;
 
@@ -38,19 +40,19 @@ public class Comment {
 		this.id = id;
 	}
 
-	public News getNews() {
+	public NewsEntity getNews() {
 		return news;
 	}
 
-	public void setNews(News news) {
+	public void setNews(NewsEntity news) {
 		this.news = news;
 	}
 
-	public User getOwner() {
+	public UserEntity getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(UserEntity owner) {
 		this.owner = owner;
 	}
 

@@ -23,7 +23,8 @@ public class InMemoryUserRepositoryTest {
 	private static final String PASSWORD = "password";
 
 	private static final long INVALID_ID = -1;
-	private static final long VALID_ID = 0;
+	private static final long FIRST_ID = 0;
+	private static final long VALID_ID = 1;
 
 	private UserRepository repository;
 
@@ -42,7 +43,7 @@ public class InMemoryUserRepositoryTest {
 		User addedUser = new User();
 		repository.create(addedUser);
 
-		User retrievedUser = repository.get(VALID_ID);
+		User retrievedUser = repository.get(FIRST_ID);
 		assertThat(retrievedUser, is(addedUser));
 	}
 
@@ -84,6 +85,7 @@ public class InMemoryUserRepositoryTest {
 	public void testAddFollowedUserSuccessful() throws Exception {
 		User followingUser = new User();
 		User followedUser = new User();
+		followedUser.setId(VALID_ID);
 		followingUser.setId(repository.create(followingUser));
 
 		boolean result = repository.addFollowedUser(followingUser.getId(), followedUser);
@@ -99,6 +101,7 @@ public class InMemoryUserRepositoryTest {
 	public void testGetFollowedUsersValidId() throws Exception {
 		User followingUser = new User();
 		User followedUser = new User();
+		followedUser.setId(VALID_ID);
 		followingUser.setId(repository.create(followingUser));
 		repository.addFollowedUser(followingUser.getId(), followedUser);
 
