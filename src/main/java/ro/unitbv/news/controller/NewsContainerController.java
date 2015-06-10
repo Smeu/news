@@ -2,10 +2,14 @@ package ro.unitbv.news.controller;
 
 import java.util.List;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 
 /**
  * Controller for the news container
@@ -14,62 +18,43 @@ import javafx.scene.layout.VBox;
  */
 public class NewsContainerController extends AbstractController {
 
-	private static final int NEWS_PER_PAGE = 3;
+	private final static int NEWS_PER_UPDATE = 3;
 
 	@FXML
-	private Button previousButton;
-
-	@FXML
-	private Button nextButton;
+	public ScrollPane scrollPane;
 
 	@FXML
 	private VBox newsContainer;
 
 	private List<Pane> news;
 
-	private int currentPage;
-
-	private int numberOfPages;
-
+	private int lastNewsIndex;
 
 	public void init(List<Pane> news) {
 		this.news = news;
-		currentPage = 0;
-		numberOfPages = news.size() / NEWS_PER_PAGE + ((news.size() % NEWS_PER_PAGE > 0) ? 1 : 0);
+		lastNewsIndex = 0;
+		scrollPane.setMinHeight(Screen.getPrimary().getBounds().getHeight());
+		scrollPane.addEventFilter(ScrollEvent.SCROLL, this::scroll);
+		scrollPane.addEventFilter(MouseEvent.MOUSE_RELEASED, this::scroll);
 		updatePageNews();
-		updateButtons();
 	}
 
 	public void updatePageNews() {
 		newsContainer.getChildren().clear();
-		int from = currentPage * NEWS_PER_PAGE;
-		int to = from + NEWS_PER_PAGE;
-		if (to > news.size()) {
-			to = news.size();
-		}
-		newsContainer.getChildren().addAll(news.subList(from, to));
-	}
-
-	public void updateButtons() {
-		previousButton.setVisible(true);
-		nextButton.setVisible(true);
-		if (currentPage == 0) {
-			previousButton.setVisible(false);
-		}
-		if (currentPage >= numberOfPages - 1) {
-			nextButton.setVisible(false);
+		for (int i = 0; i < news.size() && i < 10; ++i) {
+			lastNewsIndex = i + 1;
+			newsContainer.getChildren().add(news.get(i));
 		}
 	}
 
-	public void nextPage() {
-		currentPage++;
-		updatePageNews();
-		updateButtons();
-	}
-
-	public void previousPage() {
-		currentPage--;
-		updatePageNews();
-		updateButtons();
+	public void scroll(Event event) {
+		if (scrollPane.getVvalue() > 0.75) {
+			int newIndex = lastNewsIndex + NEWS_PER_UPDATE;
+			if (newIndex > news.size()) {
+				newIndex = news.size();
+			}
+			newsContainer.getChildren().addAll(news.subList(lastNewsIndex, newIndex));
+			lastNewsIndex = newIndex;
+		}
 	}
 }
