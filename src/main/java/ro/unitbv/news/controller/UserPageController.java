@@ -20,7 +20,7 @@ import sun.font.Decoration;
  *
  * @author Teodora Tanase
  */
-public class OwnNewsPageController extends AbstractController {
+public class UserPageController extends AbstractController {
 
 	private NewsService newsService;
 
@@ -35,7 +35,7 @@ public class OwnNewsPageController extends AbstractController {
 	@FXML
 	private Button homepageButton;
 
-	public OwnNewsPageController() {
+	public UserPageController() {
 		newsService = ServiceFactory.getInstance().getNewsService();
 	}
 

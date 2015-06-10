@@ -48,6 +48,8 @@ public class AddFeedPageController extends AbstractController {
 	private Text descriptionError;
 	@FXML
 	private Button addFeed;
+	@FXML
+	private Button cancelButton;
 
 	private User user;
 
@@ -98,5 +100,10 @@ public class AddFeedPageController extends AbstractController {
 					break;
 			}
 		}
+	}
+
+	public void cancel() {
+		HomePageController homePageController = redirectTo(Page.HOME_PAGE);
+		homePageController.init(user);
 	}
 }
