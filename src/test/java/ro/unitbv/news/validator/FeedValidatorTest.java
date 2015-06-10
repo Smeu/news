@@ -41,7 +41,7 @@ public class FeedValidatorTest {
 		ValidationResult result = validator.validate(feed);
 
 		assertThat(result.hasErrors(), is(true));
-		assertThat(result.getErrors().size(), is(3));
+		assertThat(result.getErrors().size(), is(4));
 	}
 
 

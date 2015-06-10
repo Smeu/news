@@ -35,5 +35,10 @@ public enum Error {
 	/**
 	 * Field contains unwanted characters.
 	 */
-	ILLEGAL_CONTENT
+	ILLEGAL_CONTENT,
+
+	/**
+	 * Request could not be processed.
+	 */
+	FAILED_REQUEST
 }

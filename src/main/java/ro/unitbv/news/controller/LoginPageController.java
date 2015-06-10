@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.factory.ServiceFactory;
+import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.UserService;
 
@@ -39,7 +40,13 @@ public class LoginPageController extends AbstractController {
 	 * @param event the button pressed event
 	 */
 	public void loginUser(Event event) throws Exception {
-		User user = userService.authenticate(usernameInput.getText(), passwordInput.getText());
+		Response<User> response = userService.authenticate(usernameInput.getText(), passwordInput.getText());
+		if (response.hasErrors()) {
+			errorLabel.setText("Invalid Credentials");
+			errorLabel.setVisible(true);
+			return;
+		}
+		User user = response.getResponse();
 		if (user == null) {
 			passwordInput.setText("");
 			errorLabel.setText("Invalid Credentials");

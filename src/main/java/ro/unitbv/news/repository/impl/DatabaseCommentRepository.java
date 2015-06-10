@@ -3,11 +3,8 @@ package ro.unitbv.news.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ro.unitbv.news.entity.CommentEntity;
 import ro.unitbv.news.model.Comment;
@@ -17,7 +14,6 @@ import ro.unitbv.news.repository.CommentRepository;
 import ro.unitbv.news.repository.NewsRepository;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.converter.ModelEntityConverter;
-import ro.unitbv.news.repository.exception.InternalErrorException;
 import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.util.HibernateUtil;
 
@@ -28,10 +24,7 @@ import ro.unitbv.news.util.HibernateUtil;
  */
 public class DatabaseCommentRepository implements CommentRepository {
 
-	private final static Logger logger = LoggerFactory.getLogger(DatabaseCommentRepository.class);
-
 	private UserRepository userRepository = new DatabaseUserRepository();
-
 	private NewsRepository newsRepository = new DatabaseNewsRepository();
 
 	private ModelEntityConverter converter = new ModelEntityConverter();
@@ -50,10 +43,6 @@ public class DatabaseCommentRepository implements CommentRepository {
 			session.getTransaction().commit();
 			return commentEntity.getId();
 		}
-		catch (HibernateException e) {
-			logger.error("Error creating comment", e);
-			throw new InternalErrorException();
-		}
 		finally {
 			session.close();
 		}
@@ -70,10 +59,6 @@ public class DatabaseCommentRepository implements CommentRepository {
 			}
 			session.getTransaction().commit();
 			return converter.toCommentModel(commentEntity);
-		}
-		catch (HibernateException e) {
-			logger.error("Error getting comment", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -95,10 +80,6 @@ public class DatabaseCommentRepository implements CommentRepository {
 				comments.add(comment);
 			}
 			return comments;
-		}
-		catch (HibernateException e) {
-			logger.error("Error getting all comments for news", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();

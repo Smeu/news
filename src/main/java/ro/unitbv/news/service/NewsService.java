@@ -26,6 +26,7 @@ public interface NewsService {
 	 *
 	 * @param news news to be saved.
 	 * @param user owner of the news.
+	 * @return response holding the errors, in case there are any.
 	 */
-	void add(News news, User user);
+	Response<Void> add(News news, User user);
 }

@@ -15,7 +15,6 @@ import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.parser.RssFeedParser;
 import ro.unitbv.news.repository.FeedRepository;
-import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.validator.FeedValidator;
 import ro.unitbv.news.validator.ValidationResult;
@@ -28,7 +27,6 @@ import ro.unitbv.news.validator.ValidationResult;
  */
 public class DefaultFeedService implements FeedService {
 
-	private static final String ID = "id";
 	private static final String USER = "user";
 	private static final String URL = "url";
 
@@ -43,14 +41,11 @@ public class DefaultFeedService implements FeedService {
 
 	@Override
 	public Response<Long> create(Feed feed) {
-		Response<Long> response = new Response<>();
 		ValidationResult result = validator.validate(feed);
 		if (result.hasErrors()) {
-			response.setErrors(result.getErrors());
-			return response;
+			return new Response<>(result.getErrors());
 		}
-		response.setResponse(repository.create(feed));
-		return response;
+		return new Response<>(repository.create(feed));
 	}
 
 	@Override
@@ -65,15 +60,8 @@ public class DefaultFeedService implements FeedService {
 
 	@Override
 	public Response<Feed> get(long id) {
-		try {
-			Feed feed = repository.get(id);
-			return new Response<>(feed);
-		}
-		catch (InvalidIdException e) {
-			List<FieldError> errors = new ArrayList<>();
-			errors.add(new FieldError(ID, Error.INVALID_ID));
-			return new Response<>(errors);
-		}
+		Feed feed = repository.get(id);
+		return new Response<>(feed);
 	}
 
 	@Override

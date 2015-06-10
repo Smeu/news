@@ -5,10 +5,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ro.unitbv.news.entity.UserEntity;
 import ro.unitbv.news.model.User;
@@ -26,8 +23,6 @@ import ro.unitbv.news.util.PasswordHash;
  */
 public class DatabaseUserRepository implements UserRepository {
 
-	private final static Logger logger = LoggerFactory.getLogger(DatabaseUserRepository.class);
-
 	private ModelEntityConverter converter = new ModelEntityConverter();
 
 	@Override
@@ -39,10 +34,6 @@ public class DatabaseUserRepository implements UserRepository {
 			session.save(userEntity);
 			session.getTransaction().commit();
 			return userEntity.getId();
-		}
-		catch (HibernateException e) {
-			logger.error("Error creating user", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -65,10 +56,6 @@ public class DatabaseUserRepository implements UserRepository {
 			}
 			return user;
 		}
-		catch (HibernateException e) {
-			logger.error("Error getting user", e);
-			throw new InternalErrorException();
-		}
 		finally {
 			session.close();
 		}
@@ -86,7 +73,6 @@ public class DatabaseUserRepository implements UserRepository {
 			return null;
 		}
 		catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			logger.error("Authentication error", e);
 			throw new InternalErrorException();
 		}
 	}
@@ -107,10 +93,6 @@ public class DatabaseUserRepository implements UserRepository {
 			session.update(existingUserEntity);
 			session.getTransaction().commit();
 			return true;
-		}
-		catch (HibernateException e) {
-			logger.error("Error adding follower", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -139,10 +121,6 @@ public class DatabaseUserRepository implements UserRepository {
 				users.add(user);
 			}
 			return users;
-		}
-		catch (HibernateException e) {
-			logger.error("Error getting all users", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();

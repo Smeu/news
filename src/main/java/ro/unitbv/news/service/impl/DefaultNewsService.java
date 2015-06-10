@@ -37,8 +37,9 @@ public class DefaultNewsService implements NewsService {
 	}
 
 	@Override
-	public void add(News news, User user) {
+	public Response<Void> add(News news, User user) {
 		news.setOwnerId(user.getId());
 		repository.create(news);
+		return new Response<>();
 	}
 }

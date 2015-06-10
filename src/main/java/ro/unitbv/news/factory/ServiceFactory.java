@@ -1,44 +1,57 @@
 package ro.unitbv.news.factory;
 
+import java.lang.reflect.Proxy;
+
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.service.NewsService;
 import ro.unitbv.news.service.UserService;
 import ro.unitbv.news.service.impl.DefaultFeedService;
 import ro.unitbv.news.service.impl.DefaultNewsService;
 import ro.unitbv.news.service.impl.DefaultUserService;
+import ro.unitbv.news.service.proxy.ServiceInvocationHandler;
 
 /**
  * Factory for services.
  *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public class ServiceFactory {
 
 	private static ServiceFactory serviceFactory;
 
-	private FeedService feedService;
-	private NewsService newsService;
-	private UserService userService;
+	private FeedService feedServiceProxy;
+	private NewsService newsServiceProxy;
+	private UserService userServiceProxy;
 
 	private ServiceFactory() {
 		RepositoryFactory repositoryFactory = new RepositoryFactory();
 		ValidatorFactory validatorFactory = new ValidatorFactory();
 
-		feedService = new DefaultFeedService(repositoryFactory.getFeedRepository(), validatorFactory.getFeedValidator());
-		newsService = new DefaultNewsService(repositoryFactory.getNewsRepository());
-		userService = new DefaultUserService(repositoryFactory.getUserRepository(), validatorFactory.getUserValidator());
+		FeedService feedService = new DefaultFeedService(repositoryFactory.getFeedRepository(),
+				validatorFactory.getFeedValidator());
+		NewsService newsService = new DefaultNewsService(repositoryFactory.getNewsRepository());
+		UserService userService = new DefaultUserService(repositoryFactory.getUserRepository(),
+				validatorFactory.getUserValidator());
+
+		feedServiceProxy = (FeedService) Proxy.newProxyInstance(FeedService.class.getClassLoader(), new Class[]
+				{FeedService.class}, new ServiceInvocationHandler(feedService));
+		newsServiceProxy = (NewsService) Proxy.newProxyInstance(NewsService.class.getClassLoader(), new Class[]
+				{NewsService.class}, new ServiceInvocationHandler(newsService));
+		userServiceProxy = (UserService) Proxy.newProxyInstance(UserService.class.getClassLoader(), new Class[]
+				{UserService.class}, new ServiceInvocationHandler(userService));
 	}
 
 	public FeedService getFeedService() {
-		return feedService;
+		return feedServiceProxy;
 	}
 
 	public NewsService getNewsService() {
-		return newsService;
+		return newsServiceProxy;
 	}
 
 	public UserService getUserService() {
-		return userService;
+		return userServiceProxy;
 	}
 
 	public static ServiceFactory getInstance() {

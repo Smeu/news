@@ -41,9 +41,9 @@ public interface UserService {
 	 *
 	 * @param username the user's username.
 	 * @param password the user's password.
-	 * @return the authenticated user.
+	 * @return response holding the authenticated user or the errors.
 	 */
-	User authenticate(String username, String password);
+	Response<User> authenticate(String username, String password);
 
 	/**
 	 * Adds a new followed user for the one with the specified id.

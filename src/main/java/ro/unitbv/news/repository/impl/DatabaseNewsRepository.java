@@ -3,11 +3,8 @@ package ro.unitbv.news.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ro.unitbv.news.entity.NewsEntity;
 import ro.unitbv.news.model.Feed;
@@ -17,7 +14,6 @@ import ro.unitbv.news.repository.FeedRepository;
 import ro.unitbv.news.repository.NewsRepository;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.converter.ModelEntityConverter;
-import ro.unitbv.news.repository.exception.InternalErrorException;
 import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.util.HibernateUtil;
 
@@ -27,8 +23,6 @@ import ro.unitbv.news.util.HibernateUtil;
  * @author Teodora Tanase
  */
 public class DatabaseNewsRepository implements NewsRepository {
-
-	private final static Logger logger = LoggerFactory.getLogger(DatabaseNewsRepository.class);
 
 	private UserRepository userRepository = new DatabaseUserRepository();
 	private FeedRepository feedRepository = new DatabaseFeedRepository();
@@ -49,10 +43,6 @@ public class DatabaseNewsRepository implements NewsRepository {
 			session.getTransaction().commit();
 			return newsEntity.getId();
 		}
-		catch (HibernateException e) {
-			logger.error("Error creating news", e);
-			throw new InternalErrorException();
-		}
 		finally {
 			session.close();
 		}
@@ -69,10 +59,6 @@ public class DatabaseNewsRepository implements NewsRepository {
 			}
 			session.getTransaction().commit();
 			return converter.toNewsModel(newsEntity);
-		}
-		catch (HibernateException e) {
-			logger.error("Error getting news", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -94,10 +80,6 @@ public class DatabaseNewsRepository implements NewsRepository {
 				newsList.add(news);
 			}
 			return newsList;
-		}
-		catch (HibernateException e) {
-			logger.error("Error getting all news for owner", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();

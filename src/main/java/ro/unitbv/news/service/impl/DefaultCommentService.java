@@ -3,10 +3,12 @@ package ro.unitbv.news.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.unitbv.news.model.*;
+import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.model.Error;
+import ro.unitbv.news.model.FieldError;
+import ro.unitbv.news.model.News;
+import ro.unitbv.news.model.Response;
 import ro.unitbv.news.repository.CommentRepository;
-import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.service.CommentService;
 import ro.unitbv.news.validator.CommentValidator;
 import ro.unitbv.news.validator.ValidationResult;
@@ -18,7 +20,6 @@ import ro.unitbv.news.validator.ValidationResult;
  */
 public class DefaultCommentService implements CommentService {
 
-	private static final String ID = "id";
 	private static final String NEWS = "news";
 
 	private CommentRepository repository;
@@ -32,27 +33,17 @@ public class DefaultCommentService implements CommentService {
 
 	@Override
 	public Response<Long> create(Comment comment) {
-		Response<Long> response = new Response<>();
 		ValidationResult result = validator.validate(comment);
 		if (result.hasErrors()) {
-			response.setErrors(result.getErrors());
-			return response;
+			return new Response<>(result.getErrors());
 		}
-		response.setResponse(repository.create(comment));
-		return response;
+		return new Response<>(repository.create(comment));
 	}
 
 	@Override
 	public Response<Comment> get(long id) {
-		try {
-			Comment comment = repository.get(id);
-			return new Response<>(comment);
-		}
-		catch (InvalidIdException e) {
-			List<FieldError> errors = new ArrayList<>();
-			errors.add(new FieldError(ID, Error.INVALID_ID));
-			return new Response<>(errors);
-		}
+		Comment comment = repository.get(id);
+		return new Response<>(comment);
 	}
 
 	@Override

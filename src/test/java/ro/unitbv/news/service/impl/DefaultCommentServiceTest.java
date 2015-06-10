@@ -12,7 +12,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ro.unitbv.news.model.*;
 import ro.unitbv.news.model.Error;
 import ro.unitbv.news.repository.CommentRepository;
-import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.service.CommentService;
 import ro.unitbv.news.validator.CommentValidator;
 import ro.unitbv.news.validator.ValidationResult;
@@ -27,8 +26,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultCommentServiceTest {
 
-	private static final Long VALID_ID = 0L;
-	private static final Long INVALID_ID = -1L;
+	private static final Long ID = 0L;
 
 	private static final String CONTENT = "content";
 
@@ -60,30 +58,20 @@ public class DefaultCommentServiceTest {
 	@Test
 	public void testCreateWithoutErrors() throws Exception {
 		when(validator.validate(any())).thenReturn(new ValidationResult());
-		when(repository.create(any())).thenReturn(VALID_ID);
+		when(repository.create(any())).thenReturn(ID);
 
 		Response<Long> response = service.create(new Comment());
 
 		assertThat(response.hasErrors(), is(false));
-		assertThat(response.getResponse(), is(VALID_ID));
+		assertThat(response.getResponse(), is(ID));
 	}
 
 	@Test
-	public void testGetWithErrors() throws Exception {
-		when(repository.get(INVALID_ID)).thenThrow(new InvalidIdException());
-
-		Response<Comment> response = service.get(INVALID_ID);
-
-		assertThat(response.hasErrors(), is(true));
-		assertThat(response.getErrors().size(), is(1));
-	}
-
-	@Test
-	public void testGetWithoutErrors() throws Exception {
+	public void testGetWHappyFlow() throws Exception {
 		Comment comment = new Comment();
-		when(repository.get(VALID_ID)).thenReturn(comment);
+		when(repository.get(ID)).thenReturn(comment);
 
-		Response<Comment> response = service.get(VALID_ID);
+		Response<Comment> response = service.get(ID);
 
 		assertThat(response.hasErrors(), is(false));
 		assertThat(response.getResponse(), is(comment));
@@ -100,10 +88,10 @@ public class DefaultCommentServiceTest {
 	@Test
 	public void testGetCommentsValidNews() throws Exception {
 		List<Comment> comments = new ArrayList<>();
-		when(repository.getAllForNews(VALID_ID)).thenReturn(comments);
+		when(repository.getAllForNews(ID)).thenReturn(comments);
 
 		News news = new News();
-		news.setId(VALID_ID);
+		news.setId(ID);
 		Response<List<Comment>> response = service.getComments(news);
 
 		assertThat(response.hasErrors(), is(false));

@@ -3,11 +3,8 @@ package ro.unitbv.news.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ro.unitbv.news.entity.FeedEntity;
 import ro.unitbv.news.model.Feed;
@@ -15,7 +12,6 @@ import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.FeedRepository;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.converter.ModelEntityConverter;
-import ro.unitbv.news.repository.exception.InternalErrorException;
 import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.util.HibernateUtil;
 
@@ -25,8 +21,6 @@ import ro.unitbv.news.util.HibernateUtil;
  * @author Teodora Tanase
  */
 public class DatabaseFeedRepository implements FeedRepository {
-
-	private final static Logger logger = LoggerFactory.getLogger(DatabaseFeedRepository.class);
 
 	private UserRepository userRepository = new DatabaseUserRepository();
 
@@ -43,10 +37,6 @@ public class DatabaseFeedRepository implements FeedRepository {
 			session.save(feedEntity);
 			session.getTransaction().commit();
 			return feedEntity.getId();
-		}
-		catch (HibernateException e) {
-			logger.error("Error creating feed", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();
@@ -69,10 +59,6 @@ public class DatabaseFeedRepository implements FeedRepository {
 			}
 			return feeds;
 		}
-		catch (HibernateException e) {
-			logger.error("Error getting all feeds", e);
-			throw new InternalErrorException();
-		}
 		finally {
 			session.close();
 		}
@@ -89,10 +75,6 @@ public class DatabaseFeedRepository implements FeedRepository {
 			}
 			session.getTransaction().commit();
 			return converter.toFeedModel(feedEntity);
-		}
-		catch (HibernateException e) {
-			logger.error("Error getting feed", e);
-			throw new InternalErrorException();
 		}
 		finally {
 			session.close();

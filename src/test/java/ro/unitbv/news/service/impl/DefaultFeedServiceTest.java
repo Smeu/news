@@ -14,7 +14,6 @@ import ro.unitbv.news.model.FieldError;
 import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.FeedRepository;
-import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.validator.FeedValidator;
 import ro.unitbv.news.validator.ValidationResult;
@@ -31,7 +30,6 @@ import static org.mockito.Mockito.when;
 public class DefaultFeedServiceTest {
 
 	private static final Long ID = 1L;
-	private static final long INVALID_ID = -1;
 
 	private static final String NAME = "name";
 
@@ -90,18 +88,7 @@ public class DefaultFeedServiceTest {
 	}
 
 	@Test
-	public void testGetWithErrors() throws Exception {
-		FeedService service = new DefaultFeedService(repository, feedValidator);
-		when(repository.get(INVALID_ID)).thenThrow(new InvalidIdException());
-
-		Response<Feed> response = service.get(INVALID_ID);
-
-		assertThat(response.hasErrors(), is(true));
-		assertThat(response.getErrors().size(), is(1));
-	}
-
-	@Test
-	public void testGetWithoutErrors() throws Exception {
+	public void testGetHappyFlow() throws Exception {
 		FeedService service = new DefaultFeedService(repository, feedValidator);
 		Feed feed = new Feed();
 		when(repository.get(ID)).thenReturn(feed);

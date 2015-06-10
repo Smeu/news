@@ -14,7 +14,6 @@ import ro.unitbv.news.model.FieldError;
 import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.UserRepository;
-import ro.unitbv.news.repository.exception.InvalidIdException;
 import ro.unitbv.news.service.UserService;
 import ro.unitbv.news.validator.UserValidator;
 import ro.unitbv.news.validator.ValidationResult;
@@ -35,8 +34,7 @@ public class DefaultUserServiceTest {
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
-	private static final long VALID_ID = 1;
-	private static final long INVALID_ID = -1;
+	private static final long ID = 1;
 
 	private UserService service;
 
@@ -66,30 +64,20 @@ public class DefaultUserServiceTest {
 	@Test
 	public void testCreateWithoutErrors() throws Exception {
 		when(validator.validate(any())).thenReturn(new ValidationResult());
-		when(repository.create(any())).thenReturn(VALID_ID);
+		when(repository.create(any())).thenReturn(ID);
 
 		Response<Long> response = service.create(new User());
 
 		assertThat(response.hasErrors(), is(false));
-		assertThat(response.getResponse(), is(VALID_ID));
+		assertThat(response.getResponse(), is(ID));
 	}
 
 	@Test
-	public void testGetWithErrors() throws Exception {
-		when(repository.get(INVALID_ID)).thenThrow(new InvalidIdException());
-
-		Response<User> response = service.get(INVALID_ID);
-
-		assertThat(response.hasErrors(), is(true));
-		assertThat(response.getErrors().size(), is(1));
-	}
-
-	@Test
-	public void testGetWithoutErrors() throws Exception {
+	public void testGetHappyFlow() throws Exception {
 		User user = new User();
-		when(repository.get(VALID_ID)).thenReturn(user);
+		when(repository.get(ID)).thenReturn(user);
 
-		Response<User> response = service.get(VALID_ID);
+		Response<User> response = service.get(ID);
 
 		assertThat(response.hasErrors(), is(false));
 		assertThat(response.getResponse(), is(user));
@@ -99,8 +87,9 @@ public class DefaultUserServiceTest {
 	public void testAuthenticateIncorrectly() throws Exception {
 		when(repository.authenticate(anyString(), anyString())).thenReturn(null);
 
-		User authenticatedUser = service.authenticate(EMPTY_STRING, EMPTY_STRING);
-		assertEquals(null, authenticatedUser);
+		Response<User> response = service.authenticate(EMPTY_STRING, EMPTY_STRING);
+
+		assertEquals(null, response.getResponse());
 	}
 
 	@Test
@@ -108,49 +97,28 @@ public class DefaultUserServiceTest {
 		User user = new User();
 		when(repository.authenticate(anyString(), anyString())).thenReturn(user);
 
-		User authenticatedUser = service.authenticate(USERNAME, PASSWORD);
-		assertThat(authenticatedUser, is(user));
+		Response<User> response = service.authenticate(USERNAME, PASSWORD);
+
+		assertThat(response.getResponse(), is(user));
 	}
 
 	@Test
-	public void testAddFollowedUserWithErrors() throws Exception {
+	public void testAddFollowedUserHappyFlow() throws Exception {
 		User followedUser = new User();
-		when(repository.addFollowedUser(INVALID_ID, followedUser)).thenThrow(new InvalidIdException());
+		when(repository.addFollowedUser(ID, followedUser)).thenReturn(true);
 
-		Response<Boolean> response = service.addFollowedUser(INVALID_ID, followedUser);
-
-		assertThat(response.hasErrors(), is(true));
-		assertThat(response.getErrors().size(), is(1));
-	}
-
-	@Test
-	public void testAddFollowedUserWithoutErrors() throws Exception {
-		User followedUser = new User();
-		boolean result = true;
-		when(repository.addFollowedUser(VALID_ID, followedUser)).thenReturn(result);
-
-		Response<Boolean> response = service.addFollowedUser(VALID_ID, followedUser);
+		Response<Boolean> response = service.addFollowedUser(ID, followedUser);
 
 		assertThat(response.hasErrors(), is(false));
-		assertThat(response.getResponse(), is(result));
+		assertThat(response.getResponse(), is(true));
 	}
 
 	@Test
-	public void testGetFollowedUsersWithErrors() throws Exception {
-		when(repository.getFollowedUsers(INVALID_ID)).thenThrow(new InvalidIdException());
-
-		Response<List<User>> response = service.getFollowedUsers(INVALID_ID);
-
-		assertThat(response.hasErrors(), is(true));
-		assertThat(response.getErrors().size(), is(1));
-	}
-
-	@Test
-	public void testGetFollowedUsersWithoutErrors() throws Exception {
+	public void testGetFollowedUsersHappyFlow() throws Exception {
 		List<User> followedUsers = new ArrayList<>();
-		when(repository.getFollowedUsers(VALID_ID)).thenReturn(followedUsers);
+		when(repository.getFollowedUsers(ID)).thenReturn(followedUsers);
 
-		Response<List<User>> response = service.getFollowedUsers(VALID_ID);
+		Response<List<User>> response = service.getFollowedUsers(ID);
 
 		assertThat(response.hasErrors(), is(false));
 		assertThat(response.getResponse(), is(followedUsers));
