@@ -72,6 +72,9 @@ public abstract class AbstractController {
 			case URL_NOT_AVAILABLE:
 				errorArea.setText("This url is not available");
 				break;
+			case ILLEGAL_CONTENT:
+				errorArea.setText("Invalid characters");
+				break;
 		}
 	}
 

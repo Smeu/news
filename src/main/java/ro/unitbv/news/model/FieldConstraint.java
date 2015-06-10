@@ -8,7 +8,10 @@ package ro.unitbv.news.model;
 public class FieldConstraint {
 
 	private int minLength;
+
 	private int maxLength;
+
+	private String regex = "(.)*";
 
 	public int getMinLength() {
 		return minLength;
@@ -26,11 +29,16 @@ public class FieldConstraint {
 		this.maxLength = maxLength;
 	}
 
+	public String getRegex() {
+		return regex;
+	}
+
+	public void setRegex(String regex) {
+		this.regex = regex;
+	}
+
 	@Override
 	public String toString() {
-		return "FieldConstraint{" +
-				"minLength=" + minLength +
-				", maxLength=" + maxLength +
-				'}';
+		return "FieldConstraint{" + "minLength=" + minLength + ", maxLength=" + maxLength + '}';
 	}
 }

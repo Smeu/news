@@ -47,7 +47,7 @@ public class DatabaseNewsRepository implements NewsRepository {
 			session.beginTransaction();
 			session.save(newsEntity);
 			session.getTransaction().commit();
-			return news.getId();
+			return newsEntity.getId();
 		}
 		catch (HibernateException e) {
 			logger.error("Error creating news", e);

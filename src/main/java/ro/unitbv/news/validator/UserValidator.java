@@ -13,6 +13,9 @@ public class UserValidator {
 
 	private static final int USERNAME_MIN_LENGTH = 4;
 	private static final int USERNAME_MAX_LENGTH = 32;
+
+	private static final String USERNAME_REGEX = "\\p{Alpha}(\\w|\\.|_)*";
+
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
@@ -25,6 +28,7 @@ public class UserValidator {
 		usernameConstraint = new FieldConstraint();
 		usernameConstraint.setMinLength(USERNAME_MIN_LENGTH);
 		usernameConstraint.setMaxLength(USERNAME_MAX_LENGTH);
+		usernameConstraint.setRegex(USERNAME_REGEX);
 	}
 
 	/**
@@ -36,7 +40,7 @@ public class UserValidator {
 	public ValidationResult validate(User user) {
 		ValidationResult result = new ValidationResult();
 		ValidationResult usernameResult = validator.validateMandatory(USERNAME, user.getUsername(), usernameConstraint);
-		if (user.getPassword() == null || user.getPassword().isEmpty()){
+		if (user.getPassword() == null || user.getPassword().isEmpty()) {
 			result.addError(new FieldError(PASSWORD, Error.FIELD_IS_MANDATORY));
 		}
 		result.addErrors(usernameResult.getErrors());

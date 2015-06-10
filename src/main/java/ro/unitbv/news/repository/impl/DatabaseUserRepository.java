@@ -38,7 +38,7 @@ public class DatabaseUserRepository implements UserRepository {
 			session.beginTransaction();
 			session.save(userEntity);
 			session.getTransaction().commit();
-			return user.getId();
+			return userEntity.getId();
 		}
 		catch (HibernateException e) {
 			logger.error("Error creating user", e);

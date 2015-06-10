@@ -1,5 +1,6 @@
 package ro.unitbv.news.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -29,7 +30,7 @@ public class UserEntity {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "user_followedUser", joinColumns = @JoinColumn(name = "followedUser_id"))
-	private List<UserEntity> followedUsers;
+	private List<UserEntity> followedUsers = new ArrayList<>();
 
 	public long getId() {
 		return id;

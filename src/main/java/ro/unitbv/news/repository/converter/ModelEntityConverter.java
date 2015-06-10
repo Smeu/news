@@ -1,8 +1,10 @@
 package ro.unitbv.news.repository.converter;
 
+import ro.unitbv.news.entity.CommentEntity;
 import ro.unitbv.news.entity.FeedEntity;
 import ro.unitbv.news.entity.NewsEntity;
 import ro.unitbv.news.entity.UserEntity;
+import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.User;
@@ -105,5 +107,35 @@ public class ModelEntityConverter {
 		newsEntity.setUrl(newsModel.getUrl());
 		newsEntity.setDate(newsModel.getDate());
 		return newsEntity;
+	}
+
+	/**
+	 * Converts an entity comment to a model comment.
+	 *
+	 * @param commentEntity entity comment to convert to a model comment.
+	 * @return the model comment.
+	 */
+	public Comment toCommentModel(CommentEntity commentEntity) {
+		Comment commentModel = new Comment();
+		commentModel.setId(commentEntity.getId());
+		commentModel.setNewsId(commentEntity.getNews().getId());
+		commentModel.setOwnerId(commentEntity.getOwner().getId());
+		commentModel.setContent(commentEntity.getContent());
+		commentModel.setPostingDate(commentEntity.getPostingDate());
+		return commentModel;
+	}
+
+	/**
+	 * Converts a model comment to an entity comment without its owner and news.
+	 *
+	 * @param commentModel model comment to convert to an entity comment.
+	 * @return the entity comment.
+	 */
+	public CommentEntity toCommentEntity(Comment commentModel) {
+		CommentEntity commentEntity = new CommentEntity();
+		commentEntity.setId(commentModel.getId());
+		commentEntity.setContent(commentModel.getContent());
+		commentEntity.setPostingDate(commentModel.getPostingDate());
+		return commentEntity;
 	}
 }

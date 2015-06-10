@@ -30,5 +30,10 @@ public enum Error {
 	/**
 	 * The provided id is not valid.
 	 */
-	INVALID_ID
+	INVALID_ID,
+
+	/**
+	 * Field contains unwanted characters.
+	 */
+	ILLEGAL_CONTENT
 }

@@ -20,6 +20,8 @@ public class FeedValidator {
 	private static final String NAME = "name";
 	private static final String DESCRIPTION = "description";
 
+	private static final String NAME_REGEX = "\\p{Alpha}(\\w)*";
+
 	private UrlValidator urlValidator;
 
 	private FieldConstraint nameConstraint;
@@ -31,6 +33,7 @@ public class FeedValidator {
 		descriptionConstraint = new FieldConstraint();
 		nameConstraint.setMinLength(NAME_MIN_LENGTH);
 		nameConstraint.setMaxLength(NAME_MAX_LENGTH);
+		nameConstraint.setRegex(NAME_REGEX);
 		descriptionConstraint.setMaxLength(DESCRIPTION_MAX_LENGTH);
 	}
 

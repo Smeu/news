@@ -48,6 +48,9 @@ public class StringFieldValidator {
 		if (field.trim().length() > constraint.getMaxLength()) {
 			result.addError(new FieldError(fieldName, Error.MAX_LENGTH_EXCEEDED, constraint));
 		}
+		if (!(field.trim().matches(constraint.getRegex()))) {
+			result.addError(new FieldError(fieldName, Error.ILLEGAL_CONTENT));
+		}
 		return result;
 	}
 }

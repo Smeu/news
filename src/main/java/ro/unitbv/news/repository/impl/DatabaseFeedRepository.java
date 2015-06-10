@@ -42,7 +42,7 @@ public class DatabaseFeedRepository implements FeedRepository {
 			session.beginTransaction();
 			session.save(feedEntity);
 			session.getTransaction().commit();
-			return feed.getId();
+			return feedEntity.getId();
 		}
 		catch (HibernateException e) {
 			logger.error("Error creating feed", e);

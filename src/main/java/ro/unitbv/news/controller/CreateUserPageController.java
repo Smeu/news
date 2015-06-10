@@ -107,7 +107,7 @@ public class CreateUserPageController extends AbstractController {
 		}
 
 		if (passwordInput.getText().compareTo(confirmPasswordInput.getText()) != 0) {
-			setPasswordError("Passwords doesn't match");
+			setPasswordError("Passwords don't match");
 			return false;
 		}
 		return true;
