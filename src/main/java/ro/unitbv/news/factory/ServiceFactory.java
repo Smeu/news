@@ -2,9 +2,11 @@ package ro.unitbv.news.factory;
 
 import java.lang.reflect.Proxy;
 
+import ro.unitbv.news.service.CommentService;
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.service.NewsService;
 import ro.unitbv.news.service.UserService;
+import ro.unitbv.news.service.impl.DefaultCommentService;
 import ro.unitbv.news.service.impl.DefaultFeedService;
 import ro.unitbv.news.service.impl.DefaultNewsService;
 import ro.unitbv.news.service.impl.DefaultUserService;
@@ -23,6 +25,7 @@ public class ServiceFactory {
 	private FeedService feedServiceProxy;
 	private NewsService newsServiceProxy;
 	private UserService userServiceProxy;
+	private CommentService commentServiceProxy;
 
 	private ServiceFactory() {
 		RepositoryFactory repositoryFactory = new RepositoryFactory();
@@ -33,6 +36,8 @@ public class ServiceFactory {
 		NewsService newsService = new DefaultNewsService(repositoryFactory.getNewsRepository());
 		UserService userService = new DefaultUserService(repositoryFactory.getUserRepository(),
 				validatorFactory.getUserValidator());
+		CommentService commentService = new DefaultCommentService(repositoryFactory.getCommentRepository(),
+				validatorFactory.getCommentValidator());
 
 		feedServiceProxy = (FeedService) Proxy.newProxyInstance(FeedService.class.getClassLoader(), new Class[]
 				{FeedService.class}, new ServiceInvocationHandler(feedService));
@@ -40,6 +45,8 @@ public class ServiceFactory {
 				{NewsService.class}, new ServiceInvocationHandler(newsService));
 		userServiceProxy = (UserService) Proxy.newProxyInstance(UserService.class.getClassLoader(), new Class[]
 				{UserService.class}, new ServiceInvocationHandler(userService));
+		commentServiceProxy = (CommentService) Proxy.newProxyInstance(CommentService.class.getClassLoader(), new Class[]
+				{CommentService.class}, new ServiceInvocationHandler(commentService));
 	}
 
 	public FeedService getFeedService() {
