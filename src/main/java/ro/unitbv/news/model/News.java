@@ -78,4 +78,17 @@ public class News {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	@Override
+	public String toString() {
+		return "News{" +
+				"id=" + id +
+				", ownerId=" + ownerId +
+				", feedId=" + feedId +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", url='" + url + '\'' +
+				", date=" + date +
+				'}';
+	}
 }

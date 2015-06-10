@@ -70,5 +70,14 @@ public class User {
 	public int hashCode() {
 		return Objects.hash(id, username, password);
 	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", followedUsers=" + followedUsers +
+				", username='" + username + '\'' +
+				'}';
+	}
 }
 

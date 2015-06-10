@@ -61,6 +61,10 @@ public class ServiceFactory {
 		return userServiceProxy;
 	}
 
+	public CommentService getCommentService() {
+		return commentServiceProxy;
+	}
+
 	public static ServiceFactory getInstance() {
 		if (serviceFactory == null) {
 			serviceFactory = new ServiceFactory();

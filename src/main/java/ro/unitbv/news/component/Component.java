@@ -9,10 +9,11 @@ public enum Component {
 
 	NEWS_CONTAINER("components/newscontainer.fxml"),
 
-	NEWS_COMPONENT("components/news.fxml");
+	NEWS_COMPONENT("components/news.fxml"),
+
+	COMMENT_COMPONENT("components/comment.fxml");
 
 	private String path;
-
 
 	Component(String path) {
 		this.path = path;

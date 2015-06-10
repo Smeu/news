@@ -56,4 +56,15 @@ public class Feed {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "Feed{" +
+				"id=" + id +
+				", ownerId=" + ownerId +
+				", url='" + url + '\'' +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				'}';
+	}
 }

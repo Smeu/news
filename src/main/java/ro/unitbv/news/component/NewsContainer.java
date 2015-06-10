@@ -17,7 +17,7 @@ public class NewsContainer extends AbstractComponent {
 
 	private NewsContainerController controller;
 
-	User user;
+	private User user;
 
 	public NewsContainer(User user) {
 		this.user = user;

@@ -70,7 +70,7 @@ public class DatabaseCommentRepository implements CommentRepository {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			Query query = session.createQuery("from NewsEntity news where news.id = :news_id");
+			Query query = session.createQuery("from CommentEntity comment where comment.news.id = :news_id");
 			query.setParameter("news_id", newsId);
 			List<CommentEntity> commentEntities = query.list();
 			session.getTransaction().commit();

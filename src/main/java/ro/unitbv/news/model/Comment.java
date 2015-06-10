@@ -58,4 +58,15 @@ public class Comment {
 	public void setPostingDate(Date postingDate) {
 		this.postingDate = postingDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Comment{" +
+				"id=" + id +
+				", newsId=" + newsId +
+				", ownerId=" + ownerId +
+				", content='" + content + '\'' +
+				", postingDate=" + postingDate +
+				'}';
+	}
 }
