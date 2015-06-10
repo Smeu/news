@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
 import ro.unitbv.news.factory.ServiceFactory;
@@ -26,6 +27,9 @@ public class HomePageController extends AbstractController {
 
 	@FXML
 	private VBox homePageContainer;
+
+	@FXML
+	private Button ownNewsButton;
 
 	private User user;
 
@@ -77,5 +81,10 @@ public class HomePageController extends AbstractController {
 	public void users() {
 		UsersController controller = redirectTo(Page.USERS_PAGE);
 		controller.init(user, userService.getAll().getResponse());
+	}
+
+	public void loadOwnNews() {
+		OwnNewsPageController controller = redirectTo(Page.OWN_NEWS_PAGE);
+		controller.init(user);
 	}
 }

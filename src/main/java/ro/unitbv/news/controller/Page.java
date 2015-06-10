@@ -16,7 +16,9 @@ public enum Page {
 
 	HOME_PAGE("Home Page", "pages/homepage.fxml"),
 
-	USERS_PAGE("Users", "pages/users.fxml");
+	USERS_PAGE("Users", "pages/users.fxml"),
+
+	OWN_NEWS_PAGE("My News", "pages/ownNews.fxml");
 
 	private String pagePath;
 
