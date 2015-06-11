@@ -1,11 +1,14 @@
 package ro.unitbv.news.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Model for news.
  *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public class News {
 
@@ -22,6 +25,12 @@ public class News {
 	private String url;
 
 	private Date date;
+
+	private List<Category> categories;
+
+	public News() {
+		categories = new ArrayList<>();
+	}
 
 	public long getId() {
 		return id;
@@ -77,6 +86,14 @@ public class News {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void addCategory(Category category) {
+		categories.add(category);
 	}
 
 	@Override

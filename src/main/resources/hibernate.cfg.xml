@@ -16,5 +16,6 @@
         <mapping class="ro.unitbv.news.entity.FeedEntity"/>
         <mapping class="ro.unitbv.news.entity.CommentEntity"/>
         <mapping class="ro.unitbv.news.entity.UserEntity"/>
+        <mapping class="ro.unitbv.news.entity.CategoryEntity"/>
     </session-factory>
 </hibernate-configuration>

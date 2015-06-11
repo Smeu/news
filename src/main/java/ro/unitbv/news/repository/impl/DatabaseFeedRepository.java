@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import ro.unitbv.news.entity.FeedEntity;
+import ro.unitbv.news.factory.RepositoryFactory;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.FeedRepository;
@@ -22,13 +23,13 @@ import ro.unitbv.news.util.HibernateUtil;
  */
 public class DatabaseFeedRepository implements FeedRepository {
 
-	private UserRepository userRepository = new DatabaseUserRepository();
-
 	private ModelEntityConverter converter = new ModelEntityConverter();
 
 	@Override
 	public long create(Feed feed) {
 		FeedEntity feedEntity = converter.toFeedEntity(feed);
+		RepositoryFactory repositoryFactory = new RepositoryFactory();
+		UserRepository userRepository = repositoryFactory.getUserRepository();
 		User owner = userRepository.get(feed.getOwnerId());
 		feedEntity.setOwner(converter.toUserEntity(owner));
 		Session session = HibernateUtil.getSessionFactory().openSession();

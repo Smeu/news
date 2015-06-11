@@ -1,9 +1,14 @@
 package ro.unitbv.news.repository.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ro.unitbv.news.entity.CategoryEntity;
 import ro.unitbv.news.entity.CommentEntity;
 import ro.unitbv.news.entity.FeedEntity;
 import ro.unitbv.news.entity.NewsEntity;
 import ro.unitbv.news.entity.UserEntity;
+import ro.unitbv.news.model.Category;
 import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
@@ -90,6 +95,9 @@ public class ModelEntityConverter {
 		newsModel.setContent(newsEntity.getContent());
 		newsModel.setUrl(newsEntity.getUrl());
 		newsModel.setDate(newsEntity.getDate());
+		for (CategoryEntity categoryEntity : newsEntity.getCategories()) {
+			newsModel.addCategory(toCategoryModel(categoryEntity));
+		}
 		return newsModel;
 	}
 
@@ -106,6 +114,11 @@ public class ModelEntityConverter {
 		newsEntity.setContent(newsModel.getContent());
 		newsEntity.setUrl(newsModel.getUrl());
 		newsEntity.setDate(newsModel.getDate());
+		List<CategoryEntity> categoryEntities = new ArrayList<>();
+		for (Category category : newsModel.getCategories()) {
+			categoryEntities.add(toCategoryEntity(category));
+		}
+		newsEntity.setCategories(categoryEntities);
 		return newsEntity;
 	}
 
@@ -137,5 +150,35 @@ public class ModelEntityConverter {
 		commentEntity.setContent(commentModel.getContent());
 		commentEntity.setPostingDate(commentModel.getPostingDate());
 		return commentEntity;
+	}
+
+	/**
+	 * Converts an entity category to a model category.
+	 *
+	 * @param categoryEntity entity category to convert to a model category.
+	 * @return the model category.
+	 */
+	public Category toCategoryModel(CategoryEntity categoryEntity) {
+		Category categoryModel = new Category();
+		categoryModel.setId(categoryEntity.getId());
+		categoryModel.setName(categoryEntity.getName());
+		for (String keyword : categoryEntity.getKeywords()) {
+			categoryModel.addKeyword(keyword);
+		}
+		return categoryModel;
+	}
+
+	/**
+	 * Converts a model category to an entity category.
+	 *
+	 * @param categoryModel model category to convert to an entity category.
+	 * @return the entity category.
+	 */
+	public CategoryEntity toCategoryEntity(Category categoryModel) {
+		CategoryEntity categoryEntity = new CategoryEntity();
+		categoryEntity.setId(categoryModel.getId());
+		categoryEntity.setName(categoryModel.getName());
+		categoryEntity.setKeywords(categoryModel.getKeywords());
+		return categoryEntity;
 	}
 }

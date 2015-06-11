@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import ro.unitbv.news.entity.CommentEntity;
+import ro.unitbv.news.factory.RepositoryFactory;
 import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.User;
@@ -24,14 +25,14 @@ import ro.unitbv.news.util.HibernateUtil;
  */
 public class DatabaseCommentRepository implements CommentRepository {
 
-	private UserRepository userRepository = new DatabaseUserRepository();
-	private NewsRepository newsRepository = new DatabaseNewsRepository();
-
 	private ModelEntityConverter converter = new ModelEntityConverter();
 
 	@Override
 	public long create(Comment comment) {
 		CommentEntity commentEntity = converter.toCommentEntity(comment);
+		RepositoryFactory repositoryFactory = new RepositoryFactory();
+		UserRepository userRepository = repositoryFactory.getUserRepository();
+		NewsRepository newsRepository = repositoryFactory.getNewsRepository();
 		User owner = userRepository.get(comment.getOwnerId());
 		commentEntity.setOwner(converter.toUserEntity(owner));
 		News news = newsRepository.get(comment.getNewsId());

@@ -14,7 +14,7 @@ public class UserValidator {
 	private static final int USERNAME_MIN_LENGTH = 4;
 	private static final int USERNAME_MAX_LENGTH = 32;
 
-	private static final String USERNAME_REGEX = "\\p{Alpha}(\\w|\\.|_)*";
+	private static final String USERNAME_REGEX = "\\p{Alpha}(\\w|\\.|_)*\\w";
 
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";

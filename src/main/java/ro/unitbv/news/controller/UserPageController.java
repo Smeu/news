@@ -10,8 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
 import ro.unitbv.news.factory.ServiceFactory;
+import ro.unitbv.news.model.Category;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.User;
+import ro.unitbv.news.service.CategoryService;
 import ro.unitbv.news.service.NewsService;
 import sun.font.Decoration;
 
@@ -41,7 +43,7 @@ public class UserPageController extends AbstractController {
 
 	public void init(User user) {
 		this.user = user;
-		usernameLabel.setText(user.getUsername() + " : My News");
+		usernameLabel.setText(user.getUsername() + "\n- My News -");
 		NewsContainer newsContainer = new NewsContainer(user);
 		List<News> newsList = getAllNews();
 		newsContainer.setNews(newsList);

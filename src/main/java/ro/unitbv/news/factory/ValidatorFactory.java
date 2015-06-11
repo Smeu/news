@@ -1,5 +1,6 @@
 package ro.unitbv.news.factory;
 
+import ro.unitbv.news.validator.CategoryValidator;
 import ro.unitbv.news.validator.CommentValidator;
 import ro.unitbv.news.validator.FeedValidator;
 import ro.unitbv.news.validator.StringFieldValidator;
@@ -18,6 +19,7 @@ public class ValidatorFactory {
 	private UrlValidator urlValidator;
 	private UserValidator userValidator;
 	private CommentValidator commentValidator;
+	private CategoryValidator categoryValidator;
 
 	public ValidatorFactory() {
 		stringFieldValidator = new StringFieldValidator();
@@ -25,6 +27,7 @@ public class ValidatorFactory {
 		feedValidator = new FeedValidator(urlValidator);
 		userValidator = new UserValidator(stringFieldValidator);
 		commentValidator = new CommentValidator(stringFieldValidator);
+		categoryValidator = new CategoryValidator(stringFieldValidator);
 	}
 
 
@@ -46,5 +49,9 @@ public class ValidatorFactory {
 
 	public CommentValidator getCommentValidator() {
 		return commentValidator;
+	}
+
+	public CategoryValidator getCategoryValidator() {
+		return categoryValidator;
 	}
 }

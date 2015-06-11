@@ -42,7 +42,7 @@ public class LoginPageController extends AbstractController {
 	public void loginUser(Event event) throws Exception {
 		Response<User> response = userService.authenticate(usernameInput.getText(), passwordInput.getText());
 		if (response.hasErrors()) {
-			errorLabel.setText("Invalid Credentials");
+			errorLabel.setText("Could not connect");
 			errorLabel.setVisible(true);
 			return;
 		}
