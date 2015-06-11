@@ -6,7 +6,7 @@ import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
 import ro.unitbv.news.factory.ServiceFactory;
@@ -14,7 +14,6 @@ import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
-import ro.unitbv.news.model.UserType;
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.service.NewsService;
 import ro.unitbv.news.service.UserService;
@@ -27,13 +26,10 @@ import ro.unitbv.news.service.UserService;
 public class HomePageController extends AbstractController {
 
 	@FXML
-	private VBox menu;
-
-	@FXML
 	private VBox homePageContainer;
 
 	@FXML
-	private Button ownNewsButton;
+	private Label username;
 
 	private User user;
 
@@ -51,22 +47,12 @@ public class HomePageController extends AbstractController {
 
 	public void init(User user) {
 		this.user = user;
+		username.setText(user.getUsername());
 		homePageContainer.setAlignment(Pos.TOP_CENTER);
 		List<News> news = getAllNews(user);
 		NewsContainer container = new NewsContainer(user, this);
 		container.setNews(news);
 		homePageContainer.getChildren().add(container.getComponent());
-
-		if (user.getType() == UserType.ADMIN) {
-			Button button = new Button("Categories");
-			button.setPrefWidth(98);
-			button.setPrefHeight(25);
-			button.setOnMouseClicked(event -> {
-				CategoriesController controller = redirectTo(Page.CATEGORIES_PAGE);
-				controller.init(user);
-			});
-			menu.getChildren().add(button);
-		}
 	}
 
 	private List<News> getAllNews(User user) {
@@ -101,5 +87,14 @@ public class HomePageController extends AbstractController {
 	public void loadOwnNews() {
 		UserPageController controller = redirectTo(Page.USER_PAGE);
 		controller.init(user);
+	}
+
+	public void categories() {
+		CategoriesController controller = redirectTo(Page.CATEGORIES_PAGE);
+		controller.init(user);
+	}
+
+	public void logout() {
+		redirectTo(Page.LOGIN_PAGE);
 	}
 }

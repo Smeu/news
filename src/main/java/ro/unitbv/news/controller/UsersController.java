@@ -14,6 +14,8 @@ import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.UserService;
 
 /**
+ * Controller for the users page.
+ *
  * @author Rares Smeu
  */
 public class UsersController extends AbstractController {

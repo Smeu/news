@@ -12,6 +12,8 @@ import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.UserService;
 
 /**
+ * Controller for comment component.
+ *
  * @author Rares Smeu
  */
 public class CommentController extends AbstractController {

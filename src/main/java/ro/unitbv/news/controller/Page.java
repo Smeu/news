@@ -20,7 +20,9 @@ public enum Page {
 
 	USER_PAGE("News", "pages/userPage.fxml"),
 
-	CATEGORIES_PAGE("Categories", "pages/categories.fxml");
+	CATEGORIES_PAGE("Categories", "pages/categories.fxml"),
+
+	CATEGORY_PAGE("Category", "pages/category.fxml");
 
 	private String pagePath;
 

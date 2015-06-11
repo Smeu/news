@@ -5,6 +5,8 @@ import ro.unitbv.news.controller.CommentController;
 import ro.unitbv.news.model.Comment;
 
 /**
+ * Component for a comment
+ *
  * @author Rares Smeu
  */
 public class CommentComponent extends AbstractComponent {

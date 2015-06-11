@@ -28,6 +28,8 @@ import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.CommentService;
 
 /**
+ * Controller for the news container component.
+ *
  * @author Rares Smeu
  */
 public class NewsController extends AbstractController {
@@ -72,7 +74,8 @@ public class NewsController extends AbstractController {
 			categoryLabel.setPadding(new Insets(0, 5, 0, 5));
 			categoryLabel.setUnderline(true);
 			categoryLabel.setOnMouseClicked(event -> {
-
+				CategoryController controller = redirectTo(Page.CATEGORY_PAGE);
+				controller.init(user, category);
 			});
 			categoriesContainer.getChildren().add(categoryLabel);
 		});
