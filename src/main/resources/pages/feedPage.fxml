@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.FeedPageController">
+    <children>
+        <VBox alignment="TOP_CENTER">
+            <children>
+                <Label fx:id="feedLabel" alignment="CENTER" contentDisplay="CENTER">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets left="20.0" top="20.0"/>
+                    </VBox.margin>
+                </Label>
+                <Button fx:id="homepageButton" alignment="TOP_CENTER" mnemonicParsing="false" onMouseClicked="#redirectToHomepage" text="Homepage">
+                    <VBox.margin>
+                        <Insets left="20.0" top="10.0"/>
+                    </VBox.margin>
+                </Button>
+            </children>
+            <HBox.margin>
+                <Insets right="15.0"/>
+            </HBox.margin>
+        </VBox>
+        <VBox fx:id="feedPageContainer" alignment="TOP_CENTER" stylesheets="@main.css"/>
+    </children>
+</HBox>

@@ -10,49 +10,50 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
 import ro.unitbv.news.factory.ServiceFactory;
+import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.User;
-import ro.unitbv.news.service.NewsService;
+import ro.unitbv.news.service.FeedService;
 
 /**
- * Controller for a user's page.
+ * Controller for a feed's page.
  *
  * @author Teodora Tanase
  */
-public class UserPageController extends AbstractController {
+public class FeedPageController extends AbstractController {
 
-	private NewsService newsService;
+	private Feed feed;
 
 	private User loggedUser;
 
-	private User user;
+	private FeedService feedService;
 
 	@FXML
-	private Label usernameLabel;
-
-	@FXML
-	private VBox userPageContainer;
+	private Label feedLabel;
 
 	@FXML
 	private Button homepageButton;
 
-	public UserPageController() {
-		newsService = ServiceFactory.getInstance().getNewsService();
+	@FXML
+	private VBox feedPageContainer;
+
+	public FeedPageController() {
+		feedService = ServiceFactory.getInstance().getFeedService();
 	}
 
-	public void init(User loggedUser, User user) {
+	public void init(Feed feed, User loggedUser) {
+		this.feed = feed;
 		this.loggedUser = loggedUser;
-		this.user = user;
-		usernameLabel.setText(user.getUsername() + "\n- News -");
-		NewsContainer newsContainer = new NewsContainer(user, this);
+		feedLabel.setText(feed.getName());
+		NewsContainer newsContainer = new NewsContainer(loggedUser, this);
 		List<News> newsList = getAllNews();
 		newsContainer.setNews(newsList);
-		userPageContainer.getChildren().add(newsContainer.getComponent());
+		feedPageContainer.getChildren().add(newsContainer.getComponent());
 	}
 
 	private List<News> getAllNews() {
 		List<News> newsList = new ArrayList<>();
-		newsList.addAll(newsService.getAll(user).getResponse());
+		newsList.addAll(feedService.getNews(feed).getResponse());
 		Collections.sort(newsList, (first, second) -> second.getDate().compareTo(first.getDate()));
 		return newsList;
 	}

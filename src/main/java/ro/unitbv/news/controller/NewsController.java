@@ -10,6 +10,8 @@ import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,15 +19,21 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import ro.unitbv.news.component.CommentComponent;
 import ro.unitbv.news.factory.ServiceFactory;
 import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.model.Error;
+import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.FieldError;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.CommentService;
+import ro.unitbv.news.service.FeedService;
+import ro.unitbv.news.service.UserService;
 
 /**
  * Controller for the news container component.
@@ -49,21 +57,54 @@ public class NewsController extends AbstractController {
 
 	private CommentService commentService;
 
+	private UserService userService;
+
+	private FeedService feedService;
+
+	private User newsOwner;
+
+	private Feed newsFeed;
+
 	private News news;
 
 	private User user;
 
 	public void init(News news, User user) {
 		commentService = ServiceFactory.getInstance().getCommentService();
+		userService = ServiceFactory.getInstance().getUserService();
+		feedService = ServiceFactory.getInstance().getFeedService();
 		this.news = news;
 		this.user = user;
 		title.setText(news.getTitle());
 		content.setText(news.getContent());
-		feedTitle.setText("feed title");
 		addCategories();
 		if (news.getOwnerId() != 0) {
+			findNewsOwner();
+			if (newsOwner != null) {
+				feedTitle.setText(newsOwner.getUsername());
+			}
 			saveButton.setVisible(false);
 			addComments();
+		}
+		else {
+			findNewsFeed();
+			if (newsFeed != null) {
+				feedTitle.setText(newsFeed.getName());
+			}
+		}
+	}
+
+	private void findNewsOwner() {
+		Response<User> response = userService.get(news.getOwnerId());
+		if (!response.hasErrors()) {
+			newsOwner = response.getResponse();
+		}
+	}
+
+	private void findNewsFeed() {
+		Response<Feed> response = feedService.get(news.getFeedId());
+		if (!response.hasErrors()) {
+			newsFeed = response.getResponse();
 		}
 	}
 
@@ -140,11 +181,34 @@ public class NewsController extends AbstractController {
 	}
 
 	public void goToNewsSource() throws Exception {
-		Desktop.getDesktop().browse(new URI(news.getUrl()));
+		Stage stage = new Stage();
+		stage.setTitle(news.getTitle());
+		stage.setWidth(500);
+		stage.setHeight(500);
+		Scene scene = new Scene(new Group());
+		VBox root = new VBox();
+		WebView browser = new WebView();
+		WebEngine webEngine = browser.getEngine();
+		webEngine.load(news.getUrl());
+		root.getChildren().add(browser);
+		scene.setRoot(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	public void saveNews() {
 		ServiceFactory.getInstance().getNewsService().add(news, user);
 		saveButton.setVisible(false);
+	}
+
+	public void goToOwner() {
+		if (newsOwner != null) {
+			UserPageController userPageController = redirectTo(Page.USER_PAGE);
+			userPageController.init(user, newsOwner);
+		}
+		else if (newsFeed != null) {
+			FeedPageController feedPageController = redirectTo(Page.FEED_PAGE);
+			feedPageController.init(newsFeed, user);
+		}
 	}
 }

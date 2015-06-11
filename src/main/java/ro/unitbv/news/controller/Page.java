@@ -22,7 +22,9 @@ public enum Page {
 
 	CATEGORIES_PAGE("Categories", "pages/categories.fxml"),
 
-	CATEGORY_PAGE("Category", "pages/category.fxml");
+	CATEGORY_PAGE("Category", "pages/category.fxml"),
+
+	FEED_PAGE("Feed", "pages/feedPage.fxml");
 
 	private String pagePath;
 

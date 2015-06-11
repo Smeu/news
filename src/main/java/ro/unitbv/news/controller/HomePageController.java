@@ -86,7 +86,7 @@ public class HomePageController extends AbstractController {
 
 	public void loadOwnNews() {
 		UserPageController controller = redirectTo(Page.USER_PAGE);
-		controller.init(user);
+		controller.init(user, user);
 	}
 
 	public void categories() {

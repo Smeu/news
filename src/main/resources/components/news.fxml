@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -11,43 +17,44 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+
 <VBox alignment="center" prefHeight="200.0" prefWidth="300.0" stylesheets="@../pages/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.NewsController">
     <children>
         <Text fx:id="title" onMouseClicked="#goToNewsSource" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="500">
             <font>
-                <Font size="20.0"/>
+                <Font size="20.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </Text>
-        <FlowPane fx:id="categoriesContainer"/>
+        <FlowPane fx:id="categoriesContainer" />
         <Text fx:id="content" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="500">
         </Text>
         <HBox alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="357.0">
             <children>
-                <Label text="from  "/>
-                <Label fx:id="feedTitle">
+                <Label text="from  " />
+                <Label fx:id="feedTitle" onMouseClicked="#goToOwner">
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </Label>
             </children>
         </HBox>
         <Button fx:id="saveButton" mnemonicParsing="false" onMouseClicked="#saveNews" prefHeight="5.0" prefWidth="129.0" text="Save">
             <styleClass>
-                <String fx:value="btn"/>
-                <String fx:value="btn"/>
+                <String fx:value="btn" />
+                <String fx:value="btn" />
             </styleClass>
         </Button>
         <VBox fx:id="commentContainer">
             <padding>
-                <Insets bottom="20.0" top="20.0" left="20.0" right="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
         </VBox>
-        <Separator prefWidth="200.0"/>
+        <Separator prefWidth="200.0" />
     </children>
     <padding>
-        <Insets bottom="20.0" top="20.0"/>
+        <Insets bottom="20.0" top="20.0" />
     </padding>
 </VBox>
