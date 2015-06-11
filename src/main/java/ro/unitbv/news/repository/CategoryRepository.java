@@ -3,8 +3,6 @@ package ro.unitbv.news.repository;
 import java.util.List;
 
 import ro.unitbv.news.model.Category;
-import ro.unitbv.news.model.News;
-import ro.unitbv.news.model.User;
 
 /**
  * Repository for {@link ro.unitbv.news.model.Category}.
@@ -35,4 +33,12 @@ public interface CategoryRepository {
 	 * @return categories.
 	 */
 	List<Category> getAll();
+
+	/**
+	 * Adds a keyword to a category.
+	 *
+	 * @param category in what category to add the keyword.
+	 * @param keyword  the keyword for the category.
+	 **/
+	void addKeyword(Category category, String keyword);
 }

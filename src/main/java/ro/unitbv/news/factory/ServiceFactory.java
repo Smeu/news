@@ -34,7 +34,7 @@ public class ServiceFactory {
 		RepositoryFactory repositoryFactory = new RepositoryFactory();
 		ValidatorFactory validatorFactory = new ValidatorFactory();
 
-		FeedService feedService = new DefaultFeedService(repositoryFactory.getFeedRepository(),
+		DefaultFeedService feedService = new DefaultFeedService(repositoryFactory.getFeedRepository(),
 				validatorFactory.getFeedValidator());
 		NewsService newsService = new DefaultNewsService(repositoryFactory.getNewsRepository());
 		UserService userService = new DefaultUserService(repositoryFactory.getUserRepository(),
@@ -43,6 +43,7 @@ public class ServiceFactory {
 				validatorFactory.getCommentValidator());
 		CategoryService categoryService = new DefaultCategoryService(repositoryFactory.getCategoryRepository(),
 				validatorFactory.getCategoryValidator());
+		feedService.setCategoryService(categoryService);
 
 		feedServiceProxy = (FeedService) Proxy.newProxyInstance(FeedService.class.getClassLoader(), new Class[]
 				{FeedService.class}, new ServiceInvocationHandler(feedService));

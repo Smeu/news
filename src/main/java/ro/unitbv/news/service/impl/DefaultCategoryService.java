@@ -64,6 +64,12 @@ public class DefaultCategoryService implements CategoryService {
 		return new Response<>(selectedNews);
 	}
 
+	@Override
+	public Response addKeyword(Category category, String keyword) {
+		repository.addKeyword(category, keyword);
+		return new Response();
+	}
+
 	private List<News> findForCategoryAndUser(Category category, User user) {
 		NewsService newsService = ServiceFactory.getInstance().getNewsService();
 		FeedService feedService = ServiceFactory.getInstance().getFeedService();

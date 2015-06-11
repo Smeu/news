@@ -21,26 +21,7 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </Text>
-        <FlowPane>
-            <children>
-                <Label text="Category" underline="true">
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                    <padding>
-                        <Insets left="5.0" right="5.0"/>
-                    </padding>
-                </Label>
-                <Label text="Category" underline="true">
-                    <padding>
-                        <Insets left="5.0" right="5.0"/>
-                    </padding>
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </Label>
-            </children>
-        </FlowPane>
+        <FlowPane fx:id="categoriesContainer"/>
         <Text fx:id="content" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="500">
         </Text>
         <HBox alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="357.0">

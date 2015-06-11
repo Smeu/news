@@ -29,11 +29,16 @@ public abstract class AbstractController {
 
 	private Stage primaryStage;
 
+	protected AbstractController mainController;
+
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 
 	protected <T extends AbstractController> T redirectTo(Page page) {
+		if (mainController != null) {
+			return mainController.redirectTo(page);
+		}
 		FXMLLoader loader = new FXMLLoader(AbstractController.class.getClassLoader().getResource(page.getPagePath()));
 		Pane myPane;
 		try {
@@ -88,5 +93,9 @@ public abstract class AbstractController {
 		if (!node.getStyleClass().contains(cssClass)) {
 			node.getStyleClass().add(cssClass);
 		}
+	}
+
+	public void setMainController(AbstractController mainController) {
+		this.mainController = mainController;
 	}
 }

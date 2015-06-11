@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ro.unitbv.news.component.CommentComponent;
@@ -40,6 +42,8 @@ public class NewsController extends AbstractController {
 	private Button saveButton;
 	@FXML
 	private VBox commentContainer;
+	@FXML
+	private FlowPane categoriesContainer;
 
 	private CommentService commentService;
 
@@ -54,10 +58,24 @@ public class NewsController extends AbstractController {
 		title.setText(news.getTitle());
 		content.setText(news.getContent());
 		feedTitle.setText("feed title");
+		addCategories();
 		if (news.getOwnerId() != 0) {
 			saveButton.setVisible(false);
 			addComments();
 		}
+	}
+
+	private void addCategories() {
+		news.getCategories().forEach(category -> {
+			Label categoryLabel = new Label(category.getName());
+			categoryLabel.setCursor(Cursor.HAND);
+			categoryLabel.setPadding(new Insets(0, 5, 0, 5));
+			categoryLabel.setUnderline(true);
+			categoryLabel.setOnMouseClicked(event -> {
+
+			});
+			categoriesContainer.getChildren().add(categoryLabel);
+		});
 	}
 
 	private void addComments() {
@@ -65,7 +83,7 @@ public class NewsController extends AbstractController {
 		Response<List<Comment>> comments = commentService.getComments(news);
 		if (!comments.hasErrors()) {
 			for (Comment comment : comments.getResponse()) {
-				CommentComponent component = new CommentComponent(comment);
+				CommentComponent component = new CommentComponent(comment, mainController);
 				commentContainer.getChildren().add(component.getComponent());
 			}
 		}

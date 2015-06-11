@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ro.unitbv.news.model.Category;
-import ro.unitbv.news.model.News;
-import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.CategoryRepository;
 import ro.unitbv.news.repository.exception.InvalidIdException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * In memory implementation for {@link ro.unitbv.news.repository.CategoryRepository}.
@@ -36,5 +35,10 @@ public class InMemoryCategoryRepository implements CategoryRepository {
 	@Override
 	public List<Category> getAll() {
 		return categories;
+	}
+
+	@Override
+	public void addKeyword(Category category, String keyword) {
+		throw new NotImplementedException();
 	}
 }

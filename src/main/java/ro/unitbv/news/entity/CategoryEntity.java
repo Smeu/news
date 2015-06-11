@@ -1,5 +1,6 @@
 package ro.unitbv.news.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -64,5 +65,12 @@ public class CategoryEntity {
 
 	public void setNewsList(List<NewsEntity> newsList) {
 		this.newsList = newsList;
+	}
+
+	public void addKeyword(String keyword) {
+		if (keywords == null) {
+			keywords = new ArrayList<>();
+		}
+		keywords.add(keyword);
 	}
 }

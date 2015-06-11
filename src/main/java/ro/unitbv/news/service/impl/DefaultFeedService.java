@@ -7,6 +7,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import ro.unitbv.news.model.Category;
 import ro.unitbv.news.model.Error;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.FieldError;
@@ -15,6 +16,7 @@ import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.parser.RssFeedParser;
 import ro.unitbv.news.repository.FeedRepository;
+import ro.unitbv.news.service.CategoryService;
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.validator.FeedValidator;
 import ro.unitbv.news.validator.ValidationResult;
@@ -33,6 +35,8 @@ public class DefaultFeedService implements FeedService {
 	private FeedRepository repository;
 
 	private FeedValidator validator;
+
+	private CategoryService categoryService;
 
 	public DefaultFeedService(FeedRepository repository, FeedValidator validator) {
 		this.repository = repository;
@@ -70,9 +74,18 @@ public class DefaultFeedService implements FeedService {
 			URL url = new URL(feed.getUrl());
 			URLConnection connection = url.openConnection();
 			RssFeedParser parser = new RssFeedParser();
+			List<Category> categories = categoryService.getAll().getResponse();
 			try (InputStream inputStream = connection.getInputStream()) {
 				List<News> newsList = parser.retrieveNews(inputStream);
 				for (News news : newsList) {
+					for (Category category : categories) {
+						for (String keyword : category.getKeywords()) {
+							if (news.getContent().contains(keyword) || news.getTitle().contains(keyword)) {
+								news.addCategory(category);
+								break;
+							}
+						}
+					}
 					news.setFeedId(feed.getId());
 				}
 				return new Response<>(newsList);
@@ -83,5 +96,9 @@ public class DefaultFeedService implements FeedService {
 			errors.add(new FieldError(URL, Error.URL_NOT_AVAILABLE));
 			return new Response<>(errors);
 		}
+	}
+
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
 	}
 }

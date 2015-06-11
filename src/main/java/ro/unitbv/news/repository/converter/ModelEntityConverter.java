@@ -13,6 +13,7 @@ import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.User;
+import ro.unitbv.news.model.UserType;
 
 /**
  * Tool that converts model objects to entities or entities to model objects.
@@ -32,6 +33,7 @@ public class ModelEntityConverter {
 		userModel.setId(userEntity.getId());
 		userModel.setUsername(userEntity.getUsername());
 		userModel.setPassword(userEntity.getPassword());
+		userModel.setType(userEntity.getType());
 		return userModel;
 	}
 
@@ -46,6 +48,10 @@ public class ModelEntityConverter {
 		userEntity.setId(userModel.getId());
 		userEntity.setUsername(userModel.getUsername());
 		userEntity.setPassword(userModel.getPassword());
+		userEntity.setType(userModel.getType());
+		if (userModel.getType() == null) {
+			userEntity.setType(UserType.USER);
+		}
 		return userEntity;
 	}
 

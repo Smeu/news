@@ -17,4 +17,8 @@
         <appender-ref ref="console"/>
         <appender-ref ref="file"/>
     </root>
+
+    <logger name="org.hibernate">
+        <level value="error"/>
+    </logger>
 </configuration>

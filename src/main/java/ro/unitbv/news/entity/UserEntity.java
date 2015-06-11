@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import ro.unitbv.news.model.UserType;
+
 @Entity
 @Table(name = "user")
 @Embeddable
@@ -27,6 +29,8 @@ public class UserEntity {
 	private String username;
 
 	private String password;
+
+	private UserType type;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "user_followedUser", joinColumns = @JoinColumn(name = "followedUser_id"))
@@ -66,5 +70,13 @@ public class UserEntity {
 
 	public void addFollowedUser(UserEntity followedUser) {
 		followedUsers.add(followedUser);
+	}
+
+	public UserType getType() {
+		return type;
+	}
+
+	public void setType(UserType type) {
+		this.type = type;
 	}
 }

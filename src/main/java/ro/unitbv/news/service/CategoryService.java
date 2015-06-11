@@ -38,6 +38,15 @@ public interface CategoryService {
 	Response<List<Category>> getAll();
 
 	/**
+	 * Adds a keyword to a category.
+	 *
+	 * @param category in what category to add the keyword.
+	 * @param keyword  the keyword for the category.
+	 * @return errors containing potential errors.
+	 **/
+	Response addKeyword(Category category, String keyword);
+
+	/**
 	 * Retrieves all news from a certain category that are linked to the specified user.
 	 *
 	 * @param category category for news.

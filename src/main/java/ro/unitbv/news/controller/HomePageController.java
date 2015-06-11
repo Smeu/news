@@ -14,6 +14,7 @@ import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
+import ro.unitbv.news.model.UserType;
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.service.NewsService;
 import ro.unitbv.news.service.UserService;
@@ -24,6 +25,9 @@ import ro.unitbv.news.service.UserService;
  * @author Rares Smeu
  */
 public class HomePageController extends AbstractController {
+
+	@FXML
+	private VBox menu;
 
 	@FXML
 	private VBox homePageContainer;
@@ -49,9 +53,20 @@ public class HomePageController extends AbstractController {
 		this.user = user;
 		homePageContainer.setAlignment(Pos.TOP_CENTER);
 		List<News> news = getAllNews(user);
-		NewsContainer container = new NewsContainer(user);
+		NewsContainer container = new NewsContainer(user, this);
 		container.setNews(news);
 		homePageContainer.getChildren().add(container.getComponent());
+
+		if (user.getType() == UserType.ADMIN) {
+			Button button = new Button("Categories");
+			button.setPrefWidth(98);
+			button.setPrefHeight(25);
+			button.setOnMouseClicked(event -> {
+				CategoriesController controller = redirectTo(Page.CATEGORIES_PAGE);
+				controller.init(user);
+			});
+			menu.getChildren().add(button);
+		}
 	}
 
 	private List<News> getAllNews(User user) {

@@ -12,7 +12,7 @@
     <children>
       <HBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="608.0">
          <children>
-            <VBox minHeight="200.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="SOMETIMES">
+            <VBox fx:id="menu" minHeight="200.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="SOMETIMES">
                <children>
                   <Button fx:id="ownNewsButton" mnemonicParsing="false" onMouseClicked="#loadOwnNews" prefHeight="25.0" prefWidth="98.0" text="My News" />
                   <Button mnemonicParsing="false" onMouseClicked="#addFeed" prefHeight="25.0" prefWidth="98.0" text="Add Feed" VBox.vgrow="SOMETIMES" />

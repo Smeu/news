@@ -20,6 +20,8 @@ public class User {
 
 	private List<User> followedUsers = new ArrayList<>();
 
+	private UserType type;
+
 	public long getId() {
 		return id;
 	}
@@ -52,6 +54,14 @@ public class User {
 		followedUsers.add(user);
 	}
 
+	public UserType getType() {
+		return type;
+	}
+
+	public void setType(UserType type) {
+		this.type = type;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -63,20 +73,22 @@ public class User {
 		User user = (User) o;
 		return Objects.equals(id, user.id) &&
 				Objects.equals(username, user.username) &&
-				Objects.equals(password, user.password);
+				Objects.equals(password, user.password) &&
+				Objects.equals(type, user.type);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, username, password);
+		return Objects.hash(id, username, password, type);
 	}
 
 	@Override
 	public String toString() {
 		return "User{" +
 				"id=" + id +
-				", followedUsers=" + followedUsers +
 				", username='" + username + '\'' +
+				", followedUsers=" + followedUsers +
+				", type=" + type +
 				'}';
 	}
 }

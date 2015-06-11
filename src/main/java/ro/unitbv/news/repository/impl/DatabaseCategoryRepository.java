@@ -70,4 +70,23 @@ public class DatabaseCategoryRepository implements CategoryRepository {
 			session.close();
 		}
 	}
+
+	@Override
+	public void addKeyword(Category category, String keyword) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			CategoryEntity categoryEntity = (CategoryEntity) session.get(CategoryEntity.class, category.getId());
+			if (categoryEntity == null) {
+				throw new InvalidIdException();
+			}
+			categoryEntity.addKeyword(keyword);
+			session.update(categoryEntity);
+			session.getTransaction().commit();
+		}
+		finally {
+			session.close();
+		}
+	}
+
 }
