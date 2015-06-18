@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -36,6 +37,8 @@ public class UsersController extends AbstractController {
 			HBox hBox = new HBox();
 			hBox.setAlignment(Pos.TOP_CENTER);
 			Label label = new Label(user.getUsername());
+			label.setOnMouseClicked(event -> redirectToUserPage(user));
+			label.setCursor(Cursor.HAND);
 			Button button = new Button();
 			if (followedUsers.contains(user)) {
 				unFollowButton(button, user);
@@ -76,6 +79,14 @@ public class UsersController extends AbstractController {
 			userService.deleteFollowedUser(loggedUser.getId(), user, loggedUser);
 			followButton(button, user);
 		});
+	}
+
+	private void redirectToUserPage(User user){
+		if (!userService.getFollowedUsers(loggedUser.getId()).getResponse().contains(user)){
+			return;
+		}
+		UserPageController userPageController = redirectTo(Page.USER_PAGE);
+		userPageController.init(loggedUser, user);
 	}
 
 }

@@ -44,7 +44,7 @@ public class UserPageController extends AbstractController {
 		this.loggedUser = loggedUser;
 		this.user = user;
 		usernameLabel.setText(user.getUsername() + "\n- News -");
-		NewsContainer newsContainer = new NewsContainer(user, this);
+		NewsContainer newsContainer = new NewsContainer(loggedUser, this);
 		List<News> newsList = getAllNews();
 		newsContainer.setNews(newsList);
 		userPageContainer.getChildren().add(newsContainer.getComponent());
