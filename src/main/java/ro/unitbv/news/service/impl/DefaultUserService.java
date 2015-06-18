@@ -1,11 +1,13 @@
 package ro.unitbv.news.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import ro.unitbv.news.model.Response;
-import ro.unitbv.news.model.User;
+import ro.unitbv.news.model.*;
+import ro.unitbv.news.model.Error;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.service.UserService;
+import ro.unitbv.news.validator.StringFieldValidator;
 import ro.unitbv.news.validator.UserValidator;
 import ro.unitbv.news.validator.ValidationResult;
 
@@ -16,6 +18,8 @@ import ro.unitbv.news.validator.ValidationResult;
  * @author Teodora Tanase
  */
 public class DefaultUserService implements UserService {
+
+	private static final String PERFORMER = "performer";
 
 	private UserValidator validator;
 	private UserRepository repository;
@@ -64,5 +68,15 @@ public class DefaultUserService implements UserService {
 		Response<List<User>> response = new Response<>();
 		response.setResponse(repository.getAll());
 		return response;
+	}
+
+	@Override
+	public Response<Boolean> delete(long id, User performer) {
+		if (!performer.getType().equals(UserType.ADMIN)) {
+			List<FieldError> errorList = new ArrayList<>();
+			errorList.add(new FieldError(PERFORMER, Error.FAILED_REQUEST));
+			return new Response<>(errorList);
+		}
+		return new Response<>(repository.delete(id));
 	}
 }

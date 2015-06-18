@@ -24,7 +24,7 @@ public class CommentEntity {
 	@JoinColumn(name = "newsId")
 	private NewsEntity news;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "ownerId")
 	private UserEntity owner;
 

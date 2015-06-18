@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ro.unitbv.news.factory.ServiceFactory;
-import ro.unitbv.news.model.Category;
-import ro.unitbv.news.model.Feed;
-import ro.unitbv.news.model.News;
-import ro.unitbv.news.model.Response;
-import ro.unitbv.news.model.User;
+import ro.unitbv.news.model.*;
 import ro.unitbv.news.repository.CategoryRepository;
 import ro.unitbv.news.service.CategoryService;
 import ro.unitbv.news.service.FeedService;
@@ -22,6 +18,8 @@ import ro.unitbv.news.validator.ValidationResult;
  * @author Teodora Tanase
  */
 public class DefaultCategoryService implements CategoryService {
+
+	private static final String PERFORMER = "performer";
 
 	private CategoryRepository repository;
 
@@ -92,5 +90,15 @@ public class DefaultCategoryService implements CategoryService {
 			}
 		}
 		return selectedNews;
+	}
+
+	@Override
+	public Response<Boolean> delete(long id, User performer) {
+		if (!performer.getType().equals(UserType.ADMIN)) {
+			List<FieldError> errorList = new ArrayList<>();
+			errorList.add(new FieldError(PERFORMER, ro.unitbv.news.model.Error.FAILED_REQUEST));
+			return new Response<>(errorList);
+		}
+		return new Response<>(repository.delete(id));
 	}
 }

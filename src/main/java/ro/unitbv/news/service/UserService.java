@@ -62,4 +62,14 @@ public interface UserService {
 	 * @return response holding all users that the given one is following or the errors.
 	 */
 	Response<List<User>> getFollowedUsers(long id);
+
+	/**
+	 * Deletes a user after its id.
+	 *
+	 * @param id        id of the user to delete.
+	 * @param performer user that performs deletion.
+	 * @return response holding <code>true</code> if deletion was performed, <code>false</code> if deletion was not
+	 * performed or the errors.
+	 */
+	Response<Boolean> delete(long id, User performer);
 }

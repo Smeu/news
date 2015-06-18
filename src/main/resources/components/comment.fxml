@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<VBox alignment="center" prefHeight="200.0" prefWidth="300.0" stylesheets="@../pages/main.css"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ro.unitbv.news.controller.CommentController">
+
+<VBox alignment="center" prefHeight="200.0" prefWidth="300.0" stylesheets="@../pages/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.CommentController">
     <children>
-        <Separator prefWidth="200.0"/>
+        <Separator prefWidth="200.0" />
         <HBox alignment="TOP_LEFT">
-            <Label fx:id="author" styleClass="bold" onMouseClicked="#redirectToUserPage">
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
-            </Label>
+           <children>
+               <Label fx:id="author" onMouseClicked="#redirectToUserPage" styleClass="bold">
+                   <cursor>
+                       <Cursor fx:constant="HAND" />
+                   </cursor>
+               </Label>
+           </children>
         </HBox>
-        <Text fx:id="content" wrappingWidth="450.0" VBox.vgrow="SOMETIMES"/>
-        <HBox alignment="TOP_RIGHT">
-            <Label fx:id="date"/>
+        <Text fx:id="content" wrappingWidth="450.0" VBox.vgrow="SOMETIMES" />
+        <HBox alignment="TOP_RIGHT" spacing="10.0">
+           <children>
+               <Label fx:id="date" />
+            <Button fx:id="deleteButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#deleteComment" text="Delete" visible="false" />
+           </children>
         </HBox>
     </children>
 </VBox>

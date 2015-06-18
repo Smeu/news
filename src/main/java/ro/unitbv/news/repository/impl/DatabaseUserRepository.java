@@ -5,6 +5,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import ro.unitbv.news.entity.UserEntity;
@@ -121,6 +122,28 @@ public class DatabaseUserRepository implements UserRepository {
 				users.add(user);
 			}
 			return users;
+		}
+		finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public boolean delete(long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Query newsQuery = session.createQuery("delete from NewsEntity news where news.owner.id = :owner_id");
+			newsQuery.setParameter("owner_id", id);
+			newsQuery.executeUpdate();
+			Query feedQuery = session.createQuery("delete from FeedEntity feed where feed.owner.id = :owner_id");
+			feedQuery.setParameter("owner_id", id);
+			feedQuery.executeUpdate();
+			Query userQuery = session.createQuery("delete from UserEntity where id = :id");
+			userQuery.setParameter("id", id);
+			userQuery.executeUpdate();
+			session.getTransaction().commit();
+			return true;
 		}
 		finally {
 			session.close();

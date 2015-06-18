@@ -49,4 +49,14 @@ public interface FeedService {
 	 * @return response holding latest news or the errors.
 	 */
 	Response<List<News>> getNews(Feed feed);
+
+	/**
+	 * Deletes a feed after its id.
+	 *
+	 * @param id        id of the feed to delete.
+	 * @param performer user that performs deletion.
+	 * @return response holding <code>true</code> if deletion was performed, <code>false</code> if deletion was not
+	 * performed or the errors.
+	 */
+	Response<Boolean> delete(long id, User performer);
 }

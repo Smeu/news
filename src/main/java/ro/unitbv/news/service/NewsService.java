@@ -29,4 +29,14 @@ public interface NewsService {
 	 * @return response holding the errors, in case there are any.
 	 */
 	Response<Void> add(News news, User user);
+
+	/**
+	 * Deletes a piece of news after its id.
+	 *
+	 * @param id        id of the news to delete.
+	 * @param performer user that performs deletion.
+	 * @return response holding <code>true</code> if deletion was performed, <code>false</code> if deletion was not
+	 * performed or the errors.
+	 */
+	Response<Boolean> delete(long id, User performer);
 }

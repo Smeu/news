@@ -54,4 +54,14 @@ public interface CategoryService {
 	 * @return response holding the news or the errors.
 	 */
 	Response<List<News>> getNews(Category category, User user);
+
+	/**
+	 * Deletes a category after its id.
+	 *
+	 * @param id        id of the category to delete.
+	 * @param performer user that performs deletion.
+	 * @return response holding <code>true</code> if deletion was performed, <code>false</code> if deletion was not
+	 * performed or the errors.
+	 */
+	Response<Boolean> delete(long id, User performer);
 }

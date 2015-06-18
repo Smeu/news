@@ -8,10 +8,8 @@ import org.hibernate.Session;
 
 import ro.unitbv.news.entity.NewsEntity;
 import ro.unitbv.news.factory.RepositoryFactory;
-import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.User;
-import ro.unitbv.news.repository.FeedRepository;
 import ro.unitbv.news.repository.NewsRepository;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.repository.converter.ModelEntityConverter;
@@ -32,11 +30,8 @@ public class DatabaseNewsRepository implements NewsRepository {
 		NewsEntity newsEntity = converter.toNewsEntity(news);
 		RepositoryFactory repositoryFactory = new RepositoryFactory();
 		UserRepository userRepository = repositoryFactory.getUserRepository();
-		FeedRepository feedRepository = repositoryFactory.getFeedRepository();
 		User owner = userRepository.get(news.getOwnerId());
-		Feed feed = feedRepository.get(news.getFeedId());
 		newsEntity.setOwner(converter.toUserEntity(owner));
-		newsEntity.setFeed(converter.toFeedEntity(feed));
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
@@ -81,6 +76,25 @@ public class DatabaseNewsRepository implements NewsRepository {
 				newsList.add(news);
 			}
 			return newsList;
+		}
+		finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public boolean delete(long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Query commentQuery = session.createQuery("delete from CommentEntity comment where comment.news.id = :news_id");
+			commentQuery.setParameter("news_id", id);
+			commentQuery.executeUpdate();
+			Query newsQuery = session.createQuery("delete from NewsEntity where id = :id");
+			newsQuery.setParameter("id", id);
+			newsQuery.executeUpdate();
+			session.getTransaction().commit();
+			return true;
 		}
 		finally {
 			session.close();

@@ -41,4 +41,12 @@ public interface CategoryRepository {
 	 * @param keyword  the keyword for the category.
 	 **/
 	void addKeyword(Category category, String keyword);
+
+	/**
+	 * Deletes a category after its id.
+	 *
+	 * @param id id of the category to be deleted.
+	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 */
+	boolean delete(long id);
 }

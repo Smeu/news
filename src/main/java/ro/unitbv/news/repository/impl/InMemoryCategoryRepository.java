@@ -41,4 +41,13 @@ public class InMemoryCategoryRepository implements CategoryRepository {
 	public void addKeyword(Category category, String keyword) {
 		throw new NotImplementedException();
 	}
+
+	@Override
+	public boolean delete(long id) {
+		if (id < 0 || id >= categories.size()) {
+			throw new InvalidIdException();
+		}
+		categories.set((int) id, null);
+		return true;
+	}
 }

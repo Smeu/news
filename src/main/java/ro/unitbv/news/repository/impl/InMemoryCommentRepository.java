@@ -41,4 +41,13 @@ public class InMemoryCommentRepository implements CommentRepository {
 		}
 		return selectedComments;
 	}
+
+	@Override
+	public boolean delete(long id) {
+		if (id < 0 || id >= comments.size()) {
+			throw new InvalidIdException();
+		}
+		comments.set((int) id, null);
+		return true;
+	}
 }

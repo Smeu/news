@@ -7,6 +7,7 @@ import ro.unitbv.news.service.CommentService;
 import ro.unitbv.news.service.FeedService;
 import ro.unitbv.news.service.NewsService;
 import ro.unitbv.news.service.UserService;
+import ro.unitbv.news.service.classifier.Classifier;
 import ro.unitbv.news.service.impl.DefaultCategoryService;
 import ro.unitbv.news.service.impl.DefaultCommentService;
 import ro.unitbv.news.service.impl.DefaultFeedService;
@@ -36,14 +37,17 @@ public class ServiceFactory {
 
 		DefaultFeedService feedService = new DefaultFeedService(repositoryFactory.getFeedRepository(),
 				validatorFactory.getFeedValidator());
-		NewsService newsService = new DefaultNewsService(repositoryFactory.getNewsRepository());
+		DefaultNewsService newsService = new DefaultNewsService(repositoryFactory.getNewsRepository());
 		UserService userService = new DefaultUserService(repositoryFactory.getUserRepository(),
 				validatorFactory.getUserValidator());
 		CommentService commentService = new DefaultCommentService(repositoryFactory.getCommentRepository(),
 				validatorFactory.getCommentValidator());
 		CategoryService categoryService = new DefaultCategoryService(repositoryFactory.getCategoryRepository(),
 				validatorFactory.getCategoryValidator());
-		feedService.setCategoryService(categoryService);
+
+		Classifier classifier = new Classifier(categoryService);
+		feedService.setClassifier(classifier);
+		newsService.setClassifier(classifier);
 
 		feedServiceProxy = (FeedService) Proxy.newProxyInstance(FeedService.class.getClassLoader(), new Class[]
 				{FeedService.class}, new ServiceInvocationHandler(feedService));

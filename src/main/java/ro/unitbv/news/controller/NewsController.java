@@ -33,6 +33,7 @@ import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.CommentService;
 import ro.unitbv.news.service.FeedService;
+import ro.unitbv.news.service.NewsService;
 import ro.unitbv.news.service.UserService;
 
 /**
@@ -50,6 +51,8 @@ public class NewsController extends AbstractController {
 	private Label feedTitle;
 	@FXML
 	private Button saveButton;
+	@FXML
+	private Button deleteButton;
 	@FXML
 	private VBox commentContainer;
 	@FXML
@@ -85,6 +88,9 @@ public class NewsController extends AbstractController {
 			}
 			saveButton.setVisible(false);
 			addComments();
+			if (news.getOwnerId() == user.getId()) {
+				deleteButton.setVisible(true);
+			}
 		}
 		else {
 			findNewsFeed();
@@ -210,5 +216,12 @@ public class NewsController extends AbstractController {
 			FeedPageController feedPageController = redirectTo(Page.FEED_PAGE);
 			feedPageController.init(newsFeed, user);
 		}
+	}
+
+	public void deleteNews() {
+		NewsService newsService = ServiceFactory.getInstance().getNewsService();
+		newsService.delete(news.getId(), user);
+		deleteButton.setVisible(false);
+		// TODO: refresh page
 	}
 }

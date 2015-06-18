@@ -8,6 +8,7 @@ import ro.unitbv.news.model.Error;
 import ro.unitbv.news.model.FieldError;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.Response;
+import ro.unitbv.news.model.User;
 import ro.unitbv.news.repository.CommentRepository;
 import ro.unitbv.news.service.CommentService;
 import ro.unitbv.news.validator.CommentValidator;
@@ -21,6 +22,7 @@ import ro.unitbv.news.validator.ValidationResult;
 public class DefaultCommentService implements CommentService {
 
 	private static final String NEWS = "news";
+	private static final String PERFORMER = "performer";
 
 	private CommentRepository repository;
 
@@ -54,5 +56,19 @@ public class DefaultCommentService implements CommentService {
 			return new Response<>(errors);
 		}
 		return new Response<>(repository.getAllForNews(news.getId()));
+	}
+
+	@Override
+	public Response<Boolean> delete(long id, User performer) {
+		Comment comment = repository.get(id);
+		if (comment == null) {
+			return new Response<>(false);
+		}
+		if (performer.getId() != comment.getOwnerId()) {
+			List<FieldError> errorList = new ArrayList<>();
+			errorList.add(new FieldError(PERFORMER, Error.FAILED_REQUEST));
+			return new Response<>(errorList);
+		}
+		return new Response<>(repository.delete(id));
 	}
 }

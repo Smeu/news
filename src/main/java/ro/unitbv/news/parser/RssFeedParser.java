@@ -41,6 +41,8 @@ public class RssFeedParser {
 	private static final String LINK = "link";
 	private static final String PUB_DATE = "pubDate";
 
+	private static final char OPEN_TAG = '<';
+
 	/**
 	 * Retrieves news elements from a stream.
 	 *
@@ -81,7 +83,12 @@ public class RssFeedParser {
 			news.setTitle(titles.item(0).getTextContent());
 		}
 		if (descriptions.getLength() > 0) {
-			news.setContent(descriptions.item(0).getTextContent());
+			String description = descriptions.item(0).getTextContent();
+			int breakingIndex = description.indexOf(OPEN_TAG);
+			if (breakingIndex != -1) {
+				description = description.substring(0, breakingIndex);
+			}
+			news.setContent(description);
 		}
 		if (links.getLength() > 0) {
 			news.setUrl(links.item(0).getTextContent());

@@ -81,4 +81,22 @@ public class DatabaseFeedRepository implements FeedRepository {
 			session.close();
 		}
 	}
+
+	@Override
+	public boolean delete(long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			FeedEntity feedEntity = (FeedEntity) session.get(FeedEntity.class, id);
+			if (feedEntity == null) {
+				return false;
+			}
+			session.delete(feedEntity);
+			session.getTransaction().commit();
+			return true;
+		}
+		finally {
+			session.close();
+		}
+	}
 }

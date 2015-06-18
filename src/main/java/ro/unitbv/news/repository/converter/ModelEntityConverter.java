@@ -1,8 +1,5 @@
 package ro.unitbv.news.repository.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ro.unitbv.news.entity.CategoryEntity;
 import ro.unitbv.news.entity.CommentEntity;
 import ro.unitbv.news.entity.FeedEntity;
@@ -96,19 +93,15 @@ public class ModelEntityConverter {
 		News newsModel = new News();
 		newsModel.setId(newsEntity.getId());
 		newsModel.setOwnerId(newsEntity.getOwner().getId());
-		newsModel.setFeedId(newsEntity.getFeed().getId());
 		newsModel.setTitle(newsEntity.getTitle());
 		newsModel.setContent(newsEntity.getContent());
 		newsModel.setUrl(newsEntity.getUrl());
 		newsModel.setDate(newsEntity.getDate());
-		for (CategoryEntity categoryEntity : newsEntity.getCategories()) {
-			newsModel.addCategory(toCategoryModel(categoryEntity));
-		}
 		return newsModel;
 	}
 
 	/**
-	 * Converts a model news to an entity news without its owner and feed.
+	 * Converts a model news to an entity news without its owner.
 	 *
 	 * @param newsModel model news to convert to an entity news.
 	 * @return the entity news.
@@ -120,11 +113,6 @@ public class ModelEntityConverter {
 		newsEntity.setContent(newsModel.getContent());
 		newsEntity.setUrl(newsModel.getUrl());
 		newsEntity.setDate(newsModel.getDate());
-		List<CategoryEntity> categoryEntities = new ArrayList<>();
-		for (Category category : newsModel.getCategories()) {
-			categoryEntities.add(toCategoryEntity(category));
-		}
-		newsEntity.setCategories(categoryEntities);
 		return newsEntity;
 	}
 

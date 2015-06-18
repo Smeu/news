@@ -61,4 +61,12 @@ public interface UserRepository {
 	 * @return users.
 	 */
 	List<User> getAll();
+
+	/**
+	 * Deletes a user after its id.
+	 *
+	 * @param id id of the user to be deleted.
+	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 */
+	boolean delete(long id);
 }

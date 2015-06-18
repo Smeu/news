@@ -41,4 +41,13 @@ public class InMemoryNewsRepository implements NewsRepository {
 		}
 		return selectedNews;
 	}
+
+	@Override
+	public boolean delete(long id) {
+		if (id < 0 || id >= newsList.size()) {
+			throw new InvalidIdException();
+		}
+		newsList.set((int) id, null);
+		return true;
+	}
 }

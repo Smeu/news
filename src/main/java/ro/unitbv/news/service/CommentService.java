@@ -5,6 +5,7 @@ import java.util.List;
 import ro.unitbv.news.model.Comment;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.Response;
+import ro.unitbv.news.model.User;
 
 /**
  * Service for operations that use comments.
@@ -36,4 +37,14 @@ public interface CommentService {
 	 * @return response holding the list of comments or the errors.
 	 */
 	Response<List<Comment>> getComments(News news);
+
+	/**
+	 * Deletes a comment after its id.
+	 *
+	 * @param id        id of the comment to delete.
+	 * @param performer user that performs deletion.
+	 * @return response holding <code>true</code> if deletion was performed, <code>false</code> if deletion was not
+	 * performed or the errors.
+	 */
+	Response<Boolean> delete(long id, User performer);
 }

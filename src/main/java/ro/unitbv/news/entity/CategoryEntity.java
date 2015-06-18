@@ -11,11 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "category")
@@ -30,10 +26,6 @@ public class CategoryEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "category_keyword", joinColumns = @JoinColumn(name = "category_id"))
 	private List<String> keywords;
-
-	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<NewsEntity> newsList;
 
 	public long getId() {
 		return id;
@@ -57,14 +49,6 @@ public class CategoryEntity {
 
 	public void setKeywords(List<String> keywords) {
 		this.keywords = keywords;
-	}
-
-	public List<NewsEntity> getNewsList() {
-		return newsList;
-	}
-
-	public void setNewsList(List<NewsEntity> newsList) {
-		this.newsList = newsList;
 	}
 
 	public void addKeyword(String keyword) {

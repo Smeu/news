@@ -34,4 +34,12 @@ public interface CommentRepository {
 	 * @return list of comments belonging to that news.
 	 */
 	List<Comment> getAllForNews(long newsId);
+
+	/**
+	 * Deletes a comment after its id.
+	 *
+	 * @param id id of the comment to be deleted.
+	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 */
+	boolean delete(long id);
 }

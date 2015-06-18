@@ -34,4 +34,12 @@ public interface NewsRepository {
 	 * @return list of news belonging to that owner.
 	 */
 	List<News> getAllForOwner(long ownerId);
+
+	/**
+	 * Deletes a piece of news after its id.
+	 *
+	 * @param id id of the news to be deleted.
+	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 */
+	boolean delete(long id);
 }

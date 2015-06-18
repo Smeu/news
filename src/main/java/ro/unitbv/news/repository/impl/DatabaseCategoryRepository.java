@@ -89,4 +89,21 @@ public class DatabaseCategoryRepository implements CategoryRepository {
 		}
 	}
 
+	@Override
+	public boolean delete(long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			CategoryEntity categoryEntity = (CategoryEntity) session.get(CategoryEntity.class, id);
+			if (categoryEntity == null) {
+				return false;
+			}
+			session.delete(categoryEntity);
+			session.getTransaction().commit();
+			return true;
+		}
+		finally {
+			session.close();
+		}
+	}
 }

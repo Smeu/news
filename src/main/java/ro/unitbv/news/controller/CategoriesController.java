@@ -44,7 +44,7 @@ public class CategoriesController extends AbstractController {
 		for (Category category : categoryService.getAll().getResponse()) {
 			showCategory(category);
 		}
-
+		categoriesContainer.setSpacing(5);
 		if (user.getType() == UserType.ADMIN) {
 			addCategoryUI(user);
 		}
@@ -92,6 +92,7 @@ public class CategoriesController extends AbstractController {
 		categoriesContainer.getChildren().add(pane);
 		if (user.getType() == UserType.ADMIN) {
 			addKeywordButton(category);
+			deleteCategoryButton(category);
 		}
 		Separator separator = new Separator(Orientation.HORIZONTAL);
 		separator.setPadding(new Insets(10, 0, 0, 0));
@@ -111,6 +112,15 @@ public class CategoriesController extends AbstractController {
 			}
 		});
 		categoriesContainer.getChildren().add(addKeywordButton);
+	}
+
+	private void deleteCategoryButton(Category category) {
+		Button deleteCategoryButton = new Button("Delete Category");
+		deleteCategoryButton.setOnMouseClicked(event -> {
+			categoryService.delete(category.getId(), user);
+			// TODO: refresh page
+		});
+		categoriesContainer.getChildren().add(deleteCategoryButton);
 	}
 
 	public void redirectToHomepage() {

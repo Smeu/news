@@ -1,7 +1,5 @@
 package ro.unitbv.news.validator;
 
-import java.io.FileWriter;
-
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.FieldConstraint;
 
@@ -20,7 +18,7 @@ public class FeedValidator {
 	private static final String NAME = "name";
 	private static final String DESCRIPTION = "description";
 
-	private static final String NAME_REGEX = "\\p{Alpha}(\\w)*";
+	private static final String NAME_REGEX = "\\p{Alpha}(\\w| )*";
 
 	private UrlValidator urlValidator;
 

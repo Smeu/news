@@ -41,12 +41,24 @@
                 </Label>
             </children>
         </HBox>
-        <Button fx:id="saveButton" mnemonicParsing="false" onMouseClicked="#saveNews" prefHeight="5.0" prefWidth="129.0" text="Save">
-            <styleClass>
-                <String fx:value="btn" />
-                <String fx:value="btn" />
-            </styleClass>
-        </Button>
+      <HBox alignment="TOP_CENTER">
+         <children>
+              <Button fx:id="saveButton" mnemonicParsing="false" onMouseClicked="#saveNews" prefHeight="5.0" prefWidth="129.0" text="Save">
+                  <styleClass>
+                      <String fx:value="btn" />
+                      <String fx:value="btn" />
+                  </styleClass>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+              </Button>
+            <Button fx:id="deleteButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#deleteNews" prefHeight="5.0" prefWidth="129.0" text="Delete" visible="false">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
         <VBox fx:id="commentContainer">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

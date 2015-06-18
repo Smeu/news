@@ -79,4 +79,13 @@ public class InMemoryUserRepository implements UserRepository {
 	public List<User> getAll() {
 		return new ArrayList<>(users);
 	}
+
+	@Override
+	public boolean delete(long id) {
+		if (id < 0 || id >= users.size()) {
+			throw new InvalidIdException();
+		}
+		users.set((int) id, null);
+		return true;
+	}
 }

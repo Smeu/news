@@ -42,4 +42,13 @@ public class InMemoryFeedRepository implements FeedRepository {
 		}
 		return feeds.get((int) id);
 	}
+
+	@Override
+	public boolean delete(long id) {
+		if (id < 0 || id >= feeds.size()) {
+			throw new InvalidIdException();
+		}
+		feeds.set((int) id, null);
+		return true;
+	}
 }

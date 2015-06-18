@@ -7,7 +7,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.unitbv.news.model.Category;
 import ro.unitbv.news.model.Error;
 import ro.unitbv.news.model.Feed;
 import ro.unitbv.news.model.FieldError;
@@ -16,8 +15,8 @@ import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 import ro.unitbv.news.parser.RssFeedParser;
 import ro.unitbv.news.repository.FeedRepository;
-import ro.unitbv.news.service.CategoryService;
 import ro.unitbv.news.service.FeedService;
+import ro.unitbv.news.service.classifier.Classifier;
 import ro.unitbv.news.validator.FeedValidator;
 import ro.unitbv.news.validator.ValidationResult;
 
@@ -31,16 +30,21 @@ public class DefaultFeedService implements FeedService {
 
 	private static final String USER = "user";
 	private static final String URL = "url";
+	private static final String PERFORMER = "performer";
 
 	private FeedRepository repository;
 
 	private FeedValidator validator;
 
-	private CategoryService categoryService;
+	private Classifier classifier;
 
 	public DefaultFeedService(FeedRepository repository, FeedValidator validator) {
 		this.repository = repository;
 		this.validator = validator;
+	}
+
+	public void setClassifier(Classifier classifier) {
+		this.classifier = classifier;
 	}
 
 	@Override
@@ -74,19 +78,11 @@ public class DefaultFeedService implements FeedService {
 			URL url = new URL(feed.getUrl());
 			URLConnection connection = url.openConnection();
 			RssFeedParser parser = new RssFeedParser();
-			List<Category> categories = categoryService.getAll().getResponse();
 			try (InputStream inputStream = connection.getInputStream()) {
 				List<News> newsList = parser.retrieveNews(inputStream);
 				for (News news : newsList) {
-					for (Category category : categories) {
-						for (String keyword : category.getKeywords()) {
-							if (news.getContent().contains(keyword) || news.getTitle().contains(keyword)) {
-								news.addCategory(category);
-								break;
-							}
-						}
-					}
 					news.setFeedId(feed.getId());
+					classifier.assignCategories(news);
 				}
 				return new Response<>(newsList);
 			}
@@ -98,7 +94,17 @@ public class DefaultFeedService implements FeedService {
 		}
 	}
 
-	public void setCategoryService(CategoryService categoryService) {
-		this.categoryService = categoryService;
+	@Override
+	public Response<Boolean> delete(long id, User performer) {
+		Feed feed = repository.get(id);
+		if (feed == null) {
+			return new Response<>(false);
+		}
+		if (performer.getId() != feed.getOwnerId()) {
+			List<FieldError> errorList = new ArrayList<>();
+			errorList.add(new FieldError(PERFORMER, Error.FAILED_REQUEST));
+			return new Response<>(errorList);
+		}
+		return new Response<>(repository.delete(id));
 	}
 }
