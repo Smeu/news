@@ -149,4 +149,23 @@ public class DatabaseUserRepository implements UserRepository {
 			session.close();
 		}
 	}
+
+	@Override
+	public boolean deleteFollowedUser(long id, User followedUser) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			UserEntity existingUserEntity = (UserEntity) session.get(UserEntity.class, id);
+			if (existingUserEntity == null) {
+				throw new InvalidIdException();
+			}
+			existingUserEntity.removeFollowedUser(converter.toUserEntity(followedUser));
+			session.update(existingUserEntity);
+			session.getTransaction().commit();
+			return true;
+		}
+		finally {
+			session.close();
+		}
+	}
 }

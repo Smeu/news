@@ -2,6 +2,7 @@ package ro.unitbv.news.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -71,11 +72,30 @@ public class UserEntity {
 		followedUsers.add(followedUser);
 	}
 
+	public void removeFollowedUser(UserEntity followedUser) {
+		followedUsers.remove(followedUser);
+	}
+
 	public UserType getType() {
 		return type;
 	}
 
 	public void setType(UserType type) {
 		this.type = type;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		UserEntity userEntity = (UserEntity) object;
+		return Objects.equals(id, userEntity.id) &&
+				Objects.equals(username, userEntity.username) &&
+				Objects.equals(password, userEntity.password) &&
+				Objects.equals(type, userEntity.type);
 	}
 }

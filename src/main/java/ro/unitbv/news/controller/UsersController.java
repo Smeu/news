@@ -73,6 +73,7 @@ public class UsersController extends AbstractController {
 	private void unFollowButton(Button button, User user) {
 		button.setText("Stop following");
 		button.setOnMouseClicked(event -> {
+			userService.deleteFollowedUser(loggedUser.getId(), user, loggedUser);
 			followButton(button, user);
 		});
 	}

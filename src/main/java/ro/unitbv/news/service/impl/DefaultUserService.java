@@ -79,4 +79,14 @@ public class DefaultUserService implements UserService {
 		}
 		return new Response<>(repository.delete(id));
 	}
+
+	@Override
+	public Response<Boolean> deleteFollowedUser(long id, User followedUser, User performer) {
+		if (performer.getId() != id) {
+			List<FieldError> errorList = new ArrayList<>();
+			errorList.add(new FieldError(PERFORMER, Error.FAILED_REQUEST));
+			return new Response<>(errorList);
+		}
+		return new Response<>(repository.deleteFollowedUser(id, followedUser));
+	}
 }

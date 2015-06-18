@@ -66,7 +66,16 @@ public interface UserRepository {
 	 * Deletes a user after its id.
 	 *
 	 * @param id id of the user to be deleted.
-	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 * @return <code>true</code> if deletion was performed or <code>false</code> otherwise.
 	 */
 	boolean delete(long id);
+
+	/**
+	 * Deletes a followed user from the one with the specified id.
+	 *
+	 * @param id           id of the user that follows.
+	 * @param followedUser user that is followed.
+	 * @return <code>true</code> if deletion was performed or <code>false</code> otherwise.
+	 */
+	boolean deleteFollowedUser(long id, User followedUser);
 }

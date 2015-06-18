@@ -88,4 +88,14 @@ public class InMemoryUserRepository implements UserRepository {
 		users.set((int) id, null);
 		return true;
 	}
+
+	@Override
+	public boolean deleteFollowedUser(long id, User followedUser) {
+		if (id < 0 || id >= users.size()) {
+			throw new InvalidIdException();
+		}
+		List<User> followedUsers = users.get((int) id).getFollowedUsers();
+		followedUsers.remove(followedUser);
+		return true;
+	}
 }
