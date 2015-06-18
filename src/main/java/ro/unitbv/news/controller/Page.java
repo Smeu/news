@@ -24,7 +24,9 @@ public enum Page {
 
 	CATEGORY_PAGE("Category", "pages/category.fxml"),
 
-	FEED_PAGE("Feed", "pages/feedPage.fxml");
+	FEED_PAGE("Feed", "pages/feedPage.fxml"),
+
+	FEEDS_PAGE("Feeds", "pages/feeds.fxml");
 
 	private String pagePath;
 

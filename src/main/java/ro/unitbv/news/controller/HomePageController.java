@@ -97,4 +97,9 @@ public class HomePageController extends AbstractController {
 	public void logout() {
 		redirectTo(Page.LOGIN_PAGE);
 	}
+
+	public void redirectToFeeds() {
+		FeedsController feedsController = redirectTo(Page.FEEDS_PAGE);
+		feedsController.init(user);
+	}
 }
