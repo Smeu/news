@@ -41,7 +41,7 @@ public abstract class AbstractController {
 
 	final static protected List<Task> runningTasks = new LinkedList<>();
 
-	final static protected ExecutorService pool = Executors.newFixedThreadPool(1);
+	final static protected ExecutorService pool = Executors.newCachedThreadPool();
 
 	protected <T extends AbstractController> T redirectTo(Page page) {
 		System.out.println(runningTasks.size());
