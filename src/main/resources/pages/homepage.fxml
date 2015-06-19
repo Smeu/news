@@ -25,87 +25,88 @@
                     <children>
                         <Separator prefWidth="10.0">
                             <padding>
-                                <Insets bottom="3.0" top="3.0" />
+                                <Insets bottom="3.0" top="3.0"/>
                             </padding>
                         </Separator>
                         <FlowPane>
                             <children>
-                                <Label text="Welcome" />
+                                <Label text="Welcome"/>
                                 <Label fx:id="username" onMouseClicked="#loadOwnNews">
                                     <padding>
-                                        <Insets left="20" />
+                                        <Insets left="20"/>
                                     </padding>
                                     <cursor>
-                                        <Cursor fx:constant="HAND" />
+                                        <Cursor fx:constant="HAND"/>
                                     </cursor>
                                     <font>
-                                        <Font size="20.0" />
+                                        <Font size="20.0"/>
                                     </font>
                                 </Label>
                             </children>
                         </FlowPane>
                         <Separator prefWidth="10.0">
                             <padding>
-                                <Insets bottom="2.0" top="3.0" />
+                                <Insets bottom="2.0" top="3.0"/>
                             </padding>
                         </Separator>
                         <Label onMouseClicked="#logout">
                             <cursor>
-                                <Cursor fx:constant="HAND" />
+                                <Cursor fx:constant="HAND"/>
                             </cursor>
                             <text>
                                 (Log Out)
                             </text>
                             <padding>
-                                <Insets bottom="100.0" left="30" top="3.0" />
+                                <Insets bottom="100.0" left="30" top="3.0"/>
                             </padding>
                             <font>
-                                <Font size="9.0" />
+                                <Font size="9.0"/>
                             </font>
                         </Label>
-                  <Button fx:id="refreshButton" mnemonicParsing="false" onMouseClicked="#refreshPage" prefHeight="25.0" prefWidth="98.0" text="Refresh" />
+                        <Button fx:id="refreshButton" mnemonicParsing="false" onMouseClicked="#refreshPage"
+                                prefHeight="25.0" prefWidth="98.0" text="Homepage"/>
 
                         <Separator prefWidth="10.0">
                             <padding>
-                                <Insets bottom="3.0" top="3.0" />
+                                <Insets bottom="3.0" top="3.0"/>
                             </padding>
                         </Separator>
-                        <Button mnemonicParsing="false" onMouseClicked="#loadOwnNews" prefHeight="25.0" prefWidth="98.0" text="My News" />
+                        <Button mnemonicParsing="false" onMouseClicked="#loadOwnNews" prefHeight="25.0" prefWidth="98.0" text="My News"/>
                         <Separator prefWidth="10.0">
                             <padding>
-                                <Insets bottom="3.0" top="3.0" />
+                                <Insets bottom="3.0" top="3.0"/>
                             </padding>
                         </Separator>
-                        <Button mnemonicParsing="false" onMouseClicked="#addFeed" prefHeight="25.0" prefWidth="98.0" text="Add Feed" VBox.vgrow="SOMETIMES" />
+                        <Button mnemonicParsing="false" onMouseClicked="#addFeed" prefHeight="25.0" prefWidth="98.0" text="Add Feed" VBox.vgrow="SOMETIMES"/>
                         <Separator prefWidth="10.0">
                             <padding>
-                                <Insets bottom="3.0" top="3.0" />
+                                <Insets bottom="3.0" top="3.0"/>
                             </padding>
                         </Separator>
-                  <Button mnemonicParsing="false" onMouseClicked="#redirectToFeeds" prefHeight="25.0" prefWidth="98.0" text="Feeds" VBox.vgrow="SOMETIMES" />
-                  <Separator prefWidth="200.0">
-                     <padding>
-                        <Insets bottom="3.0" top="3.0" />
-                     </padding>
-                  </Separator>
-                        <Button mnemonicParsing="false" onMouseClicked="#users" prefHeight="25.0" prefWidth="98.0" text="Users" VBox.vgrow="SOMETIMES" />
-                        <Separator prefWidth="10.0">
+                        <Button mnemonicParsing="false" onMouseClicked="#redirectToFeeds" prefHeight="25.0" prefWidth="98.0" text="Feeds" VBox.vgrow="SOMETIMES"/>
+                        <Separator prefWidth="200.0">
                             <padding>
-                                <Insets bottom="3.0" top="3.0" />
+                                <Insets bottom="3.0" top="3.0"/>
                             </padding>
                         </Separator>
-                        <Button mnemonicParsing="false" onMouseClicked="#categories" prefHeight="25.0" prefWidth="98.0" text="Categories" VBox.vgrow="SOMETIMES" />
+                        <Button mnemonicParsing="false" onMouseClicked="#users" prefHeight="25.0" prefWidth="98.0" text="Users" VBox.vgrow="SOMETIMES"/>
                         <Separator prefWidth="10.0">
                             <padding>
-                                <Insets bottom="3.0" top="3.0" />
+                                <Insets bottom="3.0" top="3.0"/>
+                            </padding>
+                        </Separator>
+                        <Button mnemonicParsing="false" onMouseClicked="#categories" prefHeight="25.0" prefWidth="98.0" text="Categories" VBox.vgrow="SOMETIMES"/>
+                        <Separator prefWidth="10.0">
+                            <padding>
+                                <Insets bottom="3.0" top="3.0"/>
                             </padding>
                         </Separator>
                     </children>
                     <padding>
-                        <Insets right="10" top="50.0" />
+                        <Insets right="10" top="50.0"/>
                     </padding>
                 </VBox>
-                <VBox fx:id="homePageContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" style="vertical-align: text-top;" />
+                <VBox fx:id="homePageContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" style="vertical-align: text-top;"/>
 
             </children>
         </HBox>

@@ -33,7 +33,7 @@ public class NewsContainerController extends AbstractController {
 	public void init(List<Pane> news) {
 		this.news = news;
 		lastNewsIndex = 0;
-		scrollPane.setMinHeight(Screen.getPrimary().getBounds().getHeight());
+		scrollPane.setMinHeight(Screen.getPrimary().getBounds().getHeight() - 60);
 		scrollPane.addEventFilter(ScrollEvent.SCROLL, this::scroll);
 		scrollPane.addEventFilter(MouseEvent.MOUSE_RELEASED, this::scroll);
 		updatePageNews();

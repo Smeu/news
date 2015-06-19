@@ -3,3 +3,6 @@ target
 News.iml
 news.log
 lib
+.classpath
+.project
+.settings
