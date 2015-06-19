@@ -6,12 +6,11 @@ import ro.unitbv.news.model.News;
 import ro.unitbv.news.model.User;
 
 /**
- * A news component
+ * A news component.
  *
  * @author Rares Smeu
  */
 public class NewsComponent extends AbstractComponent {
-
 
 	/**
 	 * @param news the news to be displayed.
@@ -23,7 +22,6 @@ public class NewsComponent extends AbstractComponent {
 		controller.setMainController(mainController);
 		controller.init(news, user);
 	}
-
 }
 
 

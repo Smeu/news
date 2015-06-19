@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
@@ -16,7 +15,7 @@ import ro.unitbv.news.model.User;
 import ro.unitbv.news.service.FeedService;
 
 /**
- * Controller for a feed's page.
+ * Controller for a feed page.
  *
  * @author Teodora Tanase
  */
@@ -30,9 +29,6 @@ public class FeedPageController extends AbstractController {
 
 	@FXML
 	private Label feedLabel;
-
-	@FXML
-	private Button homepageButton;
 
 	@FXML
 	private VBox feedPageContainer;

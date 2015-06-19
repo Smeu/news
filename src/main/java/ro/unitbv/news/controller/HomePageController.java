@@ -113,4 +113,9 @@ public class HomePageController extends AbstractController {
 		FeedsController feedsController = redirectTo(Page.FEEDS_PAGE);
 		feedsController.init(user);
 	}
+
+	public void refreshPage() {
+		HomePageController homePageController = redirectTo(Page.HOME_PAGE);
+		homePageController.init(user);
+	}
 }

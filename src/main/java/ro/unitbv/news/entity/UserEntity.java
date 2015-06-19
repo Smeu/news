@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -13,7 +14,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import ro.unitbv.news.model.UserType;
 
@@ -24,7 +29,6 @@ import ro.unitbv.news.model.UserType;
  */
 @Entity
 @Table(name = "user")
-@Embeddable
 public class UserEntity {
 
 	@Id
@@ -37,8 +41,9 @@ public class UserEntity {
 
 	private UserType type;
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "user_followedUser", joinColumns = @JoinColumn(name = "followedUser_id"))
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_followedUser", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "followedUser_id", referencedColumnName = "id"))
 	private List<UserEntity> followedUsers = new ArrayList<>();
 
 	public long getId() {

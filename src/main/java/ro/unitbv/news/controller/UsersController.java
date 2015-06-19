@@ -34,7 +34,7 @@ public class UsersController extends AbstractController {
 		List<User> followedUsers = userService.getFollowedUsers(loggedUser.getId()).getResponse();
 		users.remove(loggedUser);
 		for (User user : users) {
-			HBox hBox = new HBox();
+			HBox hBox = new HBox(10);
 			hBox.setAlignment(Pos.TOP_CENTER);
 			Label label = new Label(user.getUsername());
 			label.setOnMouseClicked(event -> redirectToUserPage(user));
@@ -81,12 +81,11 @@ public class UsersController extends AbstractController {
 		});
 	}
 
-	private void redirectToUserPage(User user){
-		if (!userService.getFollowedUsers(loggedUser.getId()).getResponse().contains(user)){
+	private void redirectToUserPage(User user) {
+		if (!userService.getFollowedUsers(loggedUser.getId()).getResponse().contains(user)) {
 			return;
 		}
 		UserPageController userPageController = redirectTo(Page.USER_PAGE);
 		userPageController.init(loggedUser, user);
 	}
-
 }

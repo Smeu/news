@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import ro.unitbv.news.controller.AbstractController;
 
 /**
- * Abstract component that serve as guideline for all components.
+ * Abstract component that serves as guideline for all components.
  *
  * @author Rares Smeu
  */

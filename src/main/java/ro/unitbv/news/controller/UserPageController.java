@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
@@ -31,10 +30,10 @@ public class UserPageController extends AbstractController {
 	private Label usernameLabel;
 
 	@FXML
-	private VBox userPageContainer;
+	private Label loggedUserLabel;
 
 	@FXML
-	private Button homepageButton;
+	private VBox userPageContainer;
 
 	public UserPageController() {
 		newsService = ServiceFactory.getInstance().getNewsService();
@@ -44,6 +43,7 @@ public class UserPageController extends AbstractController {
 		this.loggedUser = loggedUser;
 		this.user = user;
 		usernameLabel.setText(user.getUsername() + "\n- News -");
+		loggedUserLabel.setText(loggedUser.getUsername());
 		NewsContainer newsContainer = new NewsContainer(loggedUser, this);
 		List<News> newsList = getAllNews();
 		newsContainer.setNews(newsList);

@@ -63,6 +63,7 @@
                                 <Font size="9.0" />
                             </font>
                         </Label>
+                  <Button fx:id="refreshButton" mnemonicParsing="false" onMouseClicked="#refreshPage" prefHeight="25.0" prefWidth="98.0" text="Refresh" />
 
                         <Separator prefWidth="10.0">
                             <padding>
