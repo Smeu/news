@@ -40,11 +40,11 @@ public interface CategoryService {
 	/**
 	 * Adds a keyword to a category.
 	 *
-	 * @param category in what category to add the keyword.
+	 * @param category in which category to add the keyword.
 	 * @param keyword  the keyword for the category.
-	 * @return errors containing potential errors.
+	 * @return response containing potential errors.
 	 **/
-	Response addKeyword(Category category, String keyword);
+	Response<Void> addKeyword(Category category, String keyword);
 
 	/**
 	 * Retrieves all news from a certain category that are linked to the specified user.

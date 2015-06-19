@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ro.unitbv.news.component.NewsContainer;
@@ -20,16 +19,16 @@ import ro.unitbv.news.service.CategoryService;
  *
  * @author Rares Smeu
  */
-public class CategoryController extends AbstractController{
+public class CategoryController extends AbstractController {
 
 	@FXML
 	private Label categoryLabel;
 
 	@FXML
-	private VBox container;
+	private Label loggedUserLabel;
 
 	@FXML
-	private Button homepageButton;
+	private VBox container;
 
 	private CategoryService categoryService;
 
@@ -45,6 +44,7 @@ public class CategoryController extends AbstractController{
 		this.user = user;
 		this.category = category;
 		categoryLabel.setText("- Category -\n" + category.getName());
+		loggedUserLabel.setText(user.getUsername());
 		NewsContainer newsContainer = new NewsContainer(user, this);
 		List<News> newsList = getAllNews();
 		newsContainer.setNews(newsList);

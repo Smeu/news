@@ -55,23 +55,8 @@ public class DefaultCategoryService implements CategoryService {
 	@Override
 	public Response<List<News>> getNews(Category category, User user) {
 		List<News> selectedNews = new ArrayList<>();
-		selectedNews.addAll(findForCategoryAndUser(category, user));
-		for (User followedUser : user.getFollowedUsers()) {
-			selectedNews.addAll(findForCategoryAndUser(category, followedUser));
-		}
-		return new Response<>(selectedNews);
-	}
-
-	@Override
-	public Response addKeyword(Category category, String keyword) {
-		repository.addKeyword(category, keyword);
-		return new Response();
-	}
-
-	private List<News> findForCategoryAndUser(Category category, User user) {
 		NewsService newsService = ServiceFactory.getInstance().getNewsService();
 		FeedService feedService = ServiceFactory.getInstance().getFeedService();
-		List<News> selectedNews = new ArrayList<>();
 		List<News> savedNews = newsService.getAll(user).getResponse();
 		selectedNews.addAll(findForCategory(category, savedNews));
 		List<Feed> personalFeeds = feedService.getAll(user).getResponse();
@@ -79,7 +64,11 @@ public class DefaultCategoryService implements CategoryService {
 			List<News> feedNews = feedService.getNews(feed).getResponse();
 			selectedNews.addAll(findForCategory(category, feedNews));
 		}
-		return selectedNews;
+		for (User followedUser : user.getFollowedUsers()) {
+			List<News> followedSavedNews = newsService.getAll(followedUser).getResponse();
+			selectedNews.addAll(findForCategory(category, followedSavedNews));
+		}
+		return new Response<>(selectedNews);
 	}
 
 	private List<News> findForCategory(Category category, List<News> newsList) {
@@ -90,6 +79,12 @@ public class DefaultCategoryService implements CategoryService {
 			}
 		}
 		return selectedNews;
+	}
+
+	@Override
+	public Response<Void> addKeyword(Category category, String keyword) {
+		repository.addKeyword(category, keyword);
+		return new Response<>();
 	}
 
 	@Override

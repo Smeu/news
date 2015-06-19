@@ -6,32 +6,41 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ro.unitbv.news.controller.CategoryController">
+<HBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.CategoryController">
     <children>
-        <VBox centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@main.css">
+        <VBox centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" stylesheets="@main.css">
             <children>
                 <Label fx:id="categoryLabel">
                     <VBox.margin>
-                        <Insets left="20.0" top="20.0"/>
+                        <Insets left="20.0" top="20.0" />
                     </VBox.margin>
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                 </Label>
+            <Label text="Logged in as:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="loggedUserLabel">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
                 <Button fx:id="homepageButton" mnemonicParsing="false" onMouseClicked="#redirectToHomepage" text="Homepage">
                     <VBox.margin>
-                        <Insets left="20.0" top="10.0"/>
+                        <Insets left="20.0" top="10.0" />
                     </VBox.margin>
                 </Button>
             </children>
             <opaqueInsets>
-                <Insets/>
+                <Insets />
             </opaqueInsets>
             <HBox.margin>
-                <Insets right="15.0"/>
+                <Insets right="15.0" />
             </HBox.margin>
         </VBox>
-        <VBox fx:id="container" alignment="TOP_CENTER" prefHeight="250.0" prefWidth="500.0"/>
+        <VBox fx:id="container" alignment="TOP_CENTER" prefHeight="250.0" prefWidth="500.0" />
     </children>
 </HBox>
