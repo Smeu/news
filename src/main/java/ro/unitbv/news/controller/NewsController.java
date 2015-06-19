@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -130,19 +131,40 @@ public class NewsController extends AbstractController {
 	}
 
 	private void addComments() {
-		commentContainer.getChildren().clear();
-		Response<List<Comment>> comments = commentService.getComments(news);
-		if (!comments.hasErrors()) {
-			for (Comment comment : comments.getResponse()) {
-				CommentComponent component = new CommentComponent(comment, user, mainController);
-				commentContainer.getChildren().add(component.getComponent());
+		Task task = new Task() {
+			@Override
+			public void run() {
+				while (true) {
+					if (shouldStop) {
+						return;
+					}
+					Response<List<Comment>> comments = commentService.getComments(news);
+					if (comments.getResponse().size() != commentContainer.getChildren().size() - 1) {
+						Platform.runLater(() -> commentContainer.getChildren().clear());
+						if (!comments.hasErrors()) {
+							for (Comment comment : comments.getResponse()) {
+								CommentComponent component = new CommentComponent(comment, user, mainController);
+								Platform.runLater(() -> commentContainer.getChildren().add(component.getComponent()));
+							}
+						}
+						Label addComment = new Label("Add Comment");
+						addComment.setCursor(Cursor.HAND);
+						addComment.setOnMouseClicked(event -> commentDialog());
+						Platform.runLater(() -> commentContainer.getChildren().add(addComment));
+					}
+					try {
+						Thread.sleep(5000);
+					}
+					catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
-		}
-		Label addComment = new Label("Add Comment");
-		addComment.setCursor(Cursor.HAND);
-		addComment.setOnMouseClicked(event -> commentDialog());
-		commentContainer.getChildren().add(addComment);
+		};
+		runningTasks.add(task);
+		pool.execute(task);
 	}
+
 
 	private void commentDialog() {
 		commentDialog("", Collections.emptyList());

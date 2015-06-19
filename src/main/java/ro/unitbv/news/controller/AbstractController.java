@@ -1,6 +1,10 @@
 package ro.unitbv.news.controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +39,16 @@ public abstract class AbstractController {
 		this.primaryStage = primaryStage;
 	}
 
+	final static protected List<Task> runningTasks = new LinkedList<>();
+
+	final static protected ExecutorService pool = Executors.newFixedThreadPool(1);
+
 	protected <T extends AbstractController> T redirectTo(Page page) {
+		System.out.println(runningTasks.size());
+		synchronized (runningTasks) {
+			runningTasks.forEach(task -> task.shouldStop = true);
+		}
+		runningTasks.clear();
 		if (mainController != null) {
 			return mainController.redirectTo(page);
 		}
@@ -100,5 +113,10 @@ public abstract class AbstractController {
 
 	public void setMainController(AbstractController mainController) {
 		this.mainController = mainController;
+	}
+
+	protected abstract class Task implements Runnable {
+
+		volatile boolean shouldStop;
 	}
 }

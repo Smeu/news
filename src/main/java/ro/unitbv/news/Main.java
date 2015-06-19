@@ -1,6 +1,7 @@
 package ro.unitbv.news;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -21,6 +22,10 @@ public class Main extends Application {
 		Rectangle2D bounds = Screen.getPrimary().getBounds();
 		primaryStage.setWidth(bounds.getWidth());
 		primaryStage.setHeight(bounds.getHeight());
+		primaryStage.setOnCloseRequest(t -> {
+			Platform.exit();
+			System.exit(0);
+		});
 
 		FXMLLoader myLoader = new FXMLLoader(Main.class.getClassLoader().getResource(LOGIN_PAGE.getPagePath()));
 		Pane myPane = myLoader.load();
@@ -36,4 +41,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
+
 }
