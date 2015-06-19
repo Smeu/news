@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ro.unitbv.news.factory.ValidatorFactory;
 import ro.unitbv.news.model.Category;
 import ro.unitbv.news.model.News;
 import ro.unitbv.news.repository.impl.InMemoryCategoryRepository;

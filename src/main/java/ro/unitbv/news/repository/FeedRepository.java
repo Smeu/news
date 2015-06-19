@@ -40,7 +40,7 @@ public interface FeedRepository {
 	 * Deletes a feed after its id.
 	 *
 	 * @param id id of the feed to be deleted.
-	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 * @return <code>true</code> if deletion was performed or <code>false</code> otherwise.
 	 */
 	boolean delete(long id);
 }

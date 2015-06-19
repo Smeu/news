@@ -3,11 +3,13 @@ package ro.unitbv.news.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.unitbv.news.model.*;
 import ro.unitbv.news.model.Error;
+import ro.unitbv.news.model.FieldError;
+import ro.unitbv.news.model.Response;
+import ro.unitbv.news.model.User;
+import ro.unitbv.news.model.UserType;
 import ro.unitbv.news.repository.UserRepository;
 import ro.unitbv.news.service.UserService;
-import ro.unitbv.news.validator.StringFieldValidator;
 import ro.unitbv.news.validator.UserValidator;
 import ro.unitbv.news.validator.ValidationResult;
 

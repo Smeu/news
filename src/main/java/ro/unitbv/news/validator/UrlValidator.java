@@ -20,12 +20,11 @@ public class UrlValidator {
 
 	private static final String URL = "url";
 
-
 	/**
 	 * Validates if the given url exists or not.
 	 *
 	 * @param url url to be checked.
-	 * @return false if urls doesn't exist or there is no internet connection.
+	 * @return false if url doesn't exist or there is no internet connection.
 	 */
 	public ValidationResult validate(String url) {
 		ValidationResult result = new ValidationResult();
@@ -48,5 +47,4 @@ public class UrlValidator {
 		}
 		return result;
 	}
-
 }

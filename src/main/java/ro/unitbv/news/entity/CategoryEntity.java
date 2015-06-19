@@ -13,6 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+/**
+ * Database entity for a category.
+ *
+ * @author Teodora Tanase
+ */
 @Entity
 @Table(name = "category")
 public class CategoryEntity {

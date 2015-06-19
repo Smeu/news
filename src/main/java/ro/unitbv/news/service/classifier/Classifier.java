@@ -21,6 +21,11 @@ public class Classifier {
 		this.categoryService = categoryService;
 	}
 
+	/**
+	 * Assigns appropriate categories to the given piece of news.
+	 *
+	 * @param news news to assign categories to.
+	 */
 	public void assignCategories(News news) {
 		List<Category> categories = categoryService.getAll().getResponse();
 		for (Category category : categories) {

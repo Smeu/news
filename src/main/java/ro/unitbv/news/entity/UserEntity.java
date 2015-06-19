@@ -17,6 +17,11 @@ import javax.persistence.Table;
 
 import ro.unitbv.news.model.UserType;
 
+/**
+ * Database entity for a user.
+ *
+ * @author Teodora Tanase
+ */
 @Entity
 @Table(name = "user")
 @Embeddable

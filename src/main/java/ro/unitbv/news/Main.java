@@ -1,9 +1,5 @@
 package ro.unitbv.news;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -18,8 +14,6 @@ import static ro.unitbv.news.controller.Page.LOGIN_PAGE;
  * @author Rares Smeu
  */
 public class Main extends Application {
-
-	private final static Logger log = LoggerFactory.getLogger(Main.class);
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {

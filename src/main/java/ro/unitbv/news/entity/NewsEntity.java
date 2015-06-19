@@ -12,6 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Database entity for news.
+ *
+ * @author Teodora Tanase
+ */
 @Entity
 @Table(name = "news")
 public class NewsEntity {
@@ -26,7 +31,7 @@ public class NewsEntity {
 
 	private String title;
 
-	@Column(length = 1023)
+	@Column(length = 1024)
 	private String content;
 
 	private String url;

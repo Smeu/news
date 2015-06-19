@@ -17,6 +17,7 @@ import ro.unitbv.news.repository.exception.InvalidIdException;
 /**
  * Invocation handler for services.
  *
+ * @author Rares Smeu
  * @author Teodora Tanase
  */
 public class ServiceInvocationHandler implements InvocationHandler {

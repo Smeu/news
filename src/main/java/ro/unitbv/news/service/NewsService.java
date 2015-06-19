@@ -7,9 +7,10 @@ import ro.unitbv.news.model.Response;
 import ro.unitbv.news.model.User;
 
 /**
- * Service for operations with {@link ro.unitbv.news.model.News}
+ * Service for operations with {@link ro.unitbv.news.model.News}.
  *
  * @author Rares Smeu
+ * @author Teodora Tanase
  */
 public interface NewsService {
 

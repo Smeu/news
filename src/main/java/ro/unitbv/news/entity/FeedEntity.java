@@ -9,6 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Database entity for a feed.
+ *
+ * @author Teodora Tanase
+ */
 @Entity
 @Table(name = "feed")
 public class FeedEntity {

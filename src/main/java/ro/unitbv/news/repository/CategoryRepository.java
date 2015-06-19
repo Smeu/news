@@ -46,7 +46,7 @@ public interface CategoryRepository {
 	 * Deletes a category after its id.
 	 *
 	 * @param id id of the category to be deleted.
-	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 * @return <code>true</code> if deletion was performed or <code>false</code> otherwise.
 	 */
 	boolean delete(long id);
 }

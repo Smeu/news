@@ -39,7 +39,7 @@ public interface CommentRepository {
 	 * Deletes a comment after its id.
 	 *
 	 * @param id id of the comment to be deleted.
-	 * @return <code>true</code> if deletion was performed or false otherwise.
+	 * @return <code>true</code> if deletion was performed or <code>false</code> otherwise.
 	 */
 	boolean delete(long id);
 }

@@ -10,12 +10,4 @@ public class RssParsingException extends RuntimeException {
 	public RssParsingException() {
 		super();
 	}
-
-	public RssParsingException(String message) {
-		super(message);
-	}
-
-	public RssParsingException(Exception exception) {
-		super(exception);
-	}
 }

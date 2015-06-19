@@ -1,7 +1,7 @@
 package ro.unitbv.news.model;
 
 /**
- * Model for a feed
+ * Model for a feed.
  *
  * @author Rares Smeu
  */

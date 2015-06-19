@@ -13,8 +13,13 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 import static ro.unitbv.news.model.Error.URL_NOT_AVAILABLE;
 
+/**
+ * @author Rares Smeu
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class FeedValidatorTest {
+
+	private static final String URL = "url";
 
 	@Mock
 	private UrlValidator urlValidator;
@@ -35,7 +40,7 @@ public class FeedValidatorTest {
 		FeedValidator validator = new FeedValidator(urlValidator);
 		Feed feed = getInvalidFeed();
 		ValidationResult urlResult = new ValidationResult();
-		urlResult.addError(new FieldError("url", URL_NOT_AVAILABLE));
+		urlResult.addError(new FieldError(URL, URL_NOT_AVAILABLE));
 		when(urlValidator.validate(anyString())).thenReturn(urlResult);
 
 		ValidationResult result = validator.validate(feed);
@@ -44,12 +49,11 @@ public class FeedValidatorTest {
 		assertThat(result.getErrors().size(), is(4));
 	}
 
-
 	private Feed getValidFeed() {
 		Feed feed = new Feed();
 		feed.setName("FeedName");
 		feed.setDescription("Some Description");
-		feed.setUrl("url");
+		feed.setUrl(URL);
 		return feed;
 	}
 
@@ -60,7 +64,7 @@ public class FeedValidatorTest {
 				+ "Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters "
 				+ "Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters "
 				+ "Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters Over 256 Characters ");
-		feed.setUrl("url");
+		feed.setUrl(URL);
 		return feed;
 	}
 }

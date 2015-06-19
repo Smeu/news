@@ -73,8 +73,8 @@ public class RssFeedParser {
 		if (node.getNodeType() != Node.ELEMENT_NODE) {
 			throw new RssParsingException();
 		}
-		Element element = (Element) node;
 		News news = new News();
+		Element element = (Element) node;
 		NodeList titles = element.getElementsByTagName(TITLE);
 		NodeList descriptions = element.getElementsByTagName(DESCRIPTION);
 		NodeList links = element.getElementsByTagName(LINK);
@@ -83,26 +83,32 @@ public class RssFeedParser {
 			news.setTitle(titles.item(0).getTextContent());
 		}
 		if (descriptions.getLength() > 0) {
-			String description = descriptions.item(0).getTextContent();
-			int breakingIndex = description.indexOf(OPEN_TAG);
-			if (breakingIndex != -1) {
-				description = description.substring(0, breakingIndex);
-			}
-			news.setContent(description);
+			news.setContent(parseDescription(descriptions.item(0).getTextContent()));
 		}
 		if (links.getLength() > 0) {
 			news.setUrl(links.item(0).getTextContent());
 		}
 		if (dates.getLength() > 0) {
-			DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-			try {
-				Date date = dateFormat.parse(dates.item(0).getTextContent());
-				news.setDate(date);
-			}
-			catch (ParseException e) {
-				throw new RssParsingException();
-			}
+			news.setDate(parseDate(dates.item(0).getTextContent()));
 		}
 		return news;
+	}
+
+	private String parseDescription(String description) {
+		int breakingIndex = description.indexOf(OPEN_TAG);
+		if (breakingIndex != -1) {
+			description = description.substring(0, breakingIndex);
+		}
+		return description;
+	}
+
+	private Date parseDate(String dateString) {
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		try {
+			return dateFormat.parse(dateString);
+		}
+		catch (ParseException e) {
+			throw new RssParsingException();
+		}
 	}
 }

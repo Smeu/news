@@ -2,6 +2,7 @@ package ro.unitbv.news.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * Database entity for a comment.
+ *
+ * @author Teodora Tanase
+ */
 @Entity
 @Table(name = "comment")
 public class CommentEntity {
@@ -28,6 +34,7 @@ public class CommentEntity {
 	@JoinColumn(name = "ownerId")
 	private UserEntity owner;
 
+	@Column(length = 1024)
 	private String content;
 
 	private Date postingDate;

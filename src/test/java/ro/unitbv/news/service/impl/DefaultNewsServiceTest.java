@@ -36,7 +36,6 @@ public class DefaultNewsServiceTest {
 		service = new DefaultNewsService(repository);
 	}
 
-
 	@Test
 	public void testGetNewsNullUser() throws Exception {
 		Response<List<News>> response = service.getAll(null);
