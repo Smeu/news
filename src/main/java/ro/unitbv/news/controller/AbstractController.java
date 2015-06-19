@@ -80,6 +80,9 @@ public abstract class AbstractController {
 			case ILLEGAL_CONTENT:
 				errorArea.setText("Invalid characters");
 				break;
+			case FAILED_REQUEST:
+				errorArea.setText("Request could not be completed");
+				break;
 		}
 	}
 

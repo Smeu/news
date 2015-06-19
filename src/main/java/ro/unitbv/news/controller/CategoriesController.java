@@ -118,7 +118,7 @@ public class CategoriesController extends AbstractController {
 		Button deleteCategoryButton = new Button("Delete Category");
 		deleteCategoryButton.setOnMouseClicked(event -> {
 			categoryService.delete(category.getId(), user);
-			// TODO: refresh page
+			refreshPage();
 		});
 		categoriesContainer.getChildren().add(deleteCategoryButton);
 	}

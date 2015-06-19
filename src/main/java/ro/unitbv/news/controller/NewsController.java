@@ -1,7 +1,5 @@
 package ro.unitbv.news.controller;
 
-import java.awt.*;
-import java.net.URI;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
@@ -57,6 +56,8 @@ public class NewsController extends AbstractController {
 	private VBox commentContainer;
 	@FXML
 	private FlowPane categoriesContainer;
+	@FXML
+	private VBox newsHolder;
 
 	private CommentService commentService;
 
@@ -133,7 +134,7 @@ public class NewsController extends AbstractController {
 		Response<List<Comment>> comments = commentService.getComments(news);
 		if (!comments.hasErrors()) {
 			for (Comment comment : comments.getResponse()) {
-				CommentComponent component = new CommentComponent(comment, mainController);
+				CommentComponent component = new CommentComponent(comment, user, mainController);
 				commentContainer.getChildren().add(component.getComponent());
 			}
 		}
@@ -205,6 +206,7 @@ public class NewsController extends AbstractController {
 	public void saveNews() {
 		ServiceFactory.getInstance().getNewsService().add(news, user);
 		saveButton.setVisible(false);
+		deleteButton.setVisible(true);
 	}
 
 	public void goToOwner() {
@@ -221,7 +223,7 @@ public class NewsController extends AbstractController {
 	public void deleteNews() {
 		NewsService newsService = ServiceFactory.getInstance().getNewsService();
 		newsService.delete(news.getId(), user);
-		deleteButton.setVisible(false);
-		// TODO: refresh page
+		Pane parent = (Pane) newsHolder.getParent();
+		parent.getChildren().remove(newsHolder);
 	}
 }

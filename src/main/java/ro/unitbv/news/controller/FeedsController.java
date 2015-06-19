@@ -33,13 +33,12 @@ public class FeedsController extends AbstractController {
 		feedService = ServiceFactory.getInstance().getFeedService();
 		List<Feed> feeds = feedService.getAll(user).getResponse();
 		for (Feed feed : feeds) {
+			VBox feedContent = new VBox(5);
 			Button deleteButton = new Button("Delete Feed");
 			deleteButton.setOnMouseClicked(event -> {
 				feedService.delete(feed.getId(), user);
-				FeedsController feedsController = redirectTo(Page.FEEDS_PAGE);
-				feedsController.init(user);
+				feedsContainer.getChildren().remove(feedContent);
 			});
-			VBox feedContent = new VBox(5);
 			feedContent.getChildren().add(new Label(feed.getName()));
 			feedContent.getChildren().add(new Label(feed.getUrl()));
 			feedContent.getChildren().add(deleteButton);

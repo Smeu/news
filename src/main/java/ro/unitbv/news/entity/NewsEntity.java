@@ -2,6 +2,7 @@ package ro.unitbv.news.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class NewsEntity {
 
 	private String title;
 
+	@Column(length = 1023)
 	private String content;
 
 	private String url;

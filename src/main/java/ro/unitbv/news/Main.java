@@ -35,6 +35,7 @@ public class Main extends Application {
 
 		Scene myScene = new Scene(myPane);
 		primaryStage.setScene(myScene);
+		primaryStage.setMaximized(true);
 		primaryStage.show();
 	}
 

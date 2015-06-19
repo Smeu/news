@@ -19,6 +19,7 @@ import ro.unitbv.news.validator.ValidationResult;
  */
 public class DefaultUserService implements UserService {
 
+	private static final String USER = "user";
 	private static final String PERFORMER = "performer";
 
 	private UserValidator validator;
@@ -34,6 +35,14 @@ public class DefaultUserService implements UserService {
 		ValidationResult result = validator.validate(user);
 		if (result.hasErrors()) {
 			return new Response<>(result.getErrors());
+		}
+		List<User> existingUsers = repository.getAll();
+		for (User existingUser : existingUsers) {
+			if (existingUser.getUsername().equals(user.getUsername())) {
+				List<FieldError> errorList = new ArrayList<>();
+				errorList.add(new FieldError(USER, Error.FAILED_REQUEST));
+				return new Response<>(errorList);
+			}
 		}
 		long id = repository.create(user);
 		return new Response<>(id);

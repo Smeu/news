@@ -30,6 +30,7 @@ public class DefaultFeedService implements FeedService {
 
 	private static final String USER = "user";
 	private static final String URL = "url";
+	private static final String FEED = "feed";
 	private static final String PERFORMER = "performer";
 
 	private FeedRepository repository;
@@ -52,6 +53,14 @@ public class DefaultFeedService implements FeedService {
 		ValidationResult result = validator.validate(feed);
 		if (result.hasErrors()) {
 			return new Response<>(result.getErrors());
+		}
+		List<Feed> existingFeeds = repository.getAllForOwner(feed.getOwnerId());
+		for (Feed existingFeed : existingFeeds) {
+			if (existingFeed.getUrl().equals(feed.getUrl())) {
+				List<FieldError> errorList = new ArrayList<>();
+				errorList.add(new FieldError(FEED, Error.FAILED_REQUEST));
+				return new Response<>(errorList);
+			}
 		}
 		return new Response<>(repository.create(feed));
 	}

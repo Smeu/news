@@ -92,11 +92,9 @@ public class DatabaseCommentRepository implements CommentRepository {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			CommentEntity commentEntity = (CommentEntity) session.get(CommentEntity.class, id);
-			if (commentEntity == null) {
-				return false;
-			}
-			session.delete(commentEntity);
+			Query query = session.createQuery("delete from CommentEntity where id = :id");
+			query.setParameter("id", id);
+			query.executeUpdate();
 			session.getTransaction().commit();
 			return true;
 		}

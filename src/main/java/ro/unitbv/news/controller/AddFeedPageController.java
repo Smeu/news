@@ -28,6 +28,7 @@ public class AddFeedPageController extends AbstractController {
 	private static final String ERROR_BORDER = "errorBorder";
 	private static final String URL = "url";
 	private static final String NAME = "name";
+	private static final String FEED = "feed";
 	private static final String DESCRIPTION = "description";
 
 	private static final Logger log = LoggerFactory.getLogger(AddFeedPageController.class);
@@ -97,6 +98,9 @@ public class AddFeedPageController extends AbstractController {
 					break;
 				case DESCRIPTION:
 					showErrorForField(descriptionInput, descriptionError, error);
+					break;
+				case FEED:
+					showErrorForField(urlInput, urlError, error);
 					break;
 			}
 		}

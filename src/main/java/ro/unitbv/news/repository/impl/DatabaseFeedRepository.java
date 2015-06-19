@@ -87,11 +87,9 @@ public class DatabaseFeedRepository implements FeedRepository {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			FeedEntity feedEntity = (FeedEntity) session.get(FeedEntity.class, id);
-			if (feedEntity == null) {
-				return false;
-			}
-			session.delete(feedEntity);
+			Query query = session.createQuery("delete from FeedEntity where id = :id");
+			query.setParameter("id", id);
+			query.executeUpdate();
 			session.getTransaction().commit();
 			return true;
 		}

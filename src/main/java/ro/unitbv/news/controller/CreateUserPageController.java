@@ -96,6 +96,9 @@ public class CreateUserPageController extends AbstractController {
 				case "password":
 					showErrorForField(passwordInput, passwordError, error);
 					break;
+				case "user":
+					showErrorForField(usernameInput, usernameError, error);
+					break;
 			}
 		}
 	}

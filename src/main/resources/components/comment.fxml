@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="center" prefHeight="200.0" prefWidth="300.0" stylesheets="@../pages/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.CommentController">
+<VBox fx:id="commentHolder" alignment="center" prefHeight="200.0" prefWidth="300.0" stylesheets="@../pages/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.unitbv.news.controller.CommentController">
     <children>
         <Separator prefWidth="200.0" />
         <HBox alignment="TOP_LEFT">

@@ -5,9 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import ro.unitbv.news.component.NewsContainer;
 import ro.unitbv.news.factory.ServiceFactory;
 import ro.unitbv.news.model.Feed;
@@ -50,6 +53,14 @@ public class HomePageController extends AbstractController {
 		username.setText(user.getUsername());
 		homePageContainer.setAlignment(Pos.TOP_CENTER);
 		List<News> news = getAllNews(user);
+		if (news.size() == 0) {
+			Label label = new Label("No News");
+			label.setPadding(new Insets(25, 25, 25, 25));
+			label.setFont(new Font(20));
+			label.setTextFill(Color.GRAY);
+			homePageContainer.getChildren().add(label);
+			return;
+		}
 		NewsContainer container = new NewsContainer(user, this);
 		container.setNews(news);
 		homePageContainer.getChildren().add(container.getComponent());

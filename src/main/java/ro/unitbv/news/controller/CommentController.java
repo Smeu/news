@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ro.unitbv.news.factory.ServiceFactory;
 import ro.unitbv.news.model.Comment;
@@ -31,6 +33,8 @@ public class CommentController extends AbstractController {
 	private Label date;
 	@FXML
 	private Button deleteButton;
+	@FXML
+	private VBox commentHolder;
 
 	private UserService userService = ServiceFactory.getInstance().getUserService();
 
@@ -38,13 +42,16 @@ public class CommentController extends AbstractController {
 
 	private User loggedUser;
 
-	public void init(Comment comment) {
+	private User owner;
+
+	public void init(Comment comment, User loggedUser) {
 		this.comment = comment;
-		loggedUser = new User(); // TODO: assign logged user
+		this.loggedUser = loggedUser;
 		Response<User> userResponse = userService.get(comment.getOwnerId());
 		author.setText(userResponse.getResponse().getUsername());
 		content.setText(comment.getContent());
 		date.setText(dateFormat.format(comment.getPostingDate()));
+		owner = userResponse.getResponse();
 		if (comment.getOwnerId() == loggedUser.getId()) {
 			deleteButton.setVisible(true);
 		}
@@ -53,9 +60,12 @@ public class CommentController extends AbstractController {
 	public void deleteComment() {
 		CommentService commentService = ServiceFactory.getInstance().getCommentService();
 		commentService.delete(comment.getId(), loggedUser);
+		Pane parent = (Pane) commentHolder.getParent();
+		parent.getChildren().remove(commentHolder);
 	}
 
 	public void redirectToUserPage() {
-		// TODO REDIRECT
+		UserPageController userPageController = redirectTo(Page.USER_PAGE);
+		userPageController.init(loggedUser, owner);
 	}
 }
